@@ -1,0 +1,21 @@
+{
+	"name": "ansible-env",
+	"build": {"dockerfile": "Dockerfile"},
+	// Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			"settings": {},
+			"extensions": [
+				"streetsidesoftware.code-spell-checker",
+				"redhat.ansible",
+				"redhat.vscode-yaml",
+				"GitHub.copilot",
+				"ms-python.python"
+	
+			]
+		}
+	},
+    "workspaceFolder": "/workspace",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,Z"
+}

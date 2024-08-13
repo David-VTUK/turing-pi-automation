@@ -1,0 +1,5 @@
+- name: Create partition on the disk
+  hosts: srv-rk1-01
+  become: true
+  roles:
+    - create-partition

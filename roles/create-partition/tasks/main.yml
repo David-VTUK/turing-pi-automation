@@ -1,0 +1,46 @@
+- name: Create partition on the disk
+  community.general.parted:
+    device: "{{ device }}"
+    state: present
+    number: 1
+    part_start: "{{ partition_start }}"
+    part_end: "{{ partition_end }}"
+    align: optimal
+    part_type: primary
+    fs_type: "{{ filesystem }}"
+  become: true
+
+- name: Make filesystem on the partition
+  community.general.filesystem:
+    fstype: "{{ filesystem }}"
+    dev: "{{ device }}{{ 'p' }}{{ partition_number }}"
+  become: true
+
+- name: Create mount point directory
+  ansible.builtin.file:
+    path: "{{ mount_point }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: true
+
+- name: Mount the partition
+  ansible.posix.mount:
+    src: "{{ device }}{{ 'p' }}{{ partition_number }}"
+    path: "{{ mount_point }}"
+    fstype: "{{ filesystem }}"
+    opts: "{{ fstab_options }}"
+    state: mounted
+  become: true
+
+- name: Ensure the partition is mounted on boot by adding to fstab
+  ansible.posix.mount:
+    src: "{{ device }}{{ 'p' }}{{ partition_number }}"
+    path: "{{ mount_point }}"
+    fstype: "{{ filesystem }}"
+    opts: "{{ fstab_options }}"
+    dump: "{{ fstab_dump }}"
+    passno: "{{ fstab_fsck }}"
+    state: present
+  become: true
