@@ -1,0 +1,20 @@
+k3s_token: myrandompassword
+k3s_version: v1.29.6+k3s1
+k3s_server_exec: >
+  --flannel-backend=none
+  --disable-network-policy
+  --write-kubeconfig-mode 644
+  --disable servicelb
+  --token {{ myrandompassword }}
+  --disable-cloud-controller
+  --disable local-storage
+  --disable-kube-proxy
+  --disable traefik
+
+k3s_agent_exec: >
+  agent
+  --server https://{{ hostvars['srv-rk1-01'].ansible_host }}:6443
+  --token myrandompassword
+
+
+k3s_kubeconfig_mode: "644"

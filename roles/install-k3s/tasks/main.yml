@@ -1,0 +1,18 @@
+- name: Download K3s installation script on Server node
+  ansible.builtin.get_url:
+    url: https://get.k3s.io
+    dest: /tmp/k3s-install.sh
+    mode: '0755'
+  become: true
+
+- name: Install K3s server
+  ansible.builtin.shell: |
+    set -o pipefail
+    /tmp/k3s-install.sh -s -
+  args:
+    warn: false
+  environment:
+    INSTALL_K3S_VERSION: "{{ k3s_version }}"
+    INSTALL_K3s_EXEC: "{{ k3s_server_exec }}"
+  register: my_output
+  changed_when: my_output.rc != 0
