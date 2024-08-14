@@ -1,5 +1,12 @@
-- name: Create partition on the disk
-  hosts: srv-rk1-01
+- name: Create data partition and mounts on disk
+  hosts: all
   become: true
   roles:
     - create-partition
+
+#
+# - name: Install K3s on nodes
+#  hosts: all
+#  become: true
+#  roles:
+#    - install-k3s
