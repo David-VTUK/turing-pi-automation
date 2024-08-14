@@ -5,20 +5,17 @@
     mode: '0755'
   become: true
   when: "'server_nodes' in group_names"
+  changed_when: "'server_nodes' in group_names"
 
 - name: Install K3s server
   ansible.builtin.shell: |
-    set -o pipefail
-    /tmp/k3s-install.sh -s -
-  args:
-    warn: false
+    /bin/bash -c 'set -o pipefail; /tmp/k3s-install.sh -s -'
   environment:
     INSTALL_K3S_VERSION: "{{ k3s_version }}"
     INSTALL_K3s_EXEC: "{{ k3s_server_exec }}"
     K3S_KUBECONFIG_MODE: "{{ k3s_kubeconfig_mode }}"
-  register: my_output
-  changed_when: my_output.rc != 0
   when: "'server_nodes' in group_names"
+  changed_when: "'server_nodes' in group_names"
 
 - name: Download k3s and install script on Agent node(s)
   ansible.builtin.get_url:
@@ -27,16 +24,13 @@
     mode: '0755'
   become: true
   when: "'agent_nodes' in group_names"
+  changed_when: "'agent_nodes' in group_names"
 
 - name: Install K3s agent
   ansible.builtin.shell: |
-    set -o pipefail
-    /tmp/k3s-install.sh -a -
-  args:
-    warn: false
+    /bin/bash -c 'set -o pipefail; /tmp/k3s-install.sh -s' -
   environment:
     INSTALL_K3S_VERSION: "{{ k3s_version }}"
     INSTALL_K3s_EXEC: "{{ k3s_agent_exec }}"
-  register: my_output
-  changed_when: my_output.rc != 0
   when: "'agent_nodes' in group_names"
+  changed_when: "'agent_nodes' in group_names"

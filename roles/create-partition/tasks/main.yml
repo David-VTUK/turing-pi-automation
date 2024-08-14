@@ -61,20 +61,20 @@
 - name: Symlink /run/k3s to data drive
   ansible.builtin.file:
     dest: /run/k3s
-    src: /mnt/data/k3s/
+    src: /mnt/data/k3s
     state: link
   become: true
 
 - name: Symlink /var/lib/kubelet to data drive
   ansible.builtin.file:
     dest: /var/lib/kubelet
-    src: /mnt/data/k3s-kubelet/
+    src: /mnt/data/k3s-kubelet
     state: link
   become: true
 
 - name: Symlink /var/lib/rancher to data drive
   ansible.builtin.file:
     dest: /var/lib/rancher
-    src: /mnt/data/k3s-rancher/
+    src: /mnt/data/k3s-rancher
     state: link
   become: true
