@@ -2,3 +2,11 @@ cilium_version: "v1.16.1"
 cilium_service_host: "{{ hostvars['srv-rk1-01'].ansible_host }}"
 cilium_cluster_pool_cidr: "10.42.0.0/16"
 cilium_service_port: 6443
+
+cilium_bgp_peer_address: "172.16.10.1"
+cilium_bgp_peer_as: 64512
+cilium_bgp_local_as: 64512
+cilium_bgp_name: "k8s-cluster"
+cilium_bgp_peer_config_name: "mikrotik"
+
+cilium_bgp_advertise_pool: "10.200.200.0/24"

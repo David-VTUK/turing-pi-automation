@@ -1,0 +1,63 @@
+# roles/install-cert-manager/tasks/main.yml
+- name: Load secrets
+  ansible.builtin.include_vars: ../vault/secrets.yml
+
+
+- name: Add Jetstack repository
+  kubernetes.core.helm_repository:
+    name: jetstack
+    repo_url: https://charts.jetstack.io
+
+- name: Install Cert-Manager helm chart
+  kubernetes.core.helm:
+    name: cert-manager
+    chart_ref: jetstack/cert-manager
+    chart_version: "{{ cert_manager_version }}"
+    release_namespace: cert-manager
+    create_namespace: true
+    wait: true
+    values:
+      installCRDs: true
+      podDNSConfig:
+        nameservers:
+          - 1.1.1.1
+          - 1.0.0.1
+
+- name: Create secret for cert-manager
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: azure-dns-secret
+        namespace: cert-manager
+      stringData:
+        azure_client_secret: "{{ azure_client_secret }}"
+
+
+- name: Add cert-manager cluster issuer
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: cert-manager.io/v1
+      kind: ClusterIssuer
+      metadata:
+        name: letsencrypt-prod
+        namespace: cert-manager
+      spec:
+        acme:
+          server: https://acme-v02.api.letsencrypt.org/directory
+          email: "{{ letsencrypt_email }}"
+          privateKeySecretRef:
+            name: letsencrypt-prod
+          solvers:
+            - dns01:
+                azureDNS:
+                  clientID: "{{ azure_client_id }}"
+                  clientSecretSecretRef:
+                    name: azure-dns-secret
+                    key: azure_client_secret
+                  subscriptionID: "{{ azure_subscriptionID }}"
+                  tenantID: "{{ azure_tenantID }}"
+                  resourceGroupName: "{{ azure_resourceGroupName }}"
+                  hostedZoneName: "{{ azure_dns_zone }}"
+                  environment: AzurePublicCloud

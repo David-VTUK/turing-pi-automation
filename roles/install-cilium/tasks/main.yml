@@ -18,7 +18,7 @@
 
 - name: Add a repository
   kubernetes.core.helm_repository:
-    name: stable
+    name: cilium
     repo_url: https://helm.cilium.io/
 
 - name: Install Cilium
@@ -36,3 +36,78 @@
           clusterPoolCIDR: "{{ cilium_cluster_pool_cidr }}"
       bgpControlPlane:
         enabled: true
+
+
+- name: Create Cilium BGP Peering Policy Object
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: cilium.io/v2alpha1
+      kind: CiliumBGPClusterConfig
+      metadata:
+        name: default
+        namespace: kube-system
+      spec:
+        bgpInstances:
+          - name: "{{ cilium_bgp_peer_config_name }}"
+            localASN: "{{ cilium_bgp_local_as }}"
+            peers:
+              - name: "{{ cilium_bgp_peer_config_name }}"
+                peerASN: "{{ cilium_bgp_peer_as }}"
+                peerAddress: "{{ cilium_bgp_peer_address }}"
+                peerConfigRef:
+                  name: "{{ cilium_bgp_peer_config_name }}"
+
+- name: Create Cilium BGP Peer Config Object
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: cilium.io/v2alpha1
+      kind: CiliumBGPPeerConfig
+      metadata:
+        name: "{{ cilium_bgp_peer_config_name }}"
+        namespace: kube-system
+      spec:
+        timers:
+          holdTimeSeconds: 9
+          keepAliveTimeSeconds: 3
+        gracefulRestart:
+          enabled: true
+          restartTimeSeconds: 15
+        families:
+          - afi: "ipv4"
+            safi: "unicast"
+
+- name: Create BGP IP clusterPoolCIDR
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: cilium.io/v2alpha1
+      kind: CiliumLoadBalancerIPPool
+      metadata:
+        name: default
+        namespace: kube-system
+      spec:
+        blocks:
+          - cidr: "{{ cilium_bgp_advertise_pool }}"
+
+- name: Create BGP Advertisment
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: cilium.io/v2alpha1
+      kind: CiliumBGPAdvertisement
+      metadata:
+        name: default
+        namespace: kube-system
+      spec:
+        advertisements:
+          - advertisementType: "Service"
+            service:
+              addresses:
+                - LoadBalancerIP
+            selector:
+              matchExpressions:
+                - key: somekey
+                  operator: NotIn
+                  values: ["never-used-value"]

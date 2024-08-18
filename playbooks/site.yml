@@ -10,7 +10,18 @@
   roles:
     - install-k3s
 
-- name: Install Cilium on K3s
-  hosts: srv-rk1-01
+- name: Get kubeconfig from server
+  hosts: localhost
+  roles:
+    - get-kubeconfig
+
+- name: Install Cilium on cluster
+  hosts: localhost
   roles:
     - install-cilium
+
+
+- name: Install Cert-Manager
+  hosts: localhost
+  roles:
+    - install-cert-manager

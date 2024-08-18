@@ -1,0 +1,26 @@
+- name: Make sure ~/.kube directory exists
+  ansible.builtin.file:
+    path: ~/.kube
+    state: directory
+    mode: '0755'
+
+
+- name: Fetch kubeconfig from server to localhost
+  ansible.builtin.fetch:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: ~/.kube/config
+    flat: true
+  delegate_to: "{{ item }}"
+  with_items: "{{ groups['server_nodes'] }}"
+  changed_when: false
+
+- name: Replace localhost reference with IP name
+  ansible.builtin.replace:
+    path: ~/.kube/config
+    regexp: '127.0.0.1'
+    replace: "{{ hostvars['srv-rk1-01'].ansible_host }}"
+
+- name: Set permissions on kubeconfig file
+  ansible.builtin.file:
+    path: ~/.kube/config
+    mode: '0600'
