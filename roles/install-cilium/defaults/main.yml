@@ -1,0 +1,4 @@
+cilium_version: "v1.16.1"
+cilium_service_host: "{{ hostvars['srv-rk1-01'].ansible_host }}"
+cilium_cluster_pool_cidr: "10.42.0.0/16"
+cilium_service_port: 6443

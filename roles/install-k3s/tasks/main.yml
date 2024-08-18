@@ -9,10 +9,10 @@
 
 - name: Install K3s server
   ansible.builtin.shell: |
-    /bin/bash -c 'set -o pipefail; /tmp/k3s-install.sh -s -'
+    /bin/bash -c 'set -o pipefail; /tmp/k3s-install.sh'
   environment:
     INSTALL_K3S_VERSION: "{{ k3s_version }}"
-    INSTALL_K3s_EXEC: "{{ k3s_server_exec }}"
+    INSTALL_K3S_EXEC: "{{ k3s_server_exec }}"
     K3S_KUBECONFIG_MODE: "{{ k3s_kubeconfig_mode }}"
   when: "'server_nodes' in group_names"
   changed_when: "'server_nodes' in group_names"
@@ -28,9 +28,9 @@
 
 - name: Install K3s agent
   ansible.builtin.shell: |
-    /bin/bash -c 'set -o pipefail; /tmp/k3s-install.sh -s' -
+    /bin/bash -c 'set -o pipefail; /tmp/k3s-install.sh'
   environment:
     INSTALL_K3S_VERSION: "{{ k3s_version }}"
-    INSTALL_K3s_EXEC: "{{ k3s_agent_exec }}"
+    INSTALL_K3S_EXEC: "{{ k3s_agent_exec }}"
   when: "'agent_nodes' in group_names"
   changed_when: "'agent_nodes' in group_names"

@@ -1,12 +1,16 @@
 - name: Create data partition and mounts on disk
-  hosts: server_nodes
+  hosts: all
   become: true
   roles:
     - create-partition
 
-
 - name: Install K3s on nodes
-  hosts: server_nodes
+  hosts: all
   become: true
   roles:
     - install-k3s
+
+- name: Install Cilium on K3s
+  hosts: srv-rk1-01
+  roles:
+    - install-cilium
