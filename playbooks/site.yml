@@ -20,7 +20,6 @@
   roles:
     - install-cilium
 
-
 - name: Install Cert-Manager
   hosts: localhost
   roles:

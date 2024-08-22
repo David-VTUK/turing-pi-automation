@@ -7,6 +7,7 @@
   when: "'server_nodes' in group_names"
   changed_when: "'server_nodes' in group_names"
 
+
 - name: Install K3s server
   ansible.builtin.shell: |
     /bin/bash -c 'set -o pipefail; /tmp/k3s-install.sh'

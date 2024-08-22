@@ -36,7 +36,13 @@
           clusterPoolCIDR: "{{ cilium_cluster_pool_cidr }}"
       bgpControlPlane:
         enabled: true
-
+      hubble:
+        relay:
+          enabled: true
+        ui:
+          enabled: true
+      gatewayAPI:
+        enabled: true
 
 - name: Create Cilium BGP Peering Policy Object
   kubernetes.core.k8s:
@@ -91,6 +97,7 @@
         blocks:
           - cidr: "{{ cilium_bgp_advertise_pool }}"
 
+# Advertise all Loadbalancer IP's
 - name: Create BGP Advertisment
   kubernetes.core.k8s:
     state: present
@@ -106,8 +113,8 @@
             service:
               addresses:
                 - LoadBalancerIP
-            selector:
-              matchExpressions:
-                - key: somekey
-                  operator: NotIn
-                  values: ["never-used-value"]
+#            selector:
+#              matchExpressions:
+#                - key: somekey
+#                  operator: NotIn
+#                  values: ["never-used-value"]
