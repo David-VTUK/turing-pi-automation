@@ -54,6 +54,9 @@
         name: default
         namespace: kube-system
       spec:
+        nodeSelector:
+          matchLabels:
+            env: turing
         bgpInstances:
           - name: "{{ cilium_bgp_peer_config_name }}"
             localASN: "{{ cilium_bgp_local_as }}"
@@ -83,6 +86,9 @@
         families:
           - afi: "ipv4"
             safi: "unicast"
+            advertisements:
+              matchLabels:
+                advertise: "bgp"
 
 - name: Create BGP IP clusterPoolCIDR
   kubernetes.core.k8s:
@@ -107,14 +113,16 @@
       metadata:
         name: default
         namespace: kube-system
+        labels:
+          advertise: bgp
       spec:
         advertisements:
           - advertisementType: "Service"
             service:
               addresses:
                 - LoadBalancerIP
-#            selector:
-#              matchExpressions:
-#                - key: somekey
-#                  operator: NotIn
-#                  values: ["never-used-value"]
+            selector:
+              matchExpressions:
+                - key: somekey
+                  operator: NotIn
+                  values: ['never-used-value']
