@@ -27,6 +27,7 @@
     chart_ref: cilium/cilium
     chart_version: "{{ cilium_version }}"
     release_namespace: kube-system
+    wait: true
     values:
       kubeProxyReplacement: true
       k8sServiceHost: "{{ cilium_service_host }}"
@@ -54,9 +55,6 @@
         name: default
         namespace: kube-system
       spec:
-        nodeSelector:
-          matchLabels:
-            env: turing
         bgpInstances:
           - name: "{{ cilium_bgp_peer_config_name }}"
             localASN: "{{ cilium_bgp_local_as }}"

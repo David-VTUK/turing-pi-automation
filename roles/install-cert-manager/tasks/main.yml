@@ -7,11 +7,6 @@
     name: jetstack
     repo_url: https://charts.jetstack.io
 
-- name: Apply gateway API CRDs
-  kubernetes.core.k8s:
-    state: present
-    src: https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.1.0/experimental-install.yaml
-
 - name: Install Cert-Manager helm chart
   kubernetes.core.helm:
     name: cert-manager
