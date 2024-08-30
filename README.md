@@ -1,6 +1,6 @@
 # turing-pi-ansible
 
-An example Playbook (and Roles) to automate the provisioning of K3s and ancillary tooling on a Turing pi cluster.
+An example Playbook (with Roles) to automate the provisioning of K3s and ancillary tooling on a Turing Pi cluster.
 
 ## Tasks Performed:
 
