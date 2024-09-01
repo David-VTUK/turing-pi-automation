@@ -10,3 +10,6 @@
     chart_version: "{{ longhorn_version }}"
     release_namespace: longhorn-system
     state: present
+    values:
+      defaultSettings:
+        defaultDataPath: "{{ mount_point }}"

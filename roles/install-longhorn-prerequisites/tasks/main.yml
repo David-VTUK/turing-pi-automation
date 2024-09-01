@@ -1,17 +1,19 @@
-- name: Install Longhorn prerequisites
+- name: Install open-iscsi Longhorn prerequisite
   ansible.builtin.apt:
     name: open-iscsi
     state: present
 
-- name: Ensure the iscsid service is running
+- name: Ensure the iscsid (open-iscsi) service is running
   ansible.builtin.service:
     name: iscsid
     state: started
     enabled: true
 
-- name: Symlink /var/lib/longhorn to data drive
+- name: Create mount point directory
   ansible.builtin.file:
-    dest: /var/lib/longhorn
-    src: /mnt/data/longhorn
-    state: link
+    path: "{{ mount_point }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
   become: true
