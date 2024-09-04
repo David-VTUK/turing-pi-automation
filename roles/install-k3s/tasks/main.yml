@@ -1,10 +1,16 @@
+# Getthe list of services on the system, leverage when deciding to install k3s
+- name: Populate service facts
+  ansible.builtin.service_facts:
+
 - name: Download K3s installation script on Server node(s)
   ansible.builtin.get_url:
     url: https://get.k3s.io
     dest: /tmp/k3s-install.sh
     mode: '0755'
   become: true
-  when: "'server_nodes' in group_names"
+  when:
+    - "'server_nodes' in group_names"
+    - "'k3s.service' not in ansible_facts.services"
   changed_when: "'server_nodes' in group_names"
 
 
@@ -15,7 +21,9 @@
     INSTALL_K3S_VERSION: "{{ k3s_version }}"
     INSTALL_K3S_EXEC: "{{ k3s_server_exec }}"
     K3S_KUBECONFIG_MODE: "{{ k3s_kubeconfig_mode }}"
-  when: "'server_nodes' in group_names"
+  when:
+    - "'server_nodes' in group_names"
+    - "'k3s.service' not in ansible_facts.services"
   changed_when: "'server_nodes' in group_names"
 
 - name: Download k3s and install script on Agent node(s)
@@ -24,7 +32,9 @@
     dest: /tmp/k3s-install.sh
     mode: '0755'
   become: true
-  when: "'agent_nodes' in group_names"
+  when:
+    - "'agent_nodes' in group_names"
+    - "'k3s-agent.service' not in ansible_facts.services"
   changed_when: "'agent_nodes' in group_names"
 
 - name: Install K3s agent
@@ -33,5 +43,7 @@
   environment:
     INSTALL_K3S_VERSION: "{{ k3s_version }}"
     INSTALL_K3S_EXEC: "{{ k3s_agent_exec }}"
-  when: "'agent_nodes' in group_names"
+  when:
+    - "'agent_nodes' in group_names"
+    - "'k3s-agent.service' not in ansible_facts.services"
   changed_when: "'agent_nodes' in group_names"
