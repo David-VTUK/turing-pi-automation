@@ -9,7 +9,10 @@
     chart_ref: longhorn/longhorn
     chart_version: "{{ longhorn_version }}"
     release_namespace: longhorn-system
+    create_namespace: true
+    wait: true
     state: present
     values:
       defaultSettings:
         defaultDataPath: "{{ mount_point }}"
+      enablePSP: false
