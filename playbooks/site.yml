@@ -30,26 +30,11 @@
   roles:
     - install-cert-manager
 
-- name: Expose hubble-ui service
-  hosts: localhost
-  roles:
-    - expose-service
-  vars:
-    route_name: "hubble-ui"
-    route_namespace: "kube-system"
-    route_hostname: "hubble.virtualthoughts.co.uk"
-    route_gateway_reference_name: "cilium-gateway"
-    route_gateway_reference_namespace: "kube-system"
-    route_backend_service_name: "hubble-ui"
-    route_backend_service_port: 80
-    gateway_namespace: kube-system
-
 - name: Install Longhorn prerequisites
   hosts: all
   become: true
   roles:
     - install-longhorn-prerequisites
-
 
 - name: Install Longhorn
   hosts: localhost
@@ -64,8 +49,8 @@
     route_name: "longhorn-ui"
     route_namespace: "longhorn-system"
     route_hostname: "longhorn.virtualthoughts.co.uk"
-    route_gateway_reference_name: "longhorn-gateway"
-    route_gateway_reference_namespace: "longhorn-system"
+    route_gateway_reference_name: "cilium-gateway"
+    route_gateway_reference_namespace: "kube-system"
     route_backend_service_name: "longhorn-frontend"
     route_backend_service_port: 80
     gateway_namespace: "longhorn-system"
