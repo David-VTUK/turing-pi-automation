@@ -1,25 +1,3 @@
-- name: Create Cillium API gateway Object
-  kubernetes.core.k8s:
-    definition:
-      apiVersion: gateway.networking.k8s.io/v1beta1
-      kind: Gateway
-      metadata:
-        name: "cilium-gateway-{{ route_name }}"
-        namespace: "{{ gateway_namespace }}"
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-      spec:
-        gatewayClassName: cilium
-        listeners:
-          - protocol: HTTPS
-            port: 443
-            name: https-gateway
-            hostname: "{{ route_hostname }}"
-            tls:
-              mode: Terminate
-              certificateRefs:
-                - name: "tls-{{ route_name }}"
-
 - name: Expose a service using the Gateway API HTTP route spec
   kubernetes.core.k8s:
     definition:
@@ -38,3 +16,5 @@
           - backendRefs:
               - name: "{{ route_backend_service_name }}"
                 port: "{{ route_backend_service_port }}"
+
+
