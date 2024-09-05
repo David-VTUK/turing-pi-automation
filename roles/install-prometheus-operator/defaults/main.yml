@@ -1,0 +1,2 @@
+prometheus_operator_namespace: monitoring-system
+prometheus_operator_version: v0.76.1

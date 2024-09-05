@@ -69,3 +69,8 @@
     route_backend_service_name: "longhorn-frontend"
     route_backend_service_port: 80
     gateway_namespace: "longhorn-system"
+
+- name: Install Kube-prometheus stack
+  hosts: localhost
+  roles:
+    - install-kube-prometheus-stack
