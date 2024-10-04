@@ -1,0 +1,3 @@
+argo_cd_version: "7.6.1"
+argo_cd_namespace: "argocd"
+argo_cd_url: "argocd.virtualthoughts.co.uk"
