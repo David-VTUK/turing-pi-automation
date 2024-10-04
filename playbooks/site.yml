@@ -1,68 +1,15 @@
-- name: Create data partition and mounts on disk
+- name: Create partitions and install K3s
   hosts: all
   become: true
   roles:
     - create-partition
-
-- name: Install K3s on nodes
-  hosts: all
-  become: true
-  roles:
     - install-k3s
 
 - name: Get kubeconfig from server
   hosts: localhost
   roles:
     - get-kubeconfig
-
-- name: Install gateway API CRD's
-  hosts: localhost
-  roles:
     - install-gateway-api-crds
-
-- name: Install Cilium on cluster
-  hosts: localhost
-  roles:
     - install-cilium
-
-- name: Install Cert-Manager
-  hosts: localhost
-  roles:
     - install-cert-manager
-
-- name: Install Longhorn prerequisites
-  hosts: all
-  become: true
-  roles:
-    - install-longhorn-prerequisites
-
-- name: Install Longhorn
-  hosts: localhost
-  roles:
-    - install-longhorn
-
-- name: Expose longhorn-ui service
-  hosts: localhost
-  roles:
-    - expose-service
-  vars:
-    route_name: "longhorn-ui"
-    route_namespace: "longhorn-system"
-    route_hostname: "longhorn.lab.virtualthoughts.co.uk"
-    route_gateway_reference_name: "cilium-shared-gateway"
-    route_gateway_reference_namespace: "kube-system"
-    route_backend_service_name: "longhorn-frontend"
-    route_backend_service_port: 80
-
-- name: Expose hubble-ui service
-  hosts: localhost
-  roles:
-    - expose-service
-  vars:
-    route_name: "hubble-ui"
-    route_namespace: "kube-system"
-    route_hostname: "hubble.lab.virtualthoughts.co.uk"
-    route_gateway_reference_name: "cilium-shared-gateway"
-    route_gateway_reference_namespace: "kube-system"
-    route_backend_service_name: "hubble-ui"
-    route_backend_service_port: 80
+    - install-argocd

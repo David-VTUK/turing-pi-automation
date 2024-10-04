@@ -1,0 +1,63 @@
+- name: Add ArgoCD repository
+  kubernetes.core.helm_repository:
+    name: argo
+    repo_url: https://argoproj.github.io/argo-helm
+
+- name: Install ArgoCD helm chart
+  kubernetes.core.helm:
+    name: argocd
+    chart_ref: argo/argo-cd
+    chart_version: "{{ argo_cd_version }}"
+    create_namespace: true
+    release_namespace: "{{ argo_cd_namespace }}"
+    values:
+      global:
+        domain: "{{ argo_cd_url }}"
+      configs:
+        params:
+          server.insecure: true
+
+- name: Create Cillium API gateway Object
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: gateway.networking.k8s.io/v1beta1
+      kind: Gateway
+      metadata:
+        name: argocd
+        namespace: "{{ argo_cd_namespace }}"
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+      spec:
+        gatewayClassName: cilium
+        listeners:
+          - name: https-endpoint
+            hostname: "{{ argo_cd_url }}"
+            protocol: HTTPS
+            port: 443
+            tls:
+              mode: Terminate
+              certificateRefs:
+                - name: argocd-cert
+                  namespace: argocd
+            allowedRoutes:
+              namespaces:
+                from: All
+
+- name: Expose a service using the Gateway API HTTP route spec
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: gateway.networking.k8s.io/v1beta1
+      kind: HTTPRoute
+      metadata:
+        name: "argocd-route"
+        namespace: "{{ argo_cd_namespace }}"
+      spec:
+        hostnames:
+          - "{{ argo_cd_url }}"
+        parentRefs:
+          - name: "argocd"
+            namespace: "{{ argo_cd_namespace }}"
+        rules:
+          - backendRefs:
+              - name: "argocd-server"
+                port: 80

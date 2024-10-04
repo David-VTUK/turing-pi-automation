@@ -98,6 +98,7 @@
         name: default
         namespace: kube-system
       spec:
+        allowFirstLastIPs: "No"
         blocks:
           - cidr: "{{ cilium_bgp_advertise_pool }}"
 
@@ -124,29 +125,3 @@
                 - key: somekey
                   operator: NotIn
                   values: ['never-used-value']
-
-- name: Create Cillium API gateway Object
-  kubernetes.core.k8s:
-    definition:
-      apiVersion: gateway.networking.k8s.io/v1beta1
-      kind: Gateway
-      metadata:
-        name: "cilium-shared-gateway"
-        namespace: kube-system
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-      spec:
-        gatewayClassName: cilium
-        listeners:
-          - name: https-endpoint
-            hostname: "*.lab.virtualthoughts.co.uk"
-            protocol: HTTPS
-            port: 443
-            tls:
-              mode: Terminate
-              certificateRefs:
-                - name: shared-gateway-wildcard-cert
-                  namespace: kube-system
-            allowedRoutes:
-              namespaces:
-                from: All

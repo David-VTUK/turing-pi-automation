@@ -9,7 +9,6 @@ An example Playbook (with Roles) to automate the provisioning of K3s and ancilla
 3. Install Gateway API CRD's
 4. Install Cilium with BGP Peering
 5. Install Cert Manager
-6. Expose `Cillium's` Hubble UI via API Gateway
 
 ## Diagram
 
