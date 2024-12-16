@@ -13,3 +13,10 @@
     - install-cilium
     - install-cert-manager
     - install-argocd
+
+- name: Uninstall K3s
+  hosts: all
+  become: true
+  roles:
+    - uninstall
+  tags: uninstall

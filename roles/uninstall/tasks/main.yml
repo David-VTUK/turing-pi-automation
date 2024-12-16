@@ -1,0 +1,22 @@
+- name: Uninstall K3s agent
+  ansible.builtin.shell: |
+    /bin/bash -c 'set -o pipefail; /usr/local/bin/k3s-agent-uninstall.sh'
+  changed_when: "'agent_nodes' in group_names"
+
+- name: Uninstall K3s server
+  ansible.builtin.shell: |
+    /bin/bash -c 'set -o pipefail; /usr/local/bin/k3s-uninstall.sh'
+  changed_when: "'server_nodes' in group_names"
+
+
+- name: Remove K3s installation script
+  ansible.builtin.file:
+    path: /tmp/k3s-install.sh
+    state: absent
+
+- name: Delete all files in /mnt/data
+  ansible.builtin.file:
+    path: /mnt/data
+    state: absent
+    recurse: true
+  become: true
