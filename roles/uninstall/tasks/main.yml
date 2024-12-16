@@ -22,16 +22,17 @@
   args:
     creates: /usr/local/bin/k3s-uninstall.sh
 
-- name: Delete all files in /mnt/data
-  ansible.builtin.file:
-    path: /mnt/data
-    state: absent
-  become: true
-  failed_when: false
-
 # Nodes need to be rebooted to remove file locks in /mnt/data
 - name: Reboot all nodes
   ansible.builtin.reboot:
   when: "'server_nodes' in group_names or 'agent_nodes' in group_names"
+  become: true
+  failed_when: false
+
+# Remove after reboot
+- name: Delete all files in /mnt/data
+  ansible.builtin.file:
+    path: /mnt/data
+    state: absent
   become: true
   failed_when: false

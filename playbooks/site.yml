@@ -5,7 +5,7 @@
     - create-partition
     - install-k3s
 
-- name: Get kubeconfig from server
+- name: Get kubeconfig from server and install Gateway API, Cilium, Cert Manager, and ArgoCD
   hosts: localhost
   roles:
     - get-kubeconfig
