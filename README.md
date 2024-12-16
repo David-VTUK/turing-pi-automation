@@ -13,3 +13,11 @@ An example Playbook (with Roles) to automate the provisioning of K3s and ancilla
 ## Diagram
 
 ![Diagram of environment](/images/turing-pi.drawio.png)
+
+## Run
+
+To run - `ansible-playbook ./playbooks/site.yml -i ./inventory/hosts.ini --ask-vault-pass`
+
+## Reversal
+
+To remove K3s and contents of `/mnt/data` run `ansible-playbook ./playbooks/site.yml -i ./inventory/hosts.ini --tags uninstall --ask-vault-pass`

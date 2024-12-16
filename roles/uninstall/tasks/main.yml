@@ -1,22 +1,37 @@
+- name: Check If k3s-agent-uninstall.sh exists
+  ansible.builtin.stat:
+    path: /usr/local/bin/k3s-agent-uninstall.sh
+  register: k3s_agent_uninstall_script
+
+- name: Check If k3s-uninstall.sh exists
+  ansible.builtin.stat:
+    path: /usr/local/bin/k3s-uninstall.sh
+  register: k3s_uninstall_script
+
 - name: Uninstall K3s agent
   ansible.builtin.shell: |
     /bin/bash -c 'set -o pipefail; /usr/local/bin/k3s-agent-uninstall.sh'
-  changed_when: "'agent_nodes' in group_names"
+  when: "'agent_nodes' in group_names and k3s_agent_uninstall_script.stat.exists"
+  args:
+    creates: /usr/local/bin/k3s-agent-uninstall.sh
 
 - name: Uninstall K3s server
   ansible.builtin.shell: |
     /bin/bash -c 'set -o pipefail; /usr/local/bin/k3s-uninstall.sh'
-  changed_when: "'server_nodes' in group_names"
-
-
-- name: Remove K3s installation script
-  ansible.builtin.file:
-    path: /tmp/k3s-install.sh
-    state: absent
+  when: "'server_nodes' in group_names and k3s_uninstall_script.stat.exists"
+  args:
+    creates: /usr/local/bin/k3s-uninstall.sh
 
 - name: Delete all files in /mnt/data
   ansible.builtin.file:
     path: /mnt/data
     state: absent
-    recurse: true
   become: true
+  failed_when: false
+
+# Nodes need to be rebooted to remove file locks in /mnt/data
+- name: Reboot all nodes
+  ansible.builtin.reboot:
+  when: "'server_nodes' in group_names or 'agent_nodes' in group_names"
+  become: true
+  failed_when: false
