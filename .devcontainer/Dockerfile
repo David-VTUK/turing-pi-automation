@@ -18,3 +18,5 @@ RUN CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium
 
 
 RUN pip install kubernetes
+
+RUN ansible-galaxy collection install community.kubernetes

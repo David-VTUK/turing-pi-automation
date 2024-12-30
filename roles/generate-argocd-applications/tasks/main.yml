@@ -1,0 +1,20 @@
+- name: List installed Helm charts
+  ansible.builtin.command: helm list --all-namespaces --output json
+  register: helm_list_output
+  changed_when: false
+
+- name: Parse Helm chart information
+  ansible.builtin.set_fact:
+    helm_charts: "{{ helm_list_output.stdout | from_json }}"
+
+
+- name: Perform actions for each Helm chart
+  ansible.builtin.debug:
+    msg: "Helm chart name: {{ item.name }}, namespace: {{ item.namespace }}, version: {{ item.app_version }}"
+  loop: "{{ helm_charts }}"
+
+# - name: List installed Helm charts
+#  kubernetes.core.helm_info:
+#    all_namespaces: true
+#  register: helm_list_output
+#  changed_when: false

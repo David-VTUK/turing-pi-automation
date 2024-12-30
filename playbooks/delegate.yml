@@ -1,0 +1,4 @@
+- name: Delegate management of apps to Argocd
+  hosts: localhost
+  roles:
+    - generate-argocd-applications

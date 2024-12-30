@@ -16,3 +16,9 @@
     - install-cilium
     - install-cert-manager
     - install-argocd
+
+- name: Debugging
+  hosts: localhost
+  roles:
+    - install-cert-manager
+  tags: debug
