@@ -25,6 +25,7 @@
         apiVersion: controller.config.cert-manager.io/v1alpha1
         kind: ControllerConfiguration
         enableGatewayAPI: true
+  register: cert_manager_install
 
 - name: Create secret for cert-manager
   kubernetes.core.k8s:

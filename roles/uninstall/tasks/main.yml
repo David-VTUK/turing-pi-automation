@@ -12,15 +12,13 @@
   ansible.builtin.shell: |
     /bin/bash -c 'set -o pipefail; /usr/local/bin/k3s-agent-uninstall.sh'
   when: "'agent_nodes' in group_names and k3s_agent_uninstall_script.stat.exists"
-  args:
-    creates: /usr/local/bin/k3s-agent-uninstall.sh
+  changed_when: false
 
 - name: Uninstall K3s server
   ansible.builtin.shell: |
     /bin/bash -c 'set -o pipefail; /usr/local/bin/k3s-uninstall.sh'
   when: "'server_nodes' in group_names and k3s_uninstall_script.stat.exists"
-  args:
-    creates: /usr/local/bin/k3s-uninstall.sh
+  changed_when: false
 
 # Nodes need to be rebooted to remove file locks in /mnt/data
 - name: Reboot all nodes

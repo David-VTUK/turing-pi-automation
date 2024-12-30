@@ -1,4 +1,4 @@
 - name: Apply gateway API CRDs
   kubernetes.core.k8s:
     state: present
-    src: https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.1.0/experimental-install.yaml
+    src: https://github.com/kubernetes-sigs/gateway-api/releases/download/{{ gateway_api_crd_version }}/experimental-install.yaml

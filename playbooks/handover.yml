@@ -1,0 +1,13 @@
+- name: Create Directory for application
+  ansible.builtin.file:
+    path: /argocd-apps/{{ cert_manager_install.release_name }}
+    state: directory
+    mode: '0755'
+
+- name: Export Helm release values
+  ansible.builtin.shell: >
+    helm get values {{ cert_manager_install.release_name }} -n {{ cert_manager_install.namespace }}
+    > {{ cert_manager_install.release_name }}-values.yaml
+  args:
+    chdir: /argocd-apps/{{ cert_manager_install.release_name }}
+  creates: /argocd-apps/{{ cert_manager_install.release_name }}/{{ cert_manager_install.release_name }}-values.yaml
