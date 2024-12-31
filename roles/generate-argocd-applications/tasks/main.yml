@@ -52,11 +52,8 @@
       git add ../argocd-apps/*
       git commit -m "Update ArgoCD applications"
       git push
-  args:
-    chdir: ../argocd-apps
 
-
-- name: Create ArgoCD applications
+- name: Apply ArgoCD applications
   kubernetes.core.k8s:
     state: present
     definition: "{{ lookup('file', '../argocd-apps/{{ item.name }}/{{ item.name }}-manifest.yml') }}"
