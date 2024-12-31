@@ -8,7 +8,6 @@ spec:
   source:
     repoURL: 'https://helm.cilium.io/'
     targetRevision: 'HEAD'
-    path: 'argocd-apps/ciliu'
     helm:
       chart: 'argo/argocd'
       version: '1.16.3'

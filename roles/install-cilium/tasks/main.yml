@@ -142,7 +142,7 @@
     argocd_namespace: "argocd"
     chart_repo_url: "https://helm.cilium.io/"
     target_revision: "HEAD"
-    app_path: "argocd-apps/ciliu"
+    app_path: "argocd-apps/cilium"
     target_server: "https://kubernetes.default.svc"
     app_namespace: "kube-system"
     prune: "true"

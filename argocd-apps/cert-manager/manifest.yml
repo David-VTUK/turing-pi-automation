@@ -6,9 +6,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://argoproj.github.io/argo-helm'
+    repoURL: 'https://charts.jetstack.io'
     targetRevision: 'HEAD'
-    path: 'argocd-apps/argocd'
     helm:
       chart: 'argo/argocd'
       version: 'v1.15.3'
