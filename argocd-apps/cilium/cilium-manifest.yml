@@ -10,8 +10,8 @@ spec:
     targetRevision: 'HEAD'
     path: '/argocd-apps/cilium'
     helm:
-      chart: 'cilium-1.16.4'
-      version: '1.16.4'
+      chart: 'cilium-1.16.3'
+      version: '1.16.3'
       valueFiles:
         - values.yaml
   destination:
