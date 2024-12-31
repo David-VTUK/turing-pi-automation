@@ -1,22 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager
+  name: cilium
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
+    repoURL: 'https://helm.cilium.io/'
     targetRevision: 'HEAD'
-    path: 'argocd-apps/cert-manager'
+    path: 'argocd-apps/ciliu'
     helm:
-      chart: 'cert-manager-v1.15.3'
-      version: 'v1.15.3'
+      chart: 'argo/argocd'
+      version: '1.16.3'
       valueFiles:
         - values.yaml
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: 'cert-manager'
+    namespace: 'kube-system'
   syncPolicy:
     automated:
       prune: true

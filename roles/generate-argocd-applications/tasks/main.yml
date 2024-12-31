@@ -7,13 +7,6 @@
   ansible.builtin.set_fact:
     helm_charts: "{{ helm_list_output.stdout | from_json }}"
 
-- name: Create directories for application files
-  ansible.builtin.file:
-    path: ../argocd-apps/{{ item.name }}
-    state: directory
-    mode: '0755'
-  loop: "{{ helm_charts }}"
-
 - name: Extract existing values from chart
   ansible.builtin.shell: set -o pipefail && helm get values {{ item.name }} --namespace {{ item.namespace }} -o yaml | grep -v 'USER-SUPPLIED VALUES:'
   loop: "{{ helm_charts }}"
@@ -26,26 +19,6 @@
     dest: "../argocd-apps/{{ item.item.name }}/values.yaml"
     mode: '0644'
   loop: "{{ helm_values_output.results }}"
-
-
-- name: Generate ArgoCD applications
-  ansible.builtin.template:
-    src: ../argocd-apps/template/template.yml.j2
-    dest: ../argocd-apps/{{ item.name }}/{{ item.name }}-manifest.yml
-    mode: '0644'
-  loop: "{{ helm_charts }}"
-  vars:
-    app_name: "{{ item.name }}"
-    argocd_namespace: "argocd"
-    argocd_repo_url: "https://github.com/David-VTUK/turing-pi-ansible.git"
-    target_revision: "HEAD"
-    app_path: "/argocd-apps/{{ item.name }}"
-    target_server: "https://kubernetes.default.svc"
-    app_namespace: "{{ item.namespace }}"
-    prune: "true"
-    self_heal: "true"
-    app_chart_name: "{{ item.chart }}"
-    app_chart_version: "{{ item.app_version }}"
 
 - name: Commit changes to Git
   ansible.builtin.shell: |

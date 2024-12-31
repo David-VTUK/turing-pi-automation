@@ -1,3 +1,3 @@
-argo_cd_version: "v2.13.2"
+argo_cd_version: "7.7.11"
 argo_cd_namespace: "argocd"
 argo_cd_url: "argocd.virtualthoughts.co.uk"

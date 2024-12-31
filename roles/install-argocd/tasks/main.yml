@@ -16,3 +16,38 @@
       configs:
         params:
           server.insecure: true
+
+- name: Create directories for application files
+  ansible.builtin.file:
+    path: ../argocd-apps/argocd
+    state: directory
+    mode: '0755'
+
+- name: Generate ArgoCD application
+  ansible.builtin.template:
+    src: ../argocd-apps/template/template.yml.j2
+    dest: ../argocd-apps/argocd/manifest.yml
+    mode: '0644'
+  vars:
+    app_name: "argocd"
+    argocd_namespace: "argocd"
+    chart_repo_url: "https://argoproj.github.io/argo-helm"
+    target_revision: "HEAD"
+    app_path: "argocd-apps/argocd"
+    target_server: "https://kubernetes.default.svc"
+    app_namespace: "{{ argocd_namespace }}"
+    prune: "true"
+    self_heal: "true"
+    app_chart_name: "argo/argocd"
+    app_chart_version: "{{ argo_cd_version }}"
+
+- name: Extract existing values from chart
+  ansible.builtin.shell: set -o pipefail && helm get values argocd --namespace {{ argo_cd_namespace }} -o yaml | grep -v 'USER-SUPPLIED VALUES:'
+  register: helm_values_output
+  changed_when: false
+
+- name: Write Helm values to files
+  ansible.builtin.copy:
+    content: "{{ helm_values_output.stdout }}"
+    dest: "../argocd-apps/argocd/values.yaml"
+    mode: '0644'

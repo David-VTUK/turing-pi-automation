@@ -1,22 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd
+  name: cert-manager
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
+    repoURL: 'https://argoproj.github.io/argo-helm'
     targetRevision: 'HEAD'
     path: 'argocd-apps/argocd'
     helm:
-      chart: 'argo-cd-7.7.11'
-      version: 'v2.13.2'
+      chart: 'argo/argocd'
+      version: 'v1.15.3'
       valueFiles:
         - values.yaml
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: 'argocd'
+    namespace: 'cert-manager'
   syncPolicy:
     automated:
       prune: true
