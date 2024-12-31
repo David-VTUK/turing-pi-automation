@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
     targetRevision: 'HEAD'
-    path: '/argocd-apps/cert-manager'
+    path: 'argocd-apps/cert-manager'
     helm:
       chart: 'cert-manager-v1.15.3'
       version: 'v1.15.3'

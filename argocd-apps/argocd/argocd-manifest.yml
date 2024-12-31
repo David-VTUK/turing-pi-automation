@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
     targetRevision: 'HEAD'
-    path: '/argocd-apps/argocd'
+    path: 'argocd-apps/argocd'
     helm:
       chart: 'argo-cd-7.7.11'
       version: 'v2.13.2'

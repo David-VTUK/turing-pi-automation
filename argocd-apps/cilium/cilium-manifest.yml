@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
     targetRevision: 'HEAD'
-    path: '/argocd-apps/cilium'
+    path: 'argocd-apps/cilium'
     helm:
       chart: 'cilium-1.16.3'
       version: '1.16.3'
