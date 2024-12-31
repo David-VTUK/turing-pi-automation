@@ -38,7 +38,7 @@
     app_namespace: "{{ argocd_namespace }}"
     prune: "true"
     self_heal: "true"
-    app_chart_name: "argo/argocd"
+    app_chart_name: "argocd"
     app_chart_version: "{{ argo_cd_version }}"
 
 - name: Extract existing values from chart

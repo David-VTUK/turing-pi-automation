@@ -8,9 +8,9 @@ spec:
   source:
     repoURL: 'https://argoproj.github.io/argo-helm'
     targetRevision: 'HEAD'
+    chart: 'argo/argocd'
+    targetRevision: '7.7.11'
     helm:
-      chart: 'argo/argocd'
-      version: '7.7.11'
       valueFiles:
         - values.yaml
   destination:

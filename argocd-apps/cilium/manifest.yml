@@ -8,9 +8,9 @@ spec:
   source:
     repoURL: 'https://helm.cilium.io/'
     targetRevision: 'HEAD'
+    chart: 'argo/argocd'
+    targetRevision: '1.16.3'
     helm:
-      chart: 'argo/argocd'
-      version: '1.16.3'
       valueFiles:
         - values.yaml
   destination:

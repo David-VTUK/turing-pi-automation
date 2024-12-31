@@ -7,10 +7,9 @@ spec:
   project: default
   source:
     repoURL: 'https://charts.jetstack.io'
-    targetRevision: 'HEAD'
+    chart: 'cert-manager'
+    targetRevision: 'v1.15.4'
     helm:
-      chart: 'argo/argocd'
-      version: 'v1.15.3'
       valueFiles:
         - values.yaml
   destination:

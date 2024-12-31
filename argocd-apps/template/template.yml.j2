@@ -7,10 +7,9 @@ spec:
   project: default
   source:
     repoURL: '{{ chart_repo_url }}'
-    targetRevision: '{{ target_revision }}'
+    chart: '{{ app_chart_name }}'
+    targetRevision: '{{ app_chart_version }}'
     helm:
-      chart: '{{ app_chart_name }}'
-      version: '{{ app_chart_version }}'
       valueFiles:
         - values.yaml
   destination:

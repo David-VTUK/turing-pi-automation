@@ -147,7 +147,7 @@
     app_namespace: "kube-system"
     prune: "true"
     self_heal: "true"
-    app_chart_name: "argo/argocd"
+    app_chart_name: "cilium"
     app_chart_version: "{{ cilium_version }}"
 
 - name: Extract existing values from chart
