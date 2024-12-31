@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cilium
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
+    targetRevision: 'HEAD'
+    path: '/argocd-apps/cilium'
+    helm:
+      chart: 'cilium-1.16.4'
+      version: '1.16.4'
+      valueFiles:
+        - values.yaml
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: 'kube-system'
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

@@ -9,8 +9,13 @@ spec:
     repoURL: '{{ argocd_repo_url }}'
     targetRevision: '{{ target_revision }}'
     path: '{{ app_path }}'
+    helm:
+      chart: '{{ app_chart_name }}'
+      version: '{{ app_chart_version }}'
+      valueFiles:
+        - values.yaml
   destination:
-    server: '{{ argocd_server }}'
+    server: '{{ target_server }}'
     namespace: '{{ app_namespace }}'
   syncPolicy:
     automated:

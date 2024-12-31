@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
+    targetRevision: 'HEAD'
+    path: '/argocd-apps/argocd'
+    helm:
+      chart: 'argo-cd-7.7.11'
+      version: 'v2.13.2'
+      valueFiles:
+        - values.yaml
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: 'argocd'
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
