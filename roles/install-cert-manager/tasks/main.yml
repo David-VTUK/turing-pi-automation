@@ -68,14 +68,14 @@
 
 - name: Create directories for application files
   ansible.builtin.file:
-    path: ../argocd-apps/cert-manager
+    path: ../argocd-apps/{{ cert_manager_namespace }}
     state: directory
     mode: '0755'
 
 - name: Generate ArgoCD application
   ansible.builtin.template:
     src: ../argocd-apps/template/template.yml.j2
-    dest: ../argocd-apps/cert-manager/manifest.yml
+    dest: ../argocd-apps/{{ cert_manager_namespace }}/manifest.yml
     mode: '0644'
   vars:
     app_name: "cert-manager"

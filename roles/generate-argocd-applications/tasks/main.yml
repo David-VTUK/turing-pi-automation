@@ -16,7 +16,7 @@
 - name: Write Helm values to files
   ansible.builtin.copy:
     content: "{{ item.stdout }}"
-    dest: "../argocd-apps/{{ item.item.name }}/values.yaml"
+    dest: "../argocd-apps/{{ item.item.namespace }}/values.yaml"
     mode: '0644'
   loop: "{{ helm_values_output.results }}"
 
@@ -26,8 +26,7 @@
       git commit -m "Update ArgoCD applications"
       git push
 
-- name: Apply ArgoCD applications
+- name: Apply ArgoCD Applicationset
   kubernetes.core.k8s:
     state: present
-    definition: "{{ lookup('file', '../argocd-apps/{{ item.name }}/{{ item.name }}-manifest.yml') }}"
-  loop: "{{ helm_charts }}"
+    definition: "{{ lookup('file', '../argocd-apps/application-set/applicationset.yaml') }}"
