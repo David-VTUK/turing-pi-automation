@@ -20,10 +20,10 @@ spec:
       source:
         repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
         targetRevision: HEAD
-        path: '{{.path}}'
+        path: '{{path}}'
       destination:
         server: 'https://kubernetes.default.svc'
-        namespace: '{{.path.basename}}'
+        namespace: '{{path.basename}}'
       syncPolicy:
         automated:
           prune: true
