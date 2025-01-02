@@ -129,14 +129,14 @@
 
 - name: Create directories for application files
   ansible.builtin.file:
-    path: ../argocd-apps/"{{ cilium_namespace }}"
+    path: ../argocd-apps/{{ cilium_namespace }}
     state: directory
     mode: '0755'
 
 - name: Generate ArgoCD application
   ansible.builtin.template:
     src: ../argocd-apps/template/template.yml.j2
-    dest: ../argocd-apps/"{{ cilium_namespace }}"/manifest.yml
+    dest: ../argocd-apps/{{ cilium_namespace }}/manifest.yml
     mode: '0644'
   vars:
     app_name: "cilium"
