@@ -9,8 +9,8 @@ spec:
         repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
         revision: HEAD
         directories:
-          - path: 'argocd-apps/*'
-          - path: 'argocd-apps/template/'
+          - path: '/argocd-apps/*'
+          - path: '/argocd-apps/template/*'
             exclude: true
   template:
     metadata:
@@ -28,3 +28,5 @@ spec:
         automated:
           prune: true
           selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
