@@ -7,8 +7,7 @@ spec:
   project: default
   source:
     repoURL: 'https://helm.cilium.io/'
-    targetRevision: 'HEAD'
-    chart: 'argo/argocd'
+    chart: 'cilium'
     targetRevision: '1.16.3'
     helm:
       valueFiles:
