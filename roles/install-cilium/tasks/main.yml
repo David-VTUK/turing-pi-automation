@@ -158,5 +158,5 @@
 - name: Write Helm values to files
   ansible.builtin.copy:
     content: "{{ helm_values_output.stdout }}"
-    dest: "../argocd-apps/cilium/values.yaml"
+    dest: "../argocd-apps/{{ cilium_namespace }}/values.yaml"
     mode: '0644'

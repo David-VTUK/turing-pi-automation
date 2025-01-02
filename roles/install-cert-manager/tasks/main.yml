@@ -99,5 +99,5 @@
 - name: Write Helm values to files
   ansible.builtin.copy:
     content: "{{ helm_values_output.stdout }}"
-    dest: "../argocd-apps/cert-manager/values.yaml"
+    dest: "../argocd-apps/{{ cert_manager_namespace }}/values.yaml"
     mode: '0644'

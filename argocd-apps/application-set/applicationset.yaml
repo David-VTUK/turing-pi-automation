@@ -10,20 +10,18 @@ spec:
         revision: HEAD
         directories:
           - path: '/argocd-apps/*'
-          - path: '/argocd-apps/template/*'
-            exclude: true
   template:
     metadata:
-      name: '{{path.basename}}'
+      name: '{{.path.basename}}'
     spec:
       project: default
       source:
         repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
         targetRevision: HEAD
-        path: '{{path}}'
+        path: '{{.path}}'
       destination:
         server: 'https://kubernetes.default.svc'
-        namespace: '{{path.basename}}'
+        namespace: '{{.path.basename}}'
       syncPolicy:
         automated:
           prune: true
