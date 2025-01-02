@@ -10,7 +10,7 @@ spec:
         revision: HEAD
         directories:
           - path: 'argocd-apps/*'
-          - path: 'argocd-apps/template/*'
+          - path: 'argocd-apps/template/'
             exclude: true
   template:
     metadata:
