@@ -2,7 +2,7 @@ cilium_version: "1.16.3"
 cilium_service_host: "{{ hostvars['srv-rk1-01'].ansible_host }}"
 cilium_cluster_pool_cidr: "10.42.0.0/16"
 cilium_service_port: 6443
-cilium_namespace: "kube-system"
+cilium_namespace: "cilium"
 
 cilium_bgp_peer_address: "172.16.10.1"
 cilium_bgp_peer_as: 64512

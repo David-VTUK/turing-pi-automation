@@ -26,7 +26,8 @@
     name: cilium
     chart_ref: cilium/cilium
     chart_version: "{{ cilium_version }}"
-    release_namespace: kube-system
+    release_namespace: "{{ cilium_namespace }}"
+    create_namespace: true
     wait: true
     values:
       kubeProxyReplacement: true
@@ -53,7 +54,7 @@
       kind: CiliumBGPClusterConfig
       metadata:
         name: default
-        namespace: kube-system
+        namespace: "{{ cilium_namespace }}"
       spec:
         bgpInstances:
           - name: "{{ cilium_bgp_peer_config_name }}"
@@ -73,7 +74,7 @@
       kind: CiliumBGPPeerConfig
       metadata:
         name: "{{ cilium_bgp_peer_config_name }}"
-        namespace: kube-system
+        namespace: "{{ cilium_namespace }}"
       spec:
         timers:
           holdTimeSeconds: 9
@@ -96,7 +97,7 @@
       kind: CiliumLoadBalancerIPPool
       metadata:
         name: default
-        namespace: kube-system
+        namespace: "{{ cilium_namespace }}"
       spec:
         allowFirstLastIPs: "No"
         blocks:
@@ -111,7 +112,7 @@
       kind: CiliumBGPAdvertisement
       metadata:
         name: default
-        namespace: kube-system
+        namespace: "{{ cilium_namespace }}"
         labels:
           advertise: bgp
       spec:
@@ -128,14 +129,14 @@
 
 - name: Create directories for application files
   ansible.builtin.file:
-    path: ../argocd-apps/{{ cilium_namespace }}
+    path: ../argocd-apps/"{{ cilium_namespace }}"
     state: directory
     mode: '0755'
 
 - name: Generate ArgoCD application
   ansible.builtin.template:
     src: ../argocd-apps/template/template.yml.j2
-    dest: ../argocd-apps/{{ cilium_namespace }}/manifest.yml
+    dest: ../argocd-apps/"{{ cilium_namespace }}"/manifest.yml
     mode: '0644'
   vars:
     app_name: "cilium"
@@ -144,14 +145,14 @@
     target_revision: "HEAD"
     app_path: "argocd-apps/cilium"
     target_server: "https://kubernetes.default.svc"
-    app_namespace: "kube-system"
+    app_namespace: "{{ cilium_namespace }}"
     prune: "true"
     self_heal: "true"
     app_chart_name: "cilium"
     app_chart_version: "{{ cilium_version }}"
 
 - name: Extract existing values from chart
-  ansible.builtin.shell: set -o pipefail && helm get values cilium --namespace kube-system -o yaml | grep -v 'USER-SUPPLIED VALUES:'
+  ansible.builtin.shell: set -o pipefail && helm get values cilium --namespace "{{ cilium_namespace }}" -o yaml | grep -v 'USER-SUPPLIED VALUES:'
   register: helm_values_output
   changed_when: false
 
