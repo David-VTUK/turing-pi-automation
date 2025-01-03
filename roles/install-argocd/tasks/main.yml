@@ -34,7 +34,7 @@
     app_chart_version: "{{ argo_cd_version }}"
 
 - name: Extract existing values from chart
-  ansible.builtin.shell: set -o pipefail && helm get values argocd --namespace {{ argo_cd_namespace }} -o yaml | sed 's/USER-SUPPLIED VALUES:/argocd:/'
+  ansible.builtin.shell: set -o pipefail && helm get values argocd --namespace {{ argo_cd_namespace }} -o yaml
   register: helm_values_output
   changed_when: false
 

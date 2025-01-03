@@ -1,32 +1,10 @@
-- name: List installed Helm charts
-  ansible.builtin.command: helm list --all-namespaces --output json
-  register: helm_list_output
-  changed_when: false
-
-- name: Parse Helm chart information
-  ansible.builtin.set_fact:
-    helm_charts: "{{ helm_list_output.stdout | from_json }}"
-
-- name: Extract existing values from chart
-  ansible.builtin.shell: set -o pipefail && helm get values {{ item.name }} --namespace {{ item.namespace }} -o yaml | grep -v 'USER-SUPPLIED VALUES:'
-  loop: "{{ helm_charts }}"
-  register: helm_values_output
-  changed_when: false
-
-- name: Write Helm values to files
-  ansible.builtin.copy:
-    content: "{{ item.stdout }}"
-    dest: "../argocd-apps/{{ item.item.namespace }}/values.yaml"
-    mode: '0644'
-  loop: "{{ helm_values_output.results }}"
+- name: Apply ArgoCD Applicationset
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('file', '../argocd-apps/application-set/applicationset.yaml') }}"
 
 - name: Commit changes to Git
   ansible.builtin.shell: |
       git add ../argocd-apps/*
       git commit -m "Update ArgoCD applications"
       git push
-
-- name: Apply ArgoCD Applicationset
-  kubernetes.core.k8s:
-    state: present
-    definition: "{{ lookup('file', '../argocd-apps/application-set/applicationset.yaml') }}"
