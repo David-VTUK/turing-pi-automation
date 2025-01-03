@@ -4,6 +4,8 @@ metadata:
   name: apps
   namespace: argocd
 spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
   generators:
     - git:
         repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
@@ -14,19 +16,16 @@ spec:
             exclude: true
   template:
     metadata:
-      name: '{{path[1]}}'
+      name: '{{ .path.basename }}'
     spec:
       project: default
       source:
         repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
         targetRevision: HEAD
-        path: '{{path}}'
+        path: '{{ .path.path }}'
       destination:
         server: 'https://kubernetes.default.svc'
-        namespace: '{{path.basename}}'
+        namespace: '{{ .path.basename }}'
       syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
         syncOptions:
           - CreateNamespace=true
