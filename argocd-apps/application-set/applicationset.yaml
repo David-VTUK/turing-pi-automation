@@ -25,11 +25,11 @@ spec:
       project: default
       source:
         repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
-        targetRevision: HEAD
+        targetRevision: '{{ .values.chartVersion }}'
         path: '{{ .path.path }}'
+        helm:
+          valueFiles:
+            - values.yaml
       destination:
         server: 'https://kubernetes.default.svc'
         namespace: '{{ .path.basename }}'
-      syncPolicy:
-        syncOptions:
-          - CreateNamespace=true
