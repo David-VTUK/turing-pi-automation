@@ -20,16 +20,13 @@ spec:
     metadata:
       name: '{{ .path.basename }}'
       labels: 
-        argocd.argoproj.io/instance: argocd
+        argocd.argoproj.io/instance: '{{ .path.basename }}'
     spec:
       project: default
       source:
         repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
         targetRevision: HEAD
         path: '{{ .path.path }}'
-        helm:
-          valueFiles:
-            - values.yaml
       destination:
         server: 'https://kubernetes.default.svc'
         namespace: '{{ .path.basename }}'
