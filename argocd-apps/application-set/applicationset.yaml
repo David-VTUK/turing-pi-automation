@@ -14,15 +14,22 @@ spec:
           - path: 'argocd-apps/*'
           - path: 'argocd-apps/template'
             exclude: true
+          - path: 'argocd-apps/application-set'
+            exclude: true
   template:
     metadata:
       name: '{{ .path.basename }}'
+      labels: 
+        argocd.argoproj.io/instance: argocd
     spec:
       project: default
       source:
         repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
         targetRevision: HEAD
         path: '{{ .path.path }}'
+        helm:
+          valueFiles:
+            - values.yaml
       destination:
         server: 'https://kubernetes.default.svc'
         namespace: '{{ .path.basename }}'
