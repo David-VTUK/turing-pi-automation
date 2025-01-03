@@ -1,15 +1,17 @@
-bgpControlPlane:
-  enabled: true
-gatewayAPI:
-  enabled: true
-hubble:
-  relay:
+cilium:
+  bgpControlPlane:
     enabled: true
-  ui:
+  gatewayAPI:
     enabled: true
-ipam:
-  operator:
-    clusterPoolCIDR: 10.42.0.0/16
-k8sServiceHost: 172.16.10.221
-k8sServicePort: 6443
-kubeProxyReplacement: true
+  hubble:
+    relay:
+      enabled: true
+    ui:
+      enabled: true
+  ipam:
+    operator:
+      clusterPoolCIDR: 10.42.0.0/16
+  k8sServiceHost: 172.16.10.221
+  k8sServicePort: 6443
+  kubeProxyReplacement: true
+  namespaceOverride: cilium
