@@ -25,19 +25,12 @@
 
 - name: Generate ArgoCD application
   ansible.builtin.template:
-    src: ../argocd-apps/template/template.yml.j2
-    dest: ../argocd-apps/{{ argo_cd_namespace }}/manifest.yml
+    src: ../argocd-apps/template/Chart.yaml.j2
+    dest: ../argocd-apps/{{ argo_cd_namespace }}/Chart.yaml
     mode: '0644'
   vars:
-    app_name: "argocd"
-    argocd_namespace: '{{ argo_cd_namespace }}'
+    app_name: "argo-cd"
     chart_repo_url: "https://argoproj.github.io/argo-helm"
-    app_path: "argocd-apps/argocd"
-    target_server: "https://kubernetes.default.svc"
-    app_namespace: "{{ argo_cd_namespace }}"
-    prune: "true"
-    self_heal: "true"
-    app_chart_name: "argo-cd"
     app_chart_version: "{{ argo_cd_version }}"
 
 - name: Extract existing values from chart
@@ -50,3 +43,8 @@
     content: "{{ helm_values_output.stdout }}"
     dest: "../argocd-apps/{{ argo_cd_namespace }}/values.yaml"
     mode: '0644'
+
+- name: Append namespace to values file
+  ansible.builtin.lineinfile:
+    path: "../argocd-apps/{{ argo_cd_namespace }}/values.yaml"
+    line: "namespaceOverride: {{ argo_cd_namespace }}"

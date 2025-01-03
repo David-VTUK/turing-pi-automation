@@ -135,20 +135,12 @@
 
 - name: Generate ArgoCD application
   ansible.builtin.template:
-    src: ../argocd-apps/template/template.yml.j2
-    dest: ../argocd-apps/{{ cilium_namespace }}/manifest.yml
+    src: ../argocd-apps/template/Chart.yaml.j2
+    dest: ../argocd-apps/{{ cilium_namespace }}/Chart.yaml
     mode: '0644'
   vars:
     app_name: "cilium"
-    argocd_namespace: "argocd"
     chart_repo_url: "https://helm.cilium.io/"
-    target_revision: "HEAD"
-    app_path: "argocd-apps/cilium"
-    target_server: "https://kubernetes.default.svc"
-    app_namespace: "{{ cilium_namespace }}"
-    prune: "true"
-    self_heal: "true"
-    app_chart_name: "cilium"
     app_chart_version: "{{ cilium_version }}"
 
 - name: Extract existing values from chart
@@ -161,3 +153,8 @@
     content: "{{ helm_values_output.stdout }}"
     dest: "../argocd-apps/{{ cilium_namespace }}/values.yaml"
     mode: '0644'
+
+- name: Append namespace to values file
+  ansible.builtin.lineinfile:
+    path: "../argocd-apps/{{ cilium_namespace }}/values.yaml"
+    line: "namespaceOverride: {{ cilium_namespace }}"
