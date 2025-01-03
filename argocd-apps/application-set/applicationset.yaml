@@ -7,29 +7,27 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-    - git:
-        repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
-        revision: HEAD
-        directories:
-          - path: 'argocd-apps/*'
-          - path: 'argocd-apps/template'
-            exclude: true
-          - path: 'argocd-apps/application-set'
-            exclude: true
+  - git:
+      repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
+      revision: HEAD
+      directories:
+      - path: 'argocd-apps/*'
+      - path: 'argocd-apps/template'
+        exclude: true
+      - path: 'argocd-apps/application-set'
+        exclude: true
   template:
     metadata:
       name: '{{ .path.basename }}'
-      labels: 
-        argocd.argoproj.io/instance: '{{ .path.basename }}'
     spec:
       project: default
       source:
         repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
-        targetRevision: '{{ .values.chartVersion }}'
+        targetRevision: HEAD
         path: '{{ .path.path }}'
         helm:
           valueFiles:
-            - values.yaml
+            - '{{ path }}/values.yaml'
       destination:
         server: 'https://kubernetes.default.svc'
         namespace: '{{ .path.basename }}'
