@@ -44,6 +44,6 @@
     dest: ../argocd-apps/{{ argo_cd_namespace }}/values.yaml
     mode: '0644'
   vars:
-    app_name: "argocd"
+    app_name: "argo-cd"
     app_values: "{{ helm_values_output.stdout }}"
     namespace: "namespaceOverride: {{ argo_cd_namespace }}"
