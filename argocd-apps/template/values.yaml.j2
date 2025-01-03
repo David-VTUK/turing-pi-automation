@@ -1,0 +1,5 @@
+{{ app_name }}:
+ {% for line in helm_values_output.stdout.split('\n') %}
+ {{ line }}
+ {% endfor %}
+ {{ namespace }}

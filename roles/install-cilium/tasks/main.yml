@@ -144,17 +144,16 @@
     app_chart_version: "{{ cilium_version }}"
 
 - name: Extract existing values from chart
-  ansible.builtin.shell: set -o pipefail && helm get values cilium --namespace "{{ cilium_namespace }}" -o yaml | grep -v 'USER-SUPPLIED VALUES:'
+  ansible.builtin.shell: set -o pipefail && helm get values cilium --namespace "{{ cilium_namespace }}" -o yaml | sed 's/USER-SUPPLIED VALUES/cilium/'
   register: helm_values_output
   changed_when: false
 
-- name: Write Helm values to files
-  ansible.builtin.copy:
-    content: "{{ helm_values_output.stdout }}"
-    dest: "../argocd-apps/{{ cilium_namespace }}/values.yaml"
+- name: Generate values yaml
+  ansible.builtin.template:
+    src: ../argocd-apps/template/values.yaml.j2
+    dest: ../argocd-apps/{{ cilium_namespace }}/values.yaml
     mode: '0644'
-
-- name: Append namespace to values file
-  ansible.builtin.lineinfile:
-    path: "../argocd-apps/{{ cilium_namespace }}/values.yaml"
-    line: "namespaceOverride: {{ cilium_namespace }}"
+  vars:
+    app_name: "cilium"
+    app_values: "{{ helm_values_output.stdout }}"
+    namespace: "namespaceOverride: {{ cilium_namespace }}"

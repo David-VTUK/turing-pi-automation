@@ -34,17 +34,16 @@
     app_chart_version: "{{ argo_cd_version }}"
 
 - name: Extract existing values from chart
-  ansible.builtin.shell: set -o pipefail && helm get values argocd --namespace {{ argo_cd_namespace }} -o yaml | grep -v 'USER-SUPPLIED VALUES:'
+  ansible.builtin.shell: set -o pipefail && helm get values argocd --namespace {{ argo_cd_namespace }} -o yaml | sed 's/USER-SUPPLIED VALUES:/argocd:/'
   register: helm_values_output
   changed_when: false
 
-- name: Write Helm values to files
-  ansible.builtin.copy:
-    content: "{{ helm_values_output.stdout }}"
-    dest: "../argocd-apps/{{ argo_cd_namespace }}/values.yaml"
+- name: Generate values yaml
+  ansible.builtin.template:
+    src: ../argocd-apps/template/values.yaml.j2
+    dest: ../argocd-apps/{{ argo_cd_namespace }}/values.yaml
     mode: '0644'
-
-- name: Append namespace to values file
-  ansible.builtin.lineinfile:
-    path: "../argocd-apps/{{ argo_cd_namespace }}/values.yaml"
-    line: "namespaceOverride: {{ argo_cd_namespace }}"
+  vars:
+    app_name: "argocd"
+    app_values: "{{ helm_values_output.stdout }}"
+    namespace: "namespaceOverride: {{ argo_cd_namespace }}"

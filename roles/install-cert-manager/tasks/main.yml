@@ -84,17 +84,16 @@
 
 
 - name: Extract existing values from chart
-  ansible.builtin.shell: set -o pipefail && helm get values cert-manager --namespace {{ cert_manager_namespace }} -o yaml | grep -v 'USER-SUPPLIED VALUES:'
+  ansible.builtin.shell: set -o pipefail && helm get values cert-manager --namespace {{ cert_manager_namespace }} -o yaml
   register: helm_values_output
   changed_when: false
 
-- name: Write Helm values to files
-  ansible.builtin.copy:
-    content: "{{ helm_values_output.stdout }}"
-    dest: "../argocd-apps/{{ cert_manager_namespace }}/values.yaml"
+- name: Generate values yaml
+  ansible.builtin.template:
+    src: ../argocd-apps/template/values.yaml.j2
+    dest: ../argocd-apps/{{ cert_manager_namespace }}/values.yaml
     mode: '0644'
-
-- name: Append namespace to values file
-  ansible.builtin.lineinfile:
-    path: "../argocd-apps/{{ cert_manager_namespace }}/values.yaml"
-    line: "namespace: {{ cert_manager_namespace }}"
+  vars:
+    app_name: "cert-manager"
+    app_values: "{{ helm_values_output.stdout }}"
+    namespace: "namespace: {{ cert_manager_namespace }}"
