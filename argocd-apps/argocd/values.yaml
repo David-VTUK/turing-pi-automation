@@ -1,7 +1,0 @@
-argo-cd:
-  configs:
-    params:
-      server.insecure: true
-  global:
-    domain: argocd.virtualthoughts.co.uk
-  namespaceOverride: argocd

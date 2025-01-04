@@ -2,3 +2,9 @@
   kubernetes.core.k8s:
     state: present
     src: https://github.com/kubernetes-sigs/gateway-api/releases/download/{{ gateway_api_crd_version }}/experimental-install.yaml
+
+- name: Write gateway API CRD to file
+  ansible.builtin.copy:
+    content: https://github.com/kubernetes-sigs/gateway-api/releases/download/{{ gateway_api_crd_version }}/experimental-install.yaml
+    dest: ../argocd-apps/manifests/gateway-api-crds/experimental-install.yaml
+    mode: '0644'

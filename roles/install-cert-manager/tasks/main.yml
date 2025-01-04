@@ -68,14 +68,14 @@
 
 - name: Create directories for application files
   ansible.builtin.file:
-    path: ../argocd-apps/{{ cert_manager_namespace }}
+    path: ../argocd-apps/helm-charts/{{ cert_manager_namespace }}
     state: directory
     mode: '0755'
 
 - name: Generate ArgoCD application
   ansible.builtin.template:
-    src: ../argocd-apps/template/Chart.yaml.j2
-    dest: ../argocd-apps/{{ cert_manager_namespace }}/Chart.yaml
+    src: ../argocd-apps/helm-charts/template/Chart.yaml.j2
+    dest: ../argocd-apps/helm-charts/{{ cert_manager_namespace }}/Chart.yaml
     mode: '0644'
   vars:
     app_name: "cert-manager"
@@ -90,8 +90,8 @@
 
 - name: Generate values yaml
   ansible.builtin.template:
-    src: ../argocd-apps/template/values.yaml.j2
-    dest: ../argocd-apps/{{ cert_manager_namespace }}/values.yaml
+    src: ../argocd-apps/helm-charts/template/values.yaml.j2
+    dest: ../argocd-apps/helm-charts/{{ cert_manager_namespace }}/values.yaml
     mode: '0644'
   vars:
     app_name: "cert-manager"

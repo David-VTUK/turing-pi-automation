@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: apps
+  name: helm-apps
   namespace: argocd
 spec:
   goTemplate: true
@@ -10,15 +10,11 @@ spec:
   - git:
       repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
       revision: HEAD
-      directories:
-      - path: 'argocd-apps/*'
-      - path: 'argocd-apps/template'
-        exclude: true
-      - path: 'argocd-apps/application-set'
-        exclude: true
+      files:
+      - path: 'argocd-apps/helm-charts/*'
   template:
     metadata:
-      name: '{{ .path.basename }}'
+      name: '{{ .path.basename }}-chart'
     spec:
       project: default
       source:
