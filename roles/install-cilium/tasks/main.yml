@@ -129,14 +129,14 @@
 
 - name: Create directories for application files
   ansible.builtin.file:
-    path: ../argocd-apps/helm-charts/cilium
+    path: ../argocd-apps/helm-charts/{{ cilium_namespace }}
     state: directory
     mode: '0755'
 
 - name: Generate ArgoCD application
   ansible.builtin.template:
     src: ../argocd-apps/helm-charts/template/Chart.yaml.j2
-    dest: ../argocd-apps/helm-charts/cilium/Chart.yaml
+    dest: ../argocd-apps/helm-charts/{{ cilium_namespace }}/Chart.yaml
     mode: '0644'
   vars:
     app_name: "cilium"
@@ -151,7 +151,7 @@
 - name: Generate values yaml
   ansible.builtin.template:
     src: ../argocd-apps/helm-charts/template/values.yaml.j2
-    dest: ../argocd-apps/helm-charts/cilium/values.yaml
+    dest: ../argocd-apps/helm-charts/{{ cilium_namespace }}/values.yaml
     mode: '0644'
   vars:
     app_name: "cilium"
