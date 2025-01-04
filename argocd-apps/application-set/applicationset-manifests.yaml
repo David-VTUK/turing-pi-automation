@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: helm-apps
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - git:
+      repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
+      revision: HEAD
+      files:
+      - path: 'argocd-apps/manifests/*'
+  template:
+    metadata:
+      name: '{{ .path.basename }}-manifest'
+    spec:
+      project: default
+      source:
+        repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
+        targetRevision: HEAD
+        path: '{{ .path.path }}'
+      destination:
+        server: 'https://kubernetes.default.svc'
+        namespace: '{{ .path.basename }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
