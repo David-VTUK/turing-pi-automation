@@ -4,12 +4,6 @@ metadata:
   name: helm-apps
   namespace: argocd
 spec:
-  ignoreApplicationDifferences:
-    - name: argo-cd 
-      jsonPointers:
-        - /data/ca.crt
-        - /data/tls.crt
-        - /data/tls.key
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
@@ -35,7 +29,7 @@ spec:
       destination:
         server: 'https://kubernetes.default.svc'
         namespace: '{{ .path.basename }}'
-      #syncPolicy:
+      syncPolicy:
         #automated:
         #  prune: true
         #  selfHeal: true
