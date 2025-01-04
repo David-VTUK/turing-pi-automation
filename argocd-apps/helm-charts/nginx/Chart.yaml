@@ -20,4 +20,4 @@ appVersion: "18.3.0"
 dependencies:
   - name: nginx
     version: 18.3.0
-    repository: registry-1.docker.io/bitnamicharts
+    repository: oci://registry-1.docker.io/bitnamicharts
