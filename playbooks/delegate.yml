@@ -1,4 +1,12 @@
 - name: Delegate management of apps to Argocd
   hosts: localhost
+  vars:
+    secrets:
+      - name: argocd
+        namespace: argocd
+      - name: cilium
+        namespace: cilium
+      - name: cert-manager
+        namespace: cert-manager
   roles:
     - generate-argocd-applications
