@@ -1,7 +1,9 @@
 - name: Apply ArgoCD Applicationset
   kubernetes.core.k8s:
     state: present
-    definition: "{{ lookup('file', '../argocd-apps/helm-charts/application-set/applicationset.yaml') }}"
+    definition:
+      - "{{ lookup('file', '../argocd-apps/application-set/applicationset-helm-charts.yaml') }}"
+      - "{{ lookup('file', '../argocd-apps/application-set/applicationset-manifests.yaml') }}"
 
 - name: Commit changes to Git
   ansible.builtin.shell: |
