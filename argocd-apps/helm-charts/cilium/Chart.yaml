@@ -12,12 +12,12 @@ version: 0.1.0
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
-appVersion: "1.16.3"
+appVersion: "1.16.4"
 
 # Note the above versions are version control for ArgoCD's internal templating
 # The version of the chart listed in dependencies is what the version of that chart that will be installed
 
 dependencies:
   - name: cilium
-    version: 1.16.3
+    version: 1.16.4
     repository: https://helm.cilium.io/
