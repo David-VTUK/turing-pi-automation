@@ -14,4 +14,4 @@ cilium:
   k8sServiceHost: 172.16.10.221
   k8sServicePort: 6443
   kubeProxyReplacement: true
-  namespaceOverride: kube-system
+  namespaceOverride: cilium
