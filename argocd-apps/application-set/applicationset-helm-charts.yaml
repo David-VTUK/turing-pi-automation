@@ -12,6 +12,8 @@ spec:
       revision: HEAD
       files:
       - path: 'argocd-apps/helm-charts/*'
+      - path: 'argocd-apps/helm-charts/template'
+        exclude: true
   template:
     metadata:
       name: '{{ .path.basename }}-chart'
