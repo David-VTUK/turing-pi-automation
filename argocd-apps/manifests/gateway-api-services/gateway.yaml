@@ -1,0 +1,32 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: Gateway
+metadata:
+  name: cilium-api-gateway
+  namespace: cilium
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  gatewayClassName: cilium
+  listeners:
+    - protocol: HTTPS
+      port: 443
+      name: https-gateway
+      allowedRoutes:
+        namespaces: 
+          from: All
+---
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: argocd-route
+  namespace: argocd
+spec:
+  hostnames:
+    - argocd.lab.virtualthoughts.co.uk
+  parentRefs:
+    - name: cilium-api-gateway
+      namespace: cilium
+  rules:
+    - backendRefs:
+        - name: argocd-server
+          port: 80
