@@ -15,6 +15,7 @@
     definition:
       - "{{ lookup('file', '../argocd-apps/application-set/applicationset-helm-charts.yaml') }}"
       - "{{ lookup('file', '../argocd-apps/application-set/applicationset-manifests.yaml') }}"
+      - "{{ lookup('file', '../argocd-apps/application-set/applicationset-cluster-standup.yaml') }}"
 
 - name: Commit changes to Git
   ansible.builtin.shell: |
