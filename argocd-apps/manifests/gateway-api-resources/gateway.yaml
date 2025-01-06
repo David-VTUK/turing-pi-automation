@@ -11,6 +11,7 @@ spec:
   gatewayClassName: cilium
   listeners:
     - name: https-gateway
+      hostname: "*.virtualthoughts.co.uk"
       port: 443
       protocol: HTTPS
       allowedRoutes:
