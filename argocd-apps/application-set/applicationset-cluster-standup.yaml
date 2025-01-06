@@ -16,6 +16,7 @@ spec:
       revision: HEAD
       directories:
       - path: 'argocd-apps/helm-charts/import-from-cluster-standup/*'
+  template:
     metadata:
       name: '{{ .path.basename }}'
     spec:
