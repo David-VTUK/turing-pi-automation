@@ -1,7 +1,11 @@
+# This applicationset is responsible for "folding in" existing helm charts
+# from the cluster standup into ArgoCD's remit. It differs from other applicationsets
+# By preserving resources if they are deleted.
+
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addon-applications
+  name: bootstrap-applications
   namespace: argocd
 spec:
   goTemplate: true
@@ -11,8 +15,7 @@ spec:
       repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
       revision: HEAD
       directories:
-      - path: 'argocd-apps/helm-charts/addons/*'
-  template:
+      - path: 'argocd-apps/helm-charts/import-from-cluster-standup/*'
     metadata:
       name: '{{ .path.basename }}'
     spec:
@@ -31,5 +34,6 @@ spec:
         automated:
           prune: true
           selfHeal: true
+          preserveResourcesOnDeletion: true
         syncOptions:
           - CreateNamespace=true
