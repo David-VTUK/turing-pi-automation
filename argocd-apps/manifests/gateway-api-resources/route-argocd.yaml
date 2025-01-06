@@ -7,9 +7,9 @@ spec:
   hostnames:
     - "argocd.virtualthoughts.co.uk"
   parentRefs:
-    - name: "cilium-gateway-{{ route_name }}"
-      namespace: "{{ route_gateway_reference_namespace }}"
+    - name: cilium-api-gateway
+      namespace: cilium
   rules:
     - backendRefs:
-        - name: "{{ route_backend_service_name }}"
-          port: "{{ route_backend_service_port }}"
+        - name: "argocd-server"
+          port: "argocd"
