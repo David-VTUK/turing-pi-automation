@@ -19,14 +19,14 @@
 
 - name: Create directories for application files
   ansible.builtin.file:
-    path: ../argocd-apps/helm-charts/{{ argo_cd_namespace }}
+    path: ../argocd-apps/helm-charts/import-from-cluster-standup/{{ argo_cd_namespace }}
     state: directory
     mode: '0755'
 
 - name: Generate ArgoCD application
   ansible.builtin.template:
     src: ../argocd-apps/helm-charts/template/Chart.yaml.j2
-    dest: ../argocd-apps/helm-charts/{{ argo_cd_namespace }}/Chart.yaml
+    dest: ../argocd-apps/helm-charts/import-from-cluster-standup/{{ argo_cd_namespace }}/Chart.yaml
     mode: '0644'
   vars:
     app_name: "argo-cd"
@@ -41,7 +41,7 @@
 - name: Generate values yaml
   ansible.builtin.template:
     src: ../argocd-apps/helm-charts/template/values.yaml.j2
-    dest: ../argocd-apps/helm-charts/{{ argo_cd_namespace }}/values.yaml
+    dest: ../argocd-apps/helm-charts/import-from-cluster-standup/{{ argo_cd_namespace }}/values.yaml
     mode: '0644'
   vars:
     app_name: "argo-cd"
