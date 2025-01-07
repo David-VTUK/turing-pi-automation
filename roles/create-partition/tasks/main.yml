@@ -56,7 +56,9 @@
     - /mnt/data/k3s
     - /mnt/data/k3s-kubelet
     - /mnt/data/k3s-rancher
+    - /mnt/data/longhorn
   become: true
+  tags: create-directories
 
 - name: Symlink /run/k3s to data drive
   ansible.builtin.file:
