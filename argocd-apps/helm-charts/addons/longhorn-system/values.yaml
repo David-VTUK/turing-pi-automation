@@ -2,3 +2,5 @@ longhorn:
   namespaceOverride: longhorn-system
   defaultSettings:
     defaultDataPath: /mnt/data/longhorn/
+  preUpgradeChecker:
+    jobEnabled: false
