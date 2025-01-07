@@ -13,4 +13,3 @@ spec:
     - backendRefs:
         - name: "hubble-ui"
           port: 80
-          type: service
