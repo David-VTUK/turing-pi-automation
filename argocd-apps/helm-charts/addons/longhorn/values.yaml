@@ -1,5 +1,5 @@
 longhorn:
-  namespaceOverride: longhorn-system
+  namespaceOverride: longhorn
   defaultSettings:
     defaultDataPath: /mnt/data/longhorn/
   preUpgradeChecker:
