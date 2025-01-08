@@ -12,4 +12,4 @@ spec:
   rules:
     - backendRefs:
         - name: "kube-prometheus-stack-prometheus"
-          port: 8080
+          port: 9090
