@@ -3,22 +3,11 @@ cilium:
     enabled: true
   gatewayAPI:
     enabled: true
-  prometheus:
-    enabled: true
-  operator: 
-    prometheus: 
-      enabled: true
   hubble:
     relay:
       enabled: true
     ui:
       enabled: true
-    metrics:
-      serviceMonitor:
-        enabled: true
-      dashboards:
-        enabled: true
-        namespace: kube-prometheus-stack
   ipam:
     operator:
       clusterPoolCIDR: 10.42.0.0/16
