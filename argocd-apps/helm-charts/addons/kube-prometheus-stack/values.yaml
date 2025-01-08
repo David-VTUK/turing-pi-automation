@@ -1,6 +1,8 @@
 kube-prometheus-stack:
   prometheus:
     prometheusSpec:
+      serviceMonitorSelectorNilUsesHelmValues: false
+      serviceMonitorNamespaceSelector: {}
       storageSpec:
         volumeClaimTemplate:
           spec:
