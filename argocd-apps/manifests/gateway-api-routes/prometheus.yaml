@@ -13,3 +13,6 @@ spec:
     - backendRefs:
         - name: "kube-prometheus-stack-prometheus"
           port: 8080
+      matches:
+        type: PathPrefix
+        value: "/prometheus"
