@@ -13,9 +13,6 @@ spec:
     - name: http-gateway
       port: 80
       protocol: HTTP
-      allowedRoutes:
-        namespaces:
-          from: All
     - name: https-gateway
       hostname: "*.virtualthoughts.co.uk"
       port: 443
