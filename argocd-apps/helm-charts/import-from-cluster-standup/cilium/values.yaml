@@ -3,6 +3,11 @@ cilium:
     enabled: true
   gatewayAPI:
     enabled: true
+  prometheus:
+    enabled: true
+  operator: 
+    prometheus: 
+      enabled: true
   hubble:
     relay:
       enabled: true
