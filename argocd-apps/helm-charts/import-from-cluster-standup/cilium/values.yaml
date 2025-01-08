@@ -1,4 +1,19 @@
 cilium:
+  agent:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+  envoy:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+  operator:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
   bgpControlPlane:
     enabled: true
   gatewayAPI:
@@ -6,6 +21,9 @@ cilium:
   hubble:
     relay:
       enabled: true
+      metrics:
+        serviceMonitor:
+          enabled: true
     ui:
       enabled: true
   ipam:
@@ -15,4 +33,3 @@ cilium:
   k8sServicePort: 6443
   kubeProxyReplacement: true
   namespaceOverride: cilium
-  
