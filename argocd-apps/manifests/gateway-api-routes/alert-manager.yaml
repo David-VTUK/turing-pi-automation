@@ -9,6 +9,7 @@ spec:
   parentRefs:
     - name: cilium-api-gateway
       namespace: cilium
+      sectionName: https-gateway
   rules:
     - backendRefs:
         - name: "kube-prometheus-stack-alertmanager"

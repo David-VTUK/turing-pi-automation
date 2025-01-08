@@ -9,7 +9,9 @@ spec:
   parentRefs:
     - name: cilium-api-gateway
       namespace: cilium
+      sectionName: https-gateway
   rules:
     - backendRefs:
         - name: "argocd-server"
           port: 80
+          

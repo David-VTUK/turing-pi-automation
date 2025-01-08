@@ -11,6 +11,7 @@ spec:
   gatewayClassName: cilium
   listeners:
     - name: http-to-https-redirect
+      hostname: "*.virtualthoughts.co.uk"
       port: 80
       protocol: HTTP
     - name: https-gateway
