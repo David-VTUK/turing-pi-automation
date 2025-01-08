@@ -14,7 +14,13 @@ cilium:
         serviceMonitor:
           enabled: true
     metrics:
-      enabled: true
+      enabled: 
+        - dns:query;ignoreAAAA
+        - drop
+        - tcp
+        - flow
+        - icmp
+        - http
       serviceMonitor:
         enabled: true
     ui:
