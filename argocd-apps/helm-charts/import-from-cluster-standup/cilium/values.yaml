@@ -8,6 +8,12 @@ cilium:
       enabled: true
     ui:
       enabled: true
+    metrics:
+      serviceMonitor:
+        enabled: true
+      dashboards:
+        enabled: true
+        namespace: kube-prometheus-stack
   ipam:
     operator:
       clusterPoolCIDR: 10.42.0.0/16
@@ -15,3 +21,4 @@ cilium:
   k8sServicePort: 6443
   kubeProxyReplacement: true
   namespaceOverride: cilium
+  
