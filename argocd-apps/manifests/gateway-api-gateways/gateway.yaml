@@ -10,6 +10,9 @@ metadata:
 spec:
   gatewayClassName: cilium
   listeners:
+    - name: http-gateway
+      port: 80
+      protocol: HTTP
     - name: https-gateway
       hostname: "*.virtualthoughts.co.uk"
       port: 443
