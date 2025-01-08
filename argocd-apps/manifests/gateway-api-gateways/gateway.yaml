@@ -10,7 +10,7 @@ metadata:
 spec:
   gatewayClassName: cilium
   listeners:
-    - name: http-gateway
+    - name: http-to-https-redirect
       port: 80
       protocol: HTTP
     - name: https-gateway

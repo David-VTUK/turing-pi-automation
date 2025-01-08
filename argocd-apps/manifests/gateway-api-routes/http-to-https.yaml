@@ -7,6 +7,7 @@ spec:
   parentRefs:
     - name: cilium-api-gateway
       namespace: cilium
+      sectionName: http-to-https-redirect
   rules:
     - matches:
         - path:
