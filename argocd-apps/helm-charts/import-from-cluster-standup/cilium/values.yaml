@@ -1,4 +1,8 @@
 cilium:
+  # -- Grafana dashboards for cilium-agent
+  dashboards:
+    enabled: false
+    label: grafana_dashboard
   bgpControlPlane:
     enabled: true
   envoy:
@@ -14,7 +18,7 @@ cilium:
         serviceMonitor:
           enabled: true
     metrics:
-      enabled: 
+      enabled:
         - dns:query;ignoreAAAA
         - drop
         - tcp
@@ -28,7 +32,7 @@ cilium:
   ipam:
     operator:
       clusterPoolCIDR: 10.42.0.0/16
-  operator: 
+  operator:
     prometheus:
       enabled: true
       serviceMonitor:
