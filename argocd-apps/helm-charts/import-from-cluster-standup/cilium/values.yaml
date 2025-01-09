@@ -3,6 +3,8 @@ cilium:
   dashboards:
     enabled: false
     label: grafana_dashboard
+    namespace: kube-prometheus-stack
+    labelValue: "1"
   bgpControlPlane:
     enabled: true
   envoy:
