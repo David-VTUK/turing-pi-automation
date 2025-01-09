@@ -1,7 +1,7 @@
 cilium:
   # -- Grafana dashboards for cilium-agent
   dashboards:
-    enabled: false
+    enabled: true
     label: grafana_dashboard
     namespace: kube-prometheus-stack
     labelValue: "1"
