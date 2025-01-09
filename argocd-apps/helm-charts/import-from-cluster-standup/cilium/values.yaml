@@ -20,6 +20,11 @@ cilium:
         serviceMonitor:
           enabled: true
     metrics:
+      dashboards:
+        enabled: true
+        label: grafana_dashboard
+        namespace: kube-prometheus-stack
+        labelValue: "1"
       enabled:
         - dns:query;ignoreAAAA
         - drop
@@ -35,6 +40,11 @@ cilium:
     operator:
       clusterPoolCIDR: 10.42.0.0/16
   operator:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      namespace: kube-prometheus-stack
+      labelValue: "1"
     prometheus:
       enabled: true
       serviceMonitor:
