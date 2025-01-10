@@ -16,9 +16,3 @@
       - "{{ lookup('file', '../argocd-apps/application-set/applicationset-helm-charts.yaml') }}"
       - "{{ lookup('file', '../argocd-apps/application-set/applicationset-manifests.yaml') }}"
       - "{{ lookup('file', '../argocd-apps/application-set/applicationset-cluster-standup.yaml') }}"
-
-- name: Commit changes to Git
-  ansible.builtin.shell: |
-      git add ../argocd-apps/*
-      git commit -m "Update ArgoCD applications"
-      git push
