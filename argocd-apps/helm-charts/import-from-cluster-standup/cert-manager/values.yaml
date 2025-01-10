@@ -4,8 +4,4 @@ cert-manager:
     enableGatewayAPI: true
     kind: ControllerConfiguration
   installCRDs: true
-#  podDNSConfig:
-#    nameservers:
-#    - 1.1.1.1
-#    - 1.0.0.1
   namespace: cert-manager
