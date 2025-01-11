@@ -9,6 +9,7 @@ An example Playbook (with Roles) to automate the provisioning of K3s and ancilla
 3. Install Gateway API CRD's
 4. Install Cilium with BGP Peering
 5. Install Cert Manager
+6. Install ArgoCD (used for long term management)
 
 ## Diagram
 
@@ -16,8 +17,14 @@ An example Playbook (with Roles) to automate the provisioning of K3s and ancilla
 
 ## Run
 
-To run - `ansible-playbook ./playbooks/site.yml -i ./inventory/hosts.ini --ask-vault-pass`
+Initiate the install:
 
-## Reversal
+* `ansible-playbook ./playbooks/bootstrap.yml -i ./inventory/hosts.ini --ask-vault-pass`
 
-To remove K3s and contents of `/mnt/data` run `ansible-playbook ./playbooks/site.yml -i ./inventory/hosts.ini --tags uninstall --ask-vault-pass`
+Delegate management of the cluster to ArgoCD:
+
+* `ansible-playbook ./playbooks/delegate.yml -i ./inventory/hosts.ini`
+
+## Removal
+
+To remove K3s and contents of `/mnt/data` run `ansible-playbook ./playbooks/uninstall.yml -i ./inventory/hosts.ini`
