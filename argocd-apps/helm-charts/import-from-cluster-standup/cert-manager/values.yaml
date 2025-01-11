@@ -7,5 +7,5 @@ cert-manager:
   namespace: cert-manager
   prometheus:
     enabled: true
-    serviceMonitor:
+    servicemonitor:
       enabled: true
