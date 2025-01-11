@@ -5,3 +5,7 @@ cert-manager:
     kind: ControllerConfiguration
   installCRDs: true
   namespace: cert-manager
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
