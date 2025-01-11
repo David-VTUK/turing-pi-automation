@@ -8,7 +8,7 @@ spec:
   goTemplateOptions: ["missingkey=error"]
   generators:
   - git:
-      repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
+      repoURL: 'https://github.com/David-VTUK/turing-pi-automation.git'
       revision: HEAD
       files:
       - path: 'argocd-apps/manifests/*'
@@ -18,7 +18,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
+        repoURL: 'https://github.com/David-VTUK/turing-pi-automation.git'
         targetRevision: HEAD
         path: '{{ .path.path }}'
       destination:

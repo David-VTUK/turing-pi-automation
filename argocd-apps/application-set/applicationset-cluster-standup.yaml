@@ -12,7 +12,7 @@ spec:
   goTemplateOptions: ["missingkey=error"]
   generators:
   - git:
-      repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
+      repoURL: 'https://github.com/David-VTUK/turing-pi-automation.git'
       revision: HEAD
       directories:
       - path: 'argocd-apps/helm-charts/import-from-cluster-standup/*'
@@ -22,7 +22,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: 'https://github.com/David-VTUK/turing-pi-ansible.git'
+        repoURL: 'https://github.com/David-VTUK/turing-pi-automation.git'
         targetRevision: HEAD
         path: '{{ .path.path }}'
         helm:
