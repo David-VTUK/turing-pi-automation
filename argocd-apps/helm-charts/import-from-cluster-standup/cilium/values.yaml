@@ -37,6 +37,7 @@ cilium:
     ui:
       enabled: true
   ipam:
+    multiPoolPreAllocation: null # https://github.com/cilium/cilium/issues/35811#issuecomment-2645399027
     operator:
       clusterPoolCIDR: 10.42.0.0/16
   operator:
