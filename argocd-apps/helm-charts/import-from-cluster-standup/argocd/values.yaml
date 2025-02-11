@@ -2,6 +2,7 @@ argo-cd:
   configs:
     params:
       server.insecure: true
+      applicationsetcontroller.enable.progressive.syncs: true
   global:
     domain: argocd.virtualthoughts.co.uk
   namespaceOverride: argocd
