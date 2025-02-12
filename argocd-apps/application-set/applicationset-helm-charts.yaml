@@ -12,9 +12,21 @@ spec:
       revision: HEAD
       directories:
       - path: 'argocd-apps/helm-charts/addons/*'
+  strategy:
+    type: RollingSync
+    rollingSync:
+      steps:
+        - matchExpressions:
+            - key: env
+              operator: In
+              values:
+                - homelab
+          maxUpdate: 10%    # maxUpdate supports both integer and percentage string values (rounds down, but floored at 1 Application for >0%)
   template:
     metadata:
       name: '{{ .path.basename }}'
+      labels:
+        env: homelab
     spec:
       project: default
       source:
@@ -33,4 +45,3 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply=true

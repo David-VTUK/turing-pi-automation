@@ -10,7 +10,7 @@ spec:
   - git:
       repoURL: 'https://github.com/David-VTUK/turing-pi-automation.git'
       revision: HEAD
-      files:
+      directories:
       - path: 'argocd-apps/manifests/*'
   template:
     metadata:

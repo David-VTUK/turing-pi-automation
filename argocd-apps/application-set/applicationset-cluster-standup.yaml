@@ -35,7 +35,19 @@ spec:
         automated:
           prune: true
           selfHeal: true
-          preserveResourcesOnDeletion: true
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply=true
+  templatePatch: |
+    {{ if eq .path.basename "cilium" }}
+      spec:
+        ignoreDifferences:
+        - group: monitoring.coreos.com
+          kind: ServiceMonitor
+          name: ""
+          jsonPointers:
+            - /spec
+        syncPolicy:
+          syncOptions:
+            - ServerSideApply=true # required to avoid the "annotations too long error"
+            - CreateNamespace=true
+    {{- end }}
