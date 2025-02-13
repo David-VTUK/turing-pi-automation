@@ -1,0 +1,6 @@
+harbor:
+  expose:
+    type: clusterIP
+    tls:
+      enabled: false
+  externalURL: https://harbor.virtualthoughts.co.uk
