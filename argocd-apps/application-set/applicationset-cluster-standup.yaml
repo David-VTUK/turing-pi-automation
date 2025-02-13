@@ -1,7 +1,3 @@
-# This applicationset is responsible for "folding in" existing helm charts
-# from the cluster standup into ArgoCD's remit. It differs from other applicationsets
-# By preserving resources if they are deleted.
-
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
