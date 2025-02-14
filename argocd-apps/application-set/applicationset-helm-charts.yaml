@@ -45,3 +45,11 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
+  templatePatch: |
+    {{ if eq .path.basename "kube-prometheus-stack" }}
+      spec:
+        syncPolicy:
+          syncOptions:
+            - ServerSideApply=true # required to avoid the "annotations too long error"
+            - CreateNamespace=true
+    {{- end }}
