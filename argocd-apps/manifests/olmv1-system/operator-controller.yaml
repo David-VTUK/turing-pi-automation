@@ -965,23 +965,6 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: olmv1-ca
-  namespace: cert-manager
-spec:
-  commonName: olmv1-ca
-  isCA: true
-  issuerRef:
-    group: cert-manager.io
-    kind: Issuer
-    name: self-sign-issuer
-  privateKey:
-    algorithm: ECDSA
-    size: 256
-  secretName: olmv1-ca
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
   name: olmv1-cert
   namespace: olmv1-system
 spec:
@@ -1004,14 +987,6 @@ metadata:
 spec:
   ca:
     secretName: olmv1-ca
----
-apiVersion: cert-manager.io/v1
-kind: Issuer
-metadata:
-  name: self-sign-issuer
-  namespace: cert-manager
-spec:
-  selfSigned: {}
 ---
 apiVersion: v1
 kind: Namespace
@@ -1792,14 +1767,6 @@ spec:
     algorithm: ECDSA
     size: 256
   secretName: catalogd-service-cert-v1.2.0-rc4
----
-apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
-metadata:
-  name: olmv1-ca
-spec:
-  ca:
-    secretName: olmv1-ca
 ---
 apiVersion: cert-manager.io/v1
 kind: Issuer
