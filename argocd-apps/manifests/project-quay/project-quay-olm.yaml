@@ -4,8 +4,6 @@ metadata:
   name: project-quay
 spec:
   namespace: project-quay
-  serviceAccount:
-    name: project-quay
   source:
     sourceType: Catalog
     catalog:
