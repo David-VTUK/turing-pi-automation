@@ -1,0 +1,13 @@
+apiVersion: olm.operatorframework.io/v1
+kind: ClusterExtension
+metadata:
+  name: project-quay
+spec:
+  namespace: project-quay
+  serviceAccount:
+    name: project-quay
+  source:
+    sourceType: Catalog
+    catalog:
+      packageName: quay-operator.v3.13.1
+      version: 3.13.1
