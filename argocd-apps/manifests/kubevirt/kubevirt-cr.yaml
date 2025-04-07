@@ -5,6 +5,7 @@ metadata:
   name: kubevirt
   namespace: kubevirt
 spec:
+  monitorNamespace: virtual-machines
   certificateRotateStrategy: {}
   configuration:
     developerConfiguration:
