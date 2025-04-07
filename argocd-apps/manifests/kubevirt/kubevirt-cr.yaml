@@ -6,6 +6,7 @@ metadata:
   namespace: kubevirt
 spec:
   monitorNamespace: kube-prometheus-stack
+  monitorAccount: kube-prometheus-stack-operator
   certificateRotateStrategy: {}
   configuration:
     developerConfiguration:
