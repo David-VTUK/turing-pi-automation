@@ -1,7 +1,7 @@
 FROM fedora:43
 
 # Install required packages
-RUN dnf install -y ansible ansible-lint git pip helm kubectl curl tar
+RUN dnf install -y ansible ansible-lint git pip helm kubectl curl tar awk
 
 # Set environment variables for CLI_ARCH
 ENV CLI_ARCH=amd64
