@@ -52,7 +52,7 @@ kind: VirtualMachine
 metadata:
   name: fedora-workstation
 spec:
-  running: true
+  running: false
   template:
     metadata:
       labels:
