@@ -24,11 +24,9 @@ spec:
         args:
           - |
             set -e
-            echo "[1/3] Installing tools..."
-            dnf install -y curl xz
-            echo "[2/3] Downloading and decompressing Fedora Workstation image..."
+            echo "[1/2] Downloading and decompressing Fedora Workstation image..."
             curl -L https://github.com/Joshua-Riek/ubuntu-rockchip/releases/download/v2.4.0/ubuntu-24.10-preinstalled-desktop-arm64-turing-rk1.img.xz | xz -d > /tmp/disk.raw
-            echo "[3/3] Writing image to PVC block device..."
+            echo "[2/2] Writing image to PVC block device..."
             dd if=/tmp/disk.raw of=/dev/vda bs=4M status=progress conv=fsync
             echo "✅ Done writing Fedora Workstation image to PVC!"
         volumeDevices:
