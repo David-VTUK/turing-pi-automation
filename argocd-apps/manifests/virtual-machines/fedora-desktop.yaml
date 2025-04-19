@@ -25,9 +25,9 @@ spec:
           - |
             set -e
             echo "[1/2] Downloading and decompressing Fedora Workstation image..."
-            curl -L https://github.com/Joshua-Riek/ubuntu-rockchip/releases/download/v2.4.0/ubuntu-24.10-preinstalled-desktop-arm64-turing-rk1.img.xz | xz -d > /tmp/disk.raw
+            curl -L https://github.com/Joshua-Riek/ubuntu-rockchip/releases/download/v2.4.0/ubuntu-24.10-preinstalled-desktop-arm64-turing-rk1.img.xz | xz -d > /tmp/disk.img
             echo "[2/2] Writing image to PVC block device..."
-            dd if=/tmp/disk.raw of=/dev/vda bs=4M status=progress conv=fsync
+            dd if=/tmp/disk.img of=/dev/vda bs=4M status=progress conv=fsync
             echo "✅ Done writing Fedora Workstation image to PVC!"
         volumeDevices:
         - name: disk
