@@ -48,7 +48,7 @@ spec:
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
-  name: fedora-workstation
+  name: fedora-workstation-kde
 spec:
   running: true
   template:
