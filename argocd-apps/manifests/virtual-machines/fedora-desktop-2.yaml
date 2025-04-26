@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: fedora-workstation-pvc
+  name: fedora-workstation-kde-pvc
 spec:
   accessModes:
     - ReadWriteOnce
@@ -13,7 +13,7 @@ spec:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: upload-fedora-workstation-job
+  name: upload-fedora-workstation-kde-job
 spec:
   template:
     spec:
@@ -25,7 +25,7 @@ spec:
           - |
             set -e
             echo "[1/2] Downloading and decompressing Fedora Workstation image..."
-            curl -L https://download.fedoraproject.org/pub/fedora/linux/releases/42/Cloud/aarch64/images/Fedora-Cloud-Base-AmazonEC2-42-1.1.aarch64.raw.xz | xz -d > /tmp/disk.raw
+            curl -L https://download.fedoraproject.org/pub/fedora/linux/releases/42/KDE/aarch64/images/Fedora-KDE-Desktop-Disk-42-1.1.aarch64.raw.xz | xz -d > /tmp/disk.raw
             echo "[2/2] Writing image to PVC block device..."
             dd if=/tmp/disk.raw of=/dev/vda bs=4M status=progress conv=fsync
             echo "✅ Done writing Fedora Workstation image to PVC!"
@@ -41,7 +41,7 @@ spec:
       volumes:
       - name: disk
         persistentVolumeClaim:
-          claimName: fedora-workstation-pvc
+          claimName: fedora-workstation-kde-pvc
       - name: tmp
         emptyDir: {}
 ---
@@ -54,7 +54,7 @@ spec:
   template:
     metadata:
       labels:
-        kubevirt.io/domain: fedora-workstation
+        kubevirt.io/domain: fedora-workstation-kde
     spec:
       domain:
         cpu:
@@ -70,4 +70,4 @@ spec:
       volumes:
         - name: disk0
           persistentVolumeClaim:
-            claimName: fedora-workstation-pvc
+            claimName: fedora-workstation-kde-pvc
