@@ -4,3 +4,5 @@ longhorn:
     defaultDataPath: /mnt/data/longhorn/
   preUpgradeChecker:
     jobEnabled: false
+  persistence:
+    defaultClassReplicaCount: 1
