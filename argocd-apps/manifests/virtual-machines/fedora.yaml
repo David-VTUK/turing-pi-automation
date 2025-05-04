@@ -58,10 +58,10 @@ spec:
     spec:
       domain:
         cpu:
-          cores: 2
+          cores: 4
         resources:
           requests:
-            memory: 2Gi
+            memory: 6Gi
         devices:
           disks:
             - name: disk0
