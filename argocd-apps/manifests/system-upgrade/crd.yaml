@@ -3,6 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   name: plans.upgrade.cattle.io
 spec:
+  preserveUnknownFields: false
   group: upgrade.cattle.io
   names:
     categories:
@@ -10,7 +11,6 @@ spec:
     kind: Plan
     plural: plans
     singular: plan
-  preserveUnknownFields: false
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
