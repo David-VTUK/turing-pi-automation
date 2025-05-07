@@ -10,7 +10,7 @@ spec:
     kind: Plan
     plural: plans
     singular: plan
-  preserveUnknownFields: false
+  #preserveUnknownFields: false
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -682,3 +682,4 @@ spec:
     storage: true
     subresources:
       status: {}
+  preserveUnknownFields: false
