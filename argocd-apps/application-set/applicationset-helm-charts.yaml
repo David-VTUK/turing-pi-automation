@@ -17,13 +17,21 @@ spec:
       name: '{{ .path.basename }}'
     spec:
       project: default
-      source:
-        repoURL: 'https://github.com/David-VTUK/turing-pi-automation.git'
-        targetRevision: HEAD
-        path: '{{ .path.path }}'
-        helm:
-          valueFiles:
-            - values.yaml
+      sources:
+        - repoURL: 'https://github.com/David-VTUK/turing-pi-automation.git'
+          targetRevision: HEAD
+          path: '{{ .path.path }}/helm'
+          helm:
+            valueFiles:
+              - values.yaml
+          ref: helm
+        - repoURL: 'https://github.com/David-VTUK/turing-pi-automation.git'
+          targetRevision: HEAD
+          path: '{{ .path.path }}/manifests'
+          ref: manifests
+      sourcesOrdering:
+        - helm
+        - manifests
       destination:
         server: 'https://kubernetes.default.svc'
         namespace: '{{ .path.basename }}'
