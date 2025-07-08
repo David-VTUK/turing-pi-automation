@@ -19,5 +19,5 @@ appVersion: "2.2.3"
 
 dependencies:
   - name: docker-registry
-    version: 2.2.3
+    version: 2.3.0
     repository: https://helm.twun.io
