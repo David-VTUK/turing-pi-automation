@@ -1,7 +1,7 @@
 # Helm chart API Version. Confusingly, v2 corresponds to Helm 3, and v1 corresponds to Helm 2.
 apiVersion: v2
 
-name: "docker-registry"
+name: "gitea"
 type: application
 
 # This is the chart version. This version number should be incremented each time you make changes
@@ -18,6 +18,6 @@ appVersion: "12.1.2"
 # The version of the chart listed in dependencies is what the version of that chart that will be installed
 
 dependencies:
-  - name: gitea-charts
+  - name: gitea
     version: 12.1.2
     repository: https://dl.gitea.com/charts/
