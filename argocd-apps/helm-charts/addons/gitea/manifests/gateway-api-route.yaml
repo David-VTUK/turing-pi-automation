@@ -12,5 +12,5 @@ spec:
       sectionName: https-gateway
   rules:
     - backendRefs:
-        - name: "kube-prometheus-stack-alertmanager"
-          port: 9093
+        - name: "gitea-http"
+          port: 3000
