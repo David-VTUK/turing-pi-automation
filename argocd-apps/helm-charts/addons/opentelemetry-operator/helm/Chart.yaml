@@ -19,5 +19,5 @@ appVersion: "0.1.0"
 
 dependencies:
   - name: opentelemetry-operator
-    version: 0.92.0
+    version: 0.92.1
     repository: https://open-telemetry.github.io/opentelemetry-helm-charts
