@@ -40,7 +40,7 @@
 
 - name: Generate values yaml
   ansible.builtin.template:
-    src: ../argocd-apps/helm-charts/template/values.yaml.j2
+    src: ../template/values.yaml.j2
     dest: ../argocd-apps/01-core-services/{{ argo_cd_namespace }}/values.yaml
     mode: '0644'
   vars:
