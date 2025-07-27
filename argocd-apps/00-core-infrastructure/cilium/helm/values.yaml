@@ -1,10 +1,6 @@
 cilium:
   bgpControlPlane:
     enabled: true
-  envoy:
-    prometheus:
-      serviceMonitor:
-        enabled: true
   gatewayAPI:
     enabled: true
   hubble:
@@ -13,7 +9,6 @@ cilium:
     ui:
       enabled: true
   ipam:
-    multiPoolPreAllocation: null # https://github.com/cilium/cilium/issues/35811#issuecomment-2645399027
     operator:
       clusterPoolCIDR: 10.42.0.0/16
   k8sServiceHost: 172.16.10.214

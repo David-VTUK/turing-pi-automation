@@ -39,7 +39,7 @@ spec:
       name: '{{ .path.basename }}'
     spec:
       project: default
-      sources:
+      source:
         - repoURL: 'https://github.com/David-VTUK/turing-pi-automation.git'
           targetRevision: HEAD
           path: '{{ .path.path }}/helm'
@@ -57,10 +57,12 @@ spec:
         syncOptions:
           - CreateNamespace=true
   templatePatch: |
-    {{ if eq .path.basename "kube-prometheus-stack" }}
+    {{ if eq .path.basename "cert-manager"}}
       spec:
-        syncPolicy:
-          syncOptions:
-            - ServerSideApply=true # required to avoid the "annotations too long error"
-            - CreateNamespace=true
+        source:
+          repoURL: 'https://github.com/David-VTUK/turing-pi-automation.git'
+          targetRevision: HEAD
+          path: '{{ .path.path }}'
+          kustomize:
+            enableHelm: true
     {{- end }}

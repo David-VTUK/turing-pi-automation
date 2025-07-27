@@ -1,0 +1,13 @@
+helmCharts:
+  - name: cert-manager
+    releaseName: cert-manager
+    repo: https://charts.jetstack.io
+    version: v1.18.2
+    namespace: cert-manager
+    valuesFile: helm/values.yaml
+
+resources:
+  - helm
+
+patchesStrategicMerge:
+  - patch-dns.yaml
