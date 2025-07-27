@@ -31,7 +31,7 @@ spec:
   generators:
   - git:
       repoURL: 'https://github.com/David-VTUK/turing-pi-automation.git'
-      revision: progressive-sync
+      revision: HEAD
       directories:
         - path: 'argocd-apps/00-core-infrastructure/*'
         - path: 'argocd-apps/01-core-services/*'
@@ -46,7 +46,7 @@ spec:
       project: default
       source:
           repoURL: 'https://github.com/David-VTUK/turing-pi-automation.git'
-          targetRevision: progressive-sync
+          targetRevision: HEAD
           path: '{{ .path.path }}/helm'
           helm:
             valueFiles:
