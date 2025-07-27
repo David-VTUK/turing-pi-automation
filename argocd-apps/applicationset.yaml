@@ -40,6 +40,8 @@ spec:
   template:
     metadata:
       name: '{{ .path.basename }}'
+      labels:
+        orderLabel: '{{ index (splitList "-" (index (splitList "/" .path.path) 1)) 0 }}'
     spec:
       project: default
       source:
@@ -59,12 +61,5 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
-templatePatch: |
-  {{ if eq .path.basename "cert-manager" }}
-    spec:
-      source:
-        helm: null
-        kustomize:
-          enableHelm: true
-  {{- end }}
+
 
