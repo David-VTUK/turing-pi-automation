@@ -1,7 +1,7 @@
 # Helm chart API Version. Confusingly, v2 corresponds to Helm 3, and v1 corresponds to Helm 2.
 apiVersion: v2
 
-name: 'argo-cd'
+name: 'cert-manager'
 type: application
 
 # This is the chart version. This version number should be incremented each time you make changes
@@ -12,12 +12,12 @@ version: 0.1.0
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
-appVersion: "8.2.2"
+appVersion: "v1.18.2"
 
 # Note the above versions are version control for ArgoCD's internal templating
 # The version of the chart listed in dependencies is what the version of that chart that will be installed
 
 dependencies:
-  - name: argo-cd
-    version: 8.2.2
-    repository: https://argoproj.github.io/argo-helm
+  - name: cert-manager
+    version: v1.18.2
+    repository: https://charts.jetstack.io

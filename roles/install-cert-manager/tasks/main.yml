@@ -87,7 +87,7 @@
 - name: Generate values yaml
   ansible.builtin.template:
     src: ../template/values.yaml.j2
-    dest: ../argocd-apps/01-core-services{{ cert_manager_namespace }}/helm/values.yaml
+    dest: ../argocd-apps/01-core-services/{{ cert_manager_namespace }}/helm/values.yaml
     mode: '0644'
   vars:
     app_name: "cert-manager"
