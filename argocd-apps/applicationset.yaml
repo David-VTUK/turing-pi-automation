@@ -59,13 +59,12 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
-  templatePatch: |
-    {{ if eq .path.basename "cert-manager"}}
-      spec:
-        source:
-          repoURL: 'https://github.com/David-VTUK/turing-pi-automation.git'
-          targetRevision: progressive-sync
-          path: '{{ .path.path }}'
-          kustomize:
-            enableHelm: true
-    {{- end }}
+templatePatch: |
+  {{ if eq .path.basename "cert-manager" }}
+    spec:
+      source:
+        helm: null
+        kustomize:
+          enableHelm: true
+  {{- end }}
+
