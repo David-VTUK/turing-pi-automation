@@ -4,6 +4,28 @@ metadata:
   name: addon-applications
   namespace: argocd
 spec:
+  strategy:
+    type: RollingSync
+    rollingSync:
+      steps:
+        - matchExpressions:
+            - key: orderLabel
+              operator: In
+              values: ["00"]
+          maxUpdate: 1
+        - matchExpressions:
+            - key: orderLabel
+              operator: In
+              values: ["01"]
+          maxUpdate: 1
+        - matchExpressions:
+            - key: orderLabel
+              operator: In
+              values: ["02"]
+        - matchExpressions:
+            - key: orderLabel
+              operator: In
+              values: ["03"]
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
@@ -11,7 +33,7 @@ spec:
       repoURL: 'https://github.com/David-VTUK/turing-pi-automation.git'
       revision: HEAD
       directories:
-      - path: 'argocd-apps/helm-charts/addons/*'
+      - path: 'argocd-apps/*'
   template:
     metadata:
       name: '{{ .path.basename }}'
