@@ -7,5 +7,5 @@
 - name: Write gateway API CRD to file
   ansible.builtin.get_url:
     url: https://github.com/kubernetes-sigs/gateway-api/releases/download/{{ gateway_api_crd_version }}/standard-install.yaml
-    dest: ../argocd-apps/manifests/gateway-api-crds/experimental-install.yaml
+    dest: ../argocd-apps/00-core-infrastructure-gateway-api-crds/manifests
     mode: '0644'
