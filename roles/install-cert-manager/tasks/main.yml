@@ -17,10 +17,6 @@
     wait: true
     values:
       installCRDs: true
-      podDNSConfig:
-        nameservers:
-          - 1.1.1.1
-          - 1.0.0.1
       config:
         apiVersion: controller.config.cert-manager.io/v1alpha1
         kind: ControllerConfiguration
@@ -68,14 +64,14 @@
 
 - name: Create directories for application files
   ansible.builtin.file:
-    path: ../argocd-apps/helm-charts/import-from-cluster-standup/{{ cert_manager_namespace }}
+    path: ../argocd-apps/01-core-services/{{ cert_manager_namespace }}
     state: directory
     mode: '0755'
 
 - name: Generate ArgoCD application
   ansible.builtin.template:
-    src: ../argocd-apps/helm-charts/template/Chart.yaml.j2
-    dest: ../argocd-apps/helm-charts/import-from-cluster-standup/{{ cert_manager_namespace }}/Chart.yaml
+    src: ../template/Chart.yaml.j2
+    dest: ../argocd-apps/01-core-services/{{ cert_manager_namespace }}/helm/Chart.yaml
     mode: '0644'
   vars:
     app_name: "cert-manager"
@@ -90,10 +86,10 @@
 
 - name: Generate values yaml
   ansible.builtin.template:
-    src: ../argocd-apps/helm-charts/template/values.yaml.j2
-    dest: ../argocd-apps/helm-charts/import-from-cluster-standup/{{ cert_manager_namespace }}/values.yaml
+    src: ../template/values.yaml.j2
+    dest: ../argocd-apps/01-core-services/{{ cert_manager_namespace }}/helm/values.yaml
     mode: '0644'
   vars:
     app_name: "cert-manager"
     app_values: "{{ helm_values_output.stdout }}"
-    namespace: "namespace: {{ cert_manager_namespace }}"
+    app_namespace: "namespace: {{ cert_manager_namespace }}"

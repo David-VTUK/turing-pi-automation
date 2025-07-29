@@ -13,6 +13,4 @@
   kubernetes.core.k8s:
     state: present
     definition:
-      - "{{ lookup('file', '../argocd-apps/application-set/applicationset-helm-charts.yaml') }}"
-      - "{{ lookup('file', '../argocd-apps/application-set/applicationset-manifests.yaml') }}"
-      - "{{ lookup('file', '../argocd-apps/application-set/applicationset-cluster-standup.yaml') }}"
+      - "{{ lookup('file', '../argocd-apps/applicationset.yaml') }}"

@@ -1,0 +1,27 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  labels:
+    argocd.argoproj.io/instance: gateway-api-services
+  name: cilium-api-gateway
+  namespace: cilium
+spec:
+  gatewayClassName: cilium
+  listeners:
+    - name: http-to-https-redirect
+      hostname: "*.virtualthoughts.co.uk"
+      port: 80
+      protocol: HTTP
+    - name: https-gateway
+      hostname: "*.virtualthoughts.co.uk"
+      port: 443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: wildcard-tls-cert

@@ -1,5 +1,5 @@
 k3s_token: myrandompassword
-k3s_version: v1.31.4+k3s1
+k3s_version: v1.33.1+k3s1
 k3s_kubeconfig_mode: "644"
 
 k3s_server_exec: >
