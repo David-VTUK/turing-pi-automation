@@ -11,5 +11,30 @@ spec:
     security:
       admin_user: root
       admin_password: secret
-
-      
+---
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  annotations:
+  name: grafana-route
+spec:
+  hostnames:
+    - grafana.virtualthoughts.co.uk
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: cilium-api-gateway
+      namespace: cilium
+      sectionName: https-gateway
+  rules:
+    - backendRefs:
+        - group: ''
+          kind: Service
+          name: grafana-service
+          port: 3000
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
