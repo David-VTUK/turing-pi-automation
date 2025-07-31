@@ -23,6 +23,8 @@ spec:
       debug: {}
       otlp/tempo:
         endpoint: tempo-query-frontend.tempo.svc.cluster.local:9095
+        tls:
+          insecure: true
     service:
       pipelines:
         traces:
