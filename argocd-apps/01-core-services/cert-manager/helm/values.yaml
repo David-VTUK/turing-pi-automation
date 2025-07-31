@@ -5,3 +5,11 @@ cert-manager:
     kind: ControllerConfiguration
   installCRDs: true
   namespace: cert-manager
+  deploymentAnnotations:
+    instrumentation.opentelemetry.io/inject-go: go-auto-instrumentation
+  cainjector:
+    deploymentAnnotations:
+      instrumentation.opentelemetry.io/inject-go: go-auto-instrumentation
+  webhook:
+    deploymentAnnotations:
+      instrumentation.opentelemetry.io/inject-go: go-auto-instrumentation
