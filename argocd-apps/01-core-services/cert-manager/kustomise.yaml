@@ -11,3 +11,4 @@ resources:
 
 patchesStrategicMerge:
   - patch-dns.yaml
+  - otel-auto-injection.yaml
