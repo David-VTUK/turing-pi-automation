@@ -21,7 +21,7 @@ spec:
         timeout: 10s
     exporters:
       debug: {}
-      oltp/tempo:
+      otlp/tempo:
         endpoint: tempo-query-frontend.tempo.svc.cluster.local:9095
     service:
       pipelines:
