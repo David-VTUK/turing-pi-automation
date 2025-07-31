@@ -2,7 +2,6 @@ apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDatasource
 metadata:
   name: tempo-datasource
-  namespace: tempo  # change if Grafana is in a different namespace
 spec:
   instanceSelector:
     matchLabels:
