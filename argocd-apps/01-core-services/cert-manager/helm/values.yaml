@@ -6,13 +6,13 @@ cert-manager:
   installCRDs: true
   namespace: cert-manager
 
-podAnnotations:
-  instrumentation.opentelemetry.io/inject-go: go-auto-instrumentation
-
-webhook:
   podAnnotations:
     instrumentation.opentelemetry.io/inject-go: go-auto-instrumentation
 
-cainjector:
-  podAnnotations:
-    instrumentation.opentelemetry.io/inject-go: go-auto-instrumentation
+  webhook:
+    podAnnotations:
+      instrumentation.opentelemetry.io/inject-go: go-auto-instrumentation
+
+  cainjector:
+    podAnnotations:
+      instrumentation.opentelemetry.io/inject-go: go-auto-instrumentation
