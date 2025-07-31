@@ -19,10 +19,10 @@ spec:
       batch:
         send_batch_size: 10000
         timeout: 10s
-
     exporters:
       debug: {}
-
+      oltp/tempo:
+        endpoint: tempo-query-frontend.tempo.svc.cluster.local:9095
     service:
       pipelines:
         traces:
