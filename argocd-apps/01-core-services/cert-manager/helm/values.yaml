@@ -5,20 +5,3 @@ cert-manager:
     kind: ControllerConfiguration
   installCRDs: true
   namespace: cert-manager
-
-  securityContext:
-    runAsNonRoot: false
-
-  podAnnotations:
-    instrumentation.opentelemetry.io/inject-go: go-auto-instrumentation
-    instrumentation.opentelemetry.io/otel-go-auto-target-exe: '/app/cmd/controller/controller'
-
-  webhook:
-    podAnnotations:
-      instrumentation.opentelemetry.io/inject-go: go-auto-instrumentation
-      instrumentation.opentelemetry.io/otel-go-auto-target-exe: '/app/cmd/webhook/webhook'
-
-  cainjector:
-    podAnnotations:
-      instrumentation.opentelemetry.io/inject-go: go-auto-instrumentation
-      instrumentation.opentelemetry.io/otel-go-auto-target-exe: '/app/cmd/cainjector/cainjector'
