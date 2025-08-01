@@ -1,3 +1,4 @@
 opentelemetry-operator:
   manager:
-    featureGates: "operator.autoinstrumentation.go"
+    extraArgs:
+      - --enable-go-instrumentation
