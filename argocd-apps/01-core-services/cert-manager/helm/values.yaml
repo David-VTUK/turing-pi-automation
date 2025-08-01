@@ -6,6 +6,9 @@ cert-manager:
   installCRDs: true
   namespace: cert-manager
 
+  security:
+    runAsNonRoot: false
+
   podAnnotations:
     instrumentation.opentelemetry.io/inject-go: go-auto-instrumentation
     instrumentation.opentelemetry.io/otel-go-auto-target-exe: '/app/cmd/controller/controller'
