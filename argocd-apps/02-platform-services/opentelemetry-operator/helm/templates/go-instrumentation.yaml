@@ -4,7 +4,7 @@ metadata:
   name: go-auto-instrumentation
 spec:
   exporter:
-    endpoint: simplest-collector.opentelemetry-operator.svc.cluster.local:4318
+    endpoint: http://simplest-collector.opentelemetry-operator.svc.cluster.local:4318
   propagators:
     - tracecontext
     - baggage
