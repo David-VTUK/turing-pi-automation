@@ -1,2 +1,3 @@
 opentelemetry-operator:
-  featureGates: "operator.autoinstrumentation.go"
+  featureGatesMap: 
+    - "operator.autoinstrumentation.go"
