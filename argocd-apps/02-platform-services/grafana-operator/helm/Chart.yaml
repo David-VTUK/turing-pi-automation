@@ -19,5 +19,5 @@ appVersion: "0.1.0"
 
 dependencies:
   - name: grafana-operator
-    version: v5.18.0
+    version: v5.19.4
     repository: oci://ghcr.io/grafana/helm-charts
