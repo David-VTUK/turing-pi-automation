@@ -87,12 +87,19 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: fedora-server-ssh
+  name: fedora-server-access
 spec:
   ports:
-  - port: 27017
-    protocol: TCP
-    targetPort: 22
+    - name: ssh
+      port: 22      # External port
+      protocol: TCP
+      targetPort: 22   # Port inside the VM for SSH
+    - name: app
+      port: 9090       # External port
+      protocol: TCP
+      targetPort: 9090 # Port inside the VM
   selector:
     kubevirt.io/domain: fedora-server
   type: LoadBalancer
+
+
