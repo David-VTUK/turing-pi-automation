@@ -83,3 +83,16 @@ spec:
               chpasswd: { expire: false }
               ssh_authorized_keys:
                 - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCn4gPvm0bEGdlfvfiwpVJgRe/gvueMXTc+E49gvwCdthyMYRzjHN1K0Y0ZuNbPI6yQestD5LLHsvOMdWjEYQpYe8TSk6qoK3fFTuXfN3XRkz36UazMSsWr8eljfGWDcw2FOGpX6zoLxibbHhzO9mjwiCbK11qAXLhAGtrsCChrACih0QH5Dr23gaVKsHpbScZN7WaNNcX1thVojt0dpgsvu7SoQLjhpnAipueGhZffaf2UEFRiRWG3Ql56U1n5xkLUDF0a/yT+/YqyEi5jdWColNCrUGt8V6UdsSE5EebCyeXY4YAdfA7ebfhth3l3DVYQ2iHCsITOxOLP0XwkZLjywmIelP9Uw5YJofW3YvsHtrKX4ML81GcCBTLGgBgj1udEjQgaNGaDrvU2LLslyDm6mAKQzaF9Iux3wWHbA8fHjZJ5SR2DTylmwbNeO5moPt4zLIeJUBsu+b01gKigSYE198EjKuzROApADeW7pzWhsK9H/IxGShMUwm1elvBXKX8TSbHQ5Gj9FVhzaoOo0fgtIlDtWd/NSbOmwC2knpDLrZQ9oW3ddyijmiTep097Mk52bzUAWocxJiUesedtV8lpEEqO3J7NGuiNdTdq8JgbdCJ9rSfediC+mrqtzfChIHpvvgp0GReo8UDyyGS7DAznPE00yy+HbBVHqqfjgoQ3Aw==
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fedora-server-ssh
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+    targetPort: 22
+  selector:
+    kubevirt.io/domain: fedora-server
+  type: LoadBalancer
