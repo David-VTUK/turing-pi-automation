@@ -67,7 +67,19 @@ spec:
             - name: disk0
               disk:
                 bus: virtio
+            - name: cloudinitdisk
+              disk:
+                bus: virtio
       volumes:
         - name: disk0
           persistentVolumeClaim:
             claimName: fedora-server-pvc
+        - name: cloudinitdisk
+          cloudInitNoCloud:
+            userData: |
+              #cloud-config
+              user: kube
+              password: changeme
+              chpasswd: { expire: false }
+              ssh_authorized_keys:
+                - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQ... your_key_here
