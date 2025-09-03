@@ -7,7 +7,7 @@ kanboard:
       persistentVolumeClaim:
         name: kanboard-pvc
         create: true
-        storageClass: default
+        storageClass: longhorn
         size: 5Gi
         accessMode: ReadWriteOnce
   clusterip:
