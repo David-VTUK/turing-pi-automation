@@ -11,5 +11,5 @@ kanboard:
         size: 5Gi
         accessMode: ReadWriteOnce
   clusterip:
-    enabled: false
+    enabled: true
     port: 80
