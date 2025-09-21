@@ -11,7 +11,7 @@ cilium:
   ipam:
     operator:
       clusterPoolCIDR: 10.42.0.0/16
-  k8sServiceHost: 172.16.10.214
+  k8sServiceHost: 172.16.10.31
   k8sServicePort: 6443
   kubeProxyReplacement: true
   namespaceOverride: cilium
