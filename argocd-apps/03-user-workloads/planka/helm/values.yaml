@@ -1,3 +1,5 @@
 planka:
   existingSecretkeySecret: secretkey
   existingAdminCredsSecret: admincredentials
+  admin_email: "demo@demo.demo"
+  admin_name: "demo"
