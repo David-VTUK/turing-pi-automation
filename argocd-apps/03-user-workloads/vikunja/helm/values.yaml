@@ -1,0 +1,19 @@
+
+vikunja:
+  image:
+    repository: vikunja/vikunja
+    #tag: "latest"
+    #pullPolicy: Always
+  persistence:
+    # This is where your Vikunja data lives,
+    # provide an existing PVC or let one be autocreated
+    data:
+      enabled: true
+      # existingClaim: # your-claim
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      mountPath: /app/vikunja/files
+      storageClass: longhorn
+  ingress:
+    main:
+      enabled: false
