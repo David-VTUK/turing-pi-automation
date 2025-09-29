@@ -1,0 +1,15 @@
+kanboard:
+  application:
+    port: 80
+    additionalLabels: {}
+    persistence:
+      enabled: false
+      persistentVolumeClaim:
+        name: kanboard-pvc
+        create: true
+        storageClass: default
+        size: 5Gi
+        accessMode: ReadWriteOnce
+  clusterip:
+    enabled: true
+    port: 80
