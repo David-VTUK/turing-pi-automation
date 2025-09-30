@@ -1,6 +1,7 @@
 planka:
   existingSecretkeySecret: secretkey
   existingAdminCredsSecret: adminsecret
+  baseUrl: "planka.virtualthoughts.co.uk"
   postgresql:
     enabled: false
     auth:
