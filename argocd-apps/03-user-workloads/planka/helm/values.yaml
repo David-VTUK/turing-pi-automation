@@ -1,5 +1,5 @@
 planka:
-  admin_email: admin@local
+  admin_email: admin@local.domain
   admin_name: admin
   existingSecretkeySecret: secretkey
   existingAdminCredsSecret: adminsecret
