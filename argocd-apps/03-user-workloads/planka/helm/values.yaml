@@ -3,7 +3,6 @@ planka:
   admin_name: admin
   existingSecretkeySecret: secretkey
   existingAdminCredsSecret: adminsecret
-  baseUrl: "https://planka.virtualthoughts.co.uk"
   postgresql:
     enabled: false
     auth:
