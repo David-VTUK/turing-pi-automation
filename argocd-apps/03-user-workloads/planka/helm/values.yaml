@@ -12,4 +12,4 @@ planka:
       # existingSecret: planka-postgresql
     serviceBindings:
       enabled: true
-  dburl: planka-postgresql.planka.cluster.svc.local:5432
+  dburl: postgres://planka:planka@planka-postgresql:5432/planka
