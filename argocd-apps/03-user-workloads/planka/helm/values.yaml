@@ -1,0 +1,14 @@
+planka:
+  existingSecretkeySecret: secretkey
+  existingAdminCredsSecret: adminsecret
+  postgresql:
+    enabled: false
+    auth:
+      database: planka
+      username: planka
+      password: ""
+      postgresPassword: ""
+      replicationPassword: ""
+      # existingSecret: planka-postgresql
+    serviceBindings:
+      enabled: true
