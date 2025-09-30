@@ -12,4 +12,4 @@ planka:
       # existingSecret: planka-postgresql
     serviceBindings:
       enabled: true
-  dburl: postgres://planka:@planka-postgresql:5432/planka
+  dburl: postgres://planka:""@planka-postgresql:5432/planka
