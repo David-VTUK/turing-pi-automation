@@ -1,0 +1,15 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDataSource
+metadata:
+  name: loki-datasource
+  namespace: grafana-operator
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  datasource:
+    name: Loki
+    type: loki
+    access: proxy
+    isDefault: false
+    url: http://loki-gateway.loki.svc.cluster.local:80
