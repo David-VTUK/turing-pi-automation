@@ -13,4 +13,6 @@ spec:
     isDefault: false
     url: http://loki-gateway.loki.svc.cluster.local:80
     jsonData:
-      tenantId: "demo"
+      httpHeaderName1: "X-Scope-OrgID"
+    secureJsonData:
+      httpHeaderValue1: "demo"
