@@ -1,5 +1,5 @@
 apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDatasource
+kind: GrafanaDataSource
 metadata:
   name: loki-datasource
 spec:
