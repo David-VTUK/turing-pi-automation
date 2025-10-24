@@ -12,3 +12,5 @@ spec:
     access: proxy
     isDefault: false
     url: http://loki-gateway.loki.svc.cluster.local:80
+    jsonData:
+      tenantId: "demo"
