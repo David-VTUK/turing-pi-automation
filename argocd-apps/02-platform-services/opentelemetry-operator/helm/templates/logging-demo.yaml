@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: otel-collector
+  namespace: opentelemetry-operator
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: otel-collector-cluster-admin-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: otel-collector
+  namespace: opentelemetry-operator
+---
+apiVersion: opentelemetry.io/v1beta1
+kind: OpenTelemetryCollector
+metadata:
+  name: collector-logging-demo
+  namespace: opentelemetry-operator
+spec:
+  mode: daemonset
+  serviceAccount: otel-collector
+  config:
+    receivers:
+      filelog:
+        include:
+          - /var/log/pods/opentelemetry-operator_otel-logging-transaction-demo-*_*/*/*.log
+        include_file_name: false
+        include_file_path: true
+        start_at: beginning
+        operators:
+          - id: container-parser
+            type: container
+    processors:
+      transform/redact_cc:
+          log_statements:
+            - context: log
+              statements:
+                - 'replace_pattern(body, "\\b[45]\\d{15}\\b", "<REDACTED>")'
+      memory_limiter:
+        check_interval: 1s
+        limit_percentage: 75
+        spike_limit_percentage: 15
+      batch:
+        send_batch_size: 10000
+        timeout: 10s
+    exporters:
+      debug: {}
+      otlphttp/loki:
+        endpoint: http://loki-gateway.loki.svc.cluster.local/otlp
+        headers:
+          X-Scope-OrgID: "demo"
+        tls:
+          insecure: true
+      otlp/signoz:
+        endpoint: signoz-otel-collector.signoz.svc.cluster.local:4317
+        tls:
+          insecure: true
+    service:
+      pipelines:
+        logs/loki:
+          exporters:
+            - debug
+            - otlphttp/loki
+          processors:
+            - batch
+            - transform/redact_cc
+          receivers:
+            - filelog
+        logs/signoz:
+          exporters:
+            - otlp/signoz
+          processors:
+            - batch
+          receivers:
+            - filelog
+  volumeMounts:
+    - mountPath: /var/log/pods
+      name: varlogpods
+  volumes:
+    - hostPath:
+        path: /var/log/pods
+        type: Directory
+      name: varlogpods
