@@ -61,7 +61,6 @@ spec:
       pipelines:
         logs/loki:
           exporters:
-            - debug
             - otlphttp/loki
           processors:
             - batch
