@@ -68,4 +68,5 @@ spec:
           syncOptions:
             - ServerSideApply=true # required to avoid the "annotations too long error"
             - CreateNamespace=true
+            - syncTimeout=10m
     {{- end }}
