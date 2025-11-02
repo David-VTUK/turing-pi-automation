@@ -22,7 +22,7 @@ kube-prometheus-stack:
   grafana:
     persistence:
      enabled: true
-     type: deployment
+     type: sts
      storageClassName: "longhorn"
      accessModes:
        - ReadWriteOnce
