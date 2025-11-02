@@ -72,6 +72,4 @@ spec:
         ignoreDifferences:
           - group: "apps"
             kind: "StatefulSet"
-            jqPathExpressions:
-            - .spec.volumeClaimTemplates[].metadata.creationTimestamp
     {{- end }}
