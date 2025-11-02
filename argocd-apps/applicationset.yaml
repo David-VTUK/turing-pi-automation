@@ -69,4 +69,9 @@ spec:
             - ServerSideApply=true # required to avoid the "annotations too long error"
             - CreateNamespace=true
             - syncTimeout=10m
+        ignoreDifferences:
+          - group: "apps"
+            kind: "StatefulSet"
+            jqPathExpressions:
+            - .spec.volumeClaimTemplates[].metadata.creationTimestamp
     {{- end }}
