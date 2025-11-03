@@ -12,7 +12,7 @@ data:
   #  providers:
   #    longhorn:
   #      url: https://longhorn.my.network
-  gateway: true
+  gateway: "true"
   custom.css: ""
   custom.js: ""
   bookmarks.yaml: |
