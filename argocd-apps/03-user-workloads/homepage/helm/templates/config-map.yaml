@@ -35,6 +35,18 @@ data:
         - My Third Service:
             href: http://localhost/
             description: Homepage is 😎
+    - Observability
+        - Grafana
+          icon: grafana.png
+          href: https://grafana.virtualthoughts.co.uk
+          description: Grafana visualisation
+          widget:
+            type: grafana
+            version: 2 # optional, default is 1
+            alerts: alertmanager # optional, default is grafana
+            url: https://grafana.virtualthoughts.co.uk
+            username: admin
+            password: HpTKUSL0ACuV780OnYxgrNLl2UwTPlvRKLDPnv25
   widgets.yaml: |
     - kubernetes:
         cluster:
