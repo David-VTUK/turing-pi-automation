@@ -18,6 +18,6 @@ appVersion: "4.2.0"
 # The version of the chart listed in dependencies is what the version of that chart that will be installed
 
 dependencies:
-  - name: kanboard
+  - name: homepage
     version: 4.2.0
     repository: oci://ghcr.io/m0nsterrr/helm-charts/homepage
