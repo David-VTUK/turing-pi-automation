@@ -35,8 +35,9 @@ data:
         - My Third Service:
             href: http://localhost/
             description: Homepage is 😎
-    - Observability
-        - Grafana
+            
+    - Observability:
+        - Grafana:
             icon: grafana.png
             href: https://grafana.virtualthoughts.co.uk
             description: Grafana visualisation
