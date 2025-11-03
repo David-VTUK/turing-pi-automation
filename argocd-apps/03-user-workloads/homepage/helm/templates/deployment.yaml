@@ -29,6 +29,16 @@ spec:
               value: homepage.virtualthoughts.co.uk
             - name: HOMEPAGE_PROXY_DISABLE_IPV6
               value: "true"
+            - name: GRAFANA_USERNAME
+              valueFrom:  
+                secretKeyRef:
+                 name: homepage-secrets
+                 key: GRAFANA_USERNAME
+            - name: GRAFANA_PASSWORD
+              valueFrom:  
+                secretKeyRef:
+                 name: homepage-secrets
+                 key: GRAFANA_PASSWORD
           ports:
             - name: http
               containerPort: 3000

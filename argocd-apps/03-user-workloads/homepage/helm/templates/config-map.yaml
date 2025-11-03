@@ -46,8 +46,8 @@ data:
               version: 2 # optional, default is 1
               alerts: alertmanager # optional, default is grafana
               url: https://grafana.virtualthoughts.co.uk
-              username: admin
-              password: UoDaAlFwxfzL4fm2jL730dFaMMryaYjMpVQZd95P
+              username: ${GRAFANA_USERNAME}
+              password: ${GRAFANA_PASSWORD}
   widgets.yaml: |
     - kubernetes:
         cluster:
