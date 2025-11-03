@@ -1,1 +1,30 @@
-# Blank
+
+services: |
+  - My First Group:
+      - My First Service:
+          href: http://localhost/
+          description: Homepage is awesome
+
+  - My Second Group:
+      - My Second Service:
+          href: http://localhost/
+          description: Homepage is the best
+
+  - My Third Group:
+      - My Third Service:
+          href: http://localhost/
+          description: Homepage is 😎
+
+  - Observability:
+      - Grafana:
+          icon: grafana.png
+          href: https://grafana.virtualthoughts.co.uk
+          description: Grafana visualisation
+          widget:
+            type: grafana
+            version: 2
+            alerts: alertmanager
+            url: https://grafana.virtualthoughts.co.uk
+            # This is now just plain text, Helm won't parse it
+            username: {{HOMEPAGE_VAR_GRAFANA_USERNAME}}
+            password: {{HOMEPAGE_VAR_GRAFANA_PASSWORD}}

@@ -21,33 +21,7 @@ data:
             - abbr: GH
               href: https://github.com/
   services.yaml: |
-    - My First Group:
-        - My First Service:
-            href: http://localhost/
-            description: Homepage is awesome
-
-    - My Second Group:
-        - My Second Service:
-            href: http://localhost/
-            description: Homepage is the best
-
-    - My Third Group:
-        - My Third Service:
-            href: http://localhost/
-            description: Homepage is 😎
-
-    - Observability:
-        - Grafana:
-            icon: grafana.png
-            href: https://grafana.virtualthoughts.co.uk
-            description: Grafana visualisation
-            widget:
-              type: grafana
-              version: 2 # optional, default is 1
-              alerts: alertmanager # optional, default is grafana
-              url: https://grafana.virtualthoughts.co.uk
-              username: '${{GRAFANA_USERNAME}}'
-              password: '${{GRAFANA_PASSWORD}}'
+    {{- .Values.services | nindent 4 }}
   widgets.yaml: |
     - kubernetes:
         cluster:
