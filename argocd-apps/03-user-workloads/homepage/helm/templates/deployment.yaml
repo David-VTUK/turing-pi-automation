@@ -29,12 +29,12 @@ spec:
               value: homepage.virtualthoughts.co.uk
             - name: HOMEPAGE_PROXY_DISABLE_IPV6
               value: "true"
-            - name: GRAFANA_USERNAME
+            - name: HOMEPAGE_VAR_GRAFANA_USERNAME
               valueFrom:  
                 secretKeyRef:
                  name: homepage-secrets
                  key: GRAFANA_USERNAME
-            - name: GRAFANA_PASSWORD
+            - name: HOMEPAGE_VAR_GRAFANA_PASSWORD
               valueFrom:  
                 secretKeyRef:
                  name: homepage-secrets
