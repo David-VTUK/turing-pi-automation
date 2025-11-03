@@ -1,4 +1,3 @@
-
 services: |
   - Observability:
       - Grafana:
@@ -12,13 +11,6 @@ services: |
             url: https://grafana.virtualthoughts.co.uk
             username: {{HOMEPAGE_VAR_GRAFANA_USERNAME}}
             password: {{HOMEPAGE_VAR_GRAFANA_PASSWORD}}
-      - Prometheus:
-          icon: prometheus.png
-          href: https://prometheus.virtualthoughts.co.uk
-          description: Prometheus Metrics
-          widget:
-            type: prometheus
-            url: https://prometheus.virtualthoughts.co.uk
       - Prometheus:
           icon: prometheus.png
           href: https://prometheus.virtualthoughts.co.uk
