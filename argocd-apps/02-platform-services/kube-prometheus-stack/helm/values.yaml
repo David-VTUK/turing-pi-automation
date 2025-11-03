@@ -19,3 +19,8 @@ kube-prometheus-stack:
               resources:
                 requests:
                   storage: 50Gi
+  grafana:
+      admin:
+        existingSecret: "grafana-credentials"
+        userKey: "GRAFANA_USERNAME"
+        passwordKey: "GRAFANA_PASSWORD"
