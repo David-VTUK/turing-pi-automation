@@ -28,7 +28,7 @@ spec:
             - name: HOMEPAGE_ALLOWED_HOSTS
               value: homepage.virtualthoughts.co.uk
             - name: HOMEPAGE_PROXY_DISABLE_IPV6
-              value: true
+              value: "true"
           ports:
             - name: http
               containerPort: 3000
