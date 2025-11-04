@@ -1,14 +1,8 @@
 argo-cd:
   configs:
-    cm:
-      accounts.readonly: apiKey
-    rbac:
-      policy.csv: "g, readonly, role:readonly"
     params:
       server.insecure: true
   global:
     domain: argocd.virtualthoughts.co.uk
   namespaceOverride: argocd
   server:
-    service:
-      servicePortHttpsAppProtocol: HTTPS
