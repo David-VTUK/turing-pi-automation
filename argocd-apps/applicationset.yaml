@@ -94,3 +94,11 @@ spec:
           jsonPointers:
           - /data/
     {{- end }}
+    {{ if eq .path.basename "kube-prometheus-stack" }}
+      spec:
+        syncPolicy:
+          syncOptions:
+            - ServerSideApply=true # required to avoid the "annotations too long error"
+            - CreateNamespace=true
+            - PruneLast=true
+    {{- end }}
