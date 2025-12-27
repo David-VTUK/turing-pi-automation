@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mktxp-exporter
+spec:
+  selector:
+    matchLabels:
+      app: mktxp-exporter
+  template:
+    metadata:
+      labels:
+        app: mktxp-exporter
+    spec:
+      containers:
+      - name: mktxp-exporter
+        image: ghcr.io/akpw/mktxp:latest
+        command: ["mktxp"]
+        args:
+          - --cfg-dir
+          - /mktxp_config
+          - export
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        volumeMounts:
+          - name: mktxp-credentials
+            mountPath: /mktxp_config
+        ports:
+        - containerPort: 49090
+      volumes:
+        - name: mktxp-credentials
+          secret:
+            secretName: mktxp-credentials
