@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   labels:
     grafana_dashboard: "1"
-  name: logs
+  name: mikrotik-dashboard
 data:
   mikrotik.json: |-
     {{ .Files.Get "dashboards/mikrotik.json" | indent 4 }}
