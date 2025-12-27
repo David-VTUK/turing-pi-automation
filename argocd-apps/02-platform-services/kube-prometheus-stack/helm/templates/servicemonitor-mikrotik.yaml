@@ -6,6 +6,9 @@ metadata:
   labels:
     release: kube-prometheus-stack 
 spec:
+  namespaceSelector:
+    matchNames:
+      - mikrotik-exporter
   endpoints:
   - port: "49090"
     scheme: http
