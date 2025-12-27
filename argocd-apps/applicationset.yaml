@@ -62,19 +62,12 @@ spec:
         syncOptions:
           - CreateNamespace=true
   templatePatch: |
-    {{ if eq .path.basename "kube-prometheus-stack" }}
-      spec:
-        syncPolicy:
-          syncOptions:
-            - ServerSideApply=true # required to avoid the "annotations too long error"
-            - CreateNamespace=true
-            - PruneLast=true
-    {{- end }}
     {{ if eq .path.basename "cilium"}}
       spec:
         syncPolicy:
           syncOptions:
             - CreateNamespace=true
+            - RespectIgnoreDifferences=true
         ignoreDifferences:
         - group: ""
           kind: ConfigMap
@@ -95,4 +88,9 @@ spec:
           - /data/ca.crt
           - /data/tls.crt
           - /data/tls.key
+        - group: ""
+          kind: Secret
+          name: cilium-ca
+          jsonPointers:
+          - /data/
     {{- end }}
