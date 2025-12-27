@@ -10,7 +10,7 @@ spec:
     matchNames:
       - mikrotik-exporter
   endpoints:
-  - port: "49090"
+  - port: http-metrics
     scheme: http
     interval: 30s
   selector:
