@@ -6,4 +6,4 @@ metadata:
   name: mikrotik-dashboard
 data:
   mikrotik.json: |-
-    {{ .Files.Get "dashboards/mikrotik.json" | indent 4 }}
+{{ .Files.Get "dashboards/mikrotik.json" | indent 4 }}
