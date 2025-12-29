@@ -1,1 +1,6 @@
-# Blank
+kube-prometheus-stack:
+  grafana:
+    admin:
+      existingSecret: "grafana-credentials"
+      userKey: admin-user
+      passwordKey: admin-password
