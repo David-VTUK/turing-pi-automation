@@ -4,3 +4,13 @@ kube-prometheus-stack:
       existingSecret: "grafana-credentials"
       userKey: admin-user
       passwordKey: admin-password
+  prometheus:
+    prometheusSpec:
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: longhorn
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 100Gi
