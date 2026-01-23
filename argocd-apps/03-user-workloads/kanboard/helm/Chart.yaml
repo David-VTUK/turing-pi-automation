@@ -19,5 +19,5 @@ appVersion: "0.1.0"
 
 dependencies:
   - name: kanboard
-    version: 1.1.2
+    version: 1.2.0
     repository: https://kube-the-home.github.io/kanboard-helm/
