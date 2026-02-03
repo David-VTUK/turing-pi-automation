@@ -3,7 +3,7 @@ kanboard:
     port: 80
     additionalLabels: {}
     persistence:
-      enabled: false
+      enabled: true
       persistentVolumeClaim:
         name: kanboard-pvc
         create: true
