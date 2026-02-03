@@ -18,4 +18,8 @@ spec:
           kind: Service
           name: "argocd-server"
           port: 80
-          
+          weight: 1	
+      matches:	
+        - path:	
+            type: PathPrefix	
+            value: /         
