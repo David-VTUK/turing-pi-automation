@@ -102,3 +102,11 @@ spec:
             - CreateNamespace=true
             - PruneLast=true
     {{- end }}
+    {{ if eq .path.basename "argocd" }}
+      spec:
+        syncPolicy:
+          syncOptions:
+            - ServerSideApply=true # required to avoid the "annotations too long error"
+            - CreateNamespace=true
+            - PruneLast=true
+    {{- end }}
