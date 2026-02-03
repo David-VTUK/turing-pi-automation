@@ -10,6 +10,9 @@ kanboard:
         storageClass: default
         size: 5Gi
         accessMode: ReadWriteOnce
-  clusterip:
+  route:
     enabled: true
-    port: 80
+    parentRefs:
+      - name: cilium-api-gateway
+        namespace: cilium
+        sectionName: https-gateway
