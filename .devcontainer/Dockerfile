@@ -1,4 +1,4 @@
-FROM fedora:44
+FROM fedora:45
 
 # Install required packages
 RUN dnf install -y ansible ansible-lint git pip helm kubectl curl tar awk
