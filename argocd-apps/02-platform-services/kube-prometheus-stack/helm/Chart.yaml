@@ -19,5 +19,5 @@ appVersion: "0.1.0"
 
 dependencies:
   - name: kube-prometheus-stack
-    version: 81.4.2
+    version: 81.6.9
     repository: https://prometheus-community.github.io/helm-charts
