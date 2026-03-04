@@ -1,7 +1,7 @@
 FROM fedora:45
 
 # Install required packages
-RUN dnf install -y ansible ansible-lint git pip helm kubectl curl tar awk
+RUN dnf install -y ansible ansible-lint git pip helm kubectl curl tar awk podman podman-docker jq
 
 # Set environment variables for CLI_ARCH
 ENV CLI_ARCH=amd64
@@ -16,6 +16,14 @@ RUN if [ "$(uname -m)" = "aarch64" ]; then CLI_ARCH=arm64; fi
 #    && tar xzvfC cilium-linux-${CLI_ARCH}.tar.gz /usr/local/bin \
 #    && rm cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
 
+# Set up the environment variables to trick act and k3d into using the Podman socket
+ENV DOCKER_HOST="unix:///run/podman/podman.sock"
+ENV DOCKER_SOCK="/run/podman/podman.sock"
+
+RUN mkdir -p /run/podman
+
+# Install nektos/act 
+RUN curl -s https://raw.githubusercontent.com/nektos/act/master/install.sh | bash
 
 RUN pip install kubernetes
 

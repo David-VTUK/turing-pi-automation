@@ -2,6 +2,9 @@
 	"name": "ansible-env",
 	"build": {"dockerfile": "Dockerfile"},
 	// Configure tool-specific properties.
+	"runArgs": [
+		"--privileged"
+	],
 	"customizations": {
 		// Configure properties specific to VS Code.
 		"vscode": {
@@ -10,11 +13,15 @@
 				"streetsidesoftware.code-spell-checker",
 				"redhat.ansible",
 				"redhat.vscode-yaml",
-				"ms-python.python"
+				"ms-python.python",
+				"sanjulaganepola.github-local-actions"
 	
 			]
 		}
 	},
-    "workspaceFolder": "/workspace",
+
+	"remoteUser": "root",
+	"postStartCommand": "podman system service --time=0 unix:///run/podman/podman.sock",
+	"workspaceFolder": "/workspace",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,Z"
 }
