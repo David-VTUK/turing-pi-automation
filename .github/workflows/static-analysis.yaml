@@ -82,6 +82,10 @@ jobs:
         if: steps.check-chart.outputs.valid_chart == 'true'
         run: helm template test-release "${{ matrix.chart_dir }}" > rendered-manifest.yaml
 
+      - name: Show Rendered Manifest
+        if: steps.check-chart.outputs.valid_chart == 'true'
+        run: cat rendered-manifest.yaml
+
       - name: Pluto Setup (Deprecation Check)
         if: steps.check-chart.outputs.valid_chart == 'true'
         uses: FairwindsOps/pluto/github-action@master
