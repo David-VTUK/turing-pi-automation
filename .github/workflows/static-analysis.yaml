@@ -90,7 +90,8 @@ jobs:
         if: steps.check-chart.outputs.valid_chart == 'true'
         uses: FairwindsOps/pluto/github-action@master
 
-      - name: Pluto Scan
+      - name: Pluto Scan (Deprecation Check)
+        if: steps.check-chart.outputs.valid_chart == 'true'
         run: |
           pluto detect-files -d rendered-manifest.yaml --target-versions k8s=v${{ env.K8S-VERSION }} 
 
