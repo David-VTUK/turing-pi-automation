@@ -1,0 +1,21 @@
+# This API version is the trap. Pluto will flag this as removed.
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: invalid-cronjob
+  labels:
+    app: doomed-job
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox
+            command:
+            - /bin/sh
+            - -c
+            - date; echo Hello from the deprecated CronJob
+          restartPolicy: OnFailure
