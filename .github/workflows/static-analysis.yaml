@@ -30,7 +30,6 @@ jobs:
           files: argocd-apps/**
           dir_names: true
           json: true
-          matrix: true 
 
       - name: Set matrix output
         id: set-matrix
