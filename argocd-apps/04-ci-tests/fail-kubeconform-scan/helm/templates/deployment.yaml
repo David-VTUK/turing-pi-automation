@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: broken-deployment
+  labels:
+    app: broken
+spec:
+  # TRAP 1: Wrong Data Type (Kubernetes expects an integer here, not a string)
+  replicas: "three" 
+  selector:
+    matchLabels:
+      app: broken
+  template:
+    metadata:
+      labels:
+        app: broken
+    spec:
+      # TRAP 2: Typo / Unknown Field ('containers' is missing the 's')
+      container: 
+      - name: web
+        image: nginx:alpine
+    
+      # TRAP 3: Another Typo in a standard field
+      restartPollicy: Always
