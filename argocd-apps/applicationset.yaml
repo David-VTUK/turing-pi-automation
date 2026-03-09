@@ -93,7 +93,7 @@ spec:
           kind: Secret
           name: cilium-ca
           jsonPointers:
-          - /data/
+          - /data
     {{- end }}
     {{ if eq .path.basename "kube-prometheus-stack" }}
       spec:
@@ -110,4 +110,22 @@ spec:
             - ServerSideApply=true # required to avoid the "annotations too long error"
             - CreateNamespace=true
             - PruneLast=true
+    {{- end }}
+    {{ if eq .path.basename "external-snapshotter"}}
+      spec:
+        syncPolicy:
+          syncOptions:
+            - CreateNamespace=true
+            - RespectIgnoreDifferences=true
+        ignoreDifferences:
+        - group: ""
+          kind: Secret
+          name: external-snapshotter-conversion-webhook
+          jsonPointers:
+          - /data
+        - group: apiextensions.k8s.io
+          kind: CustomResourceDefinition
+          name: volumegroupsnapshotcontents.groupsnapshot.storage.k8s.io
+          jsonPointers:
+            - /spec/conversion/webhook/clientConfig/caBundle
     {{- end }}
