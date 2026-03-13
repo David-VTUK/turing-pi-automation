@@ -61,6 +61,7 @@ spec:
       domain:
         cpu:
           cores: 4
+          model: host-passthrough
         resources:
           requests:
             memory: 4Gi
