@@ -52,7 +52,7 @@ kind: VirtualMachine
 metadata:
   name: fedora-desktop
 spec:
-  running: false
+  running: true
   template:
     metadata:
       labels:
