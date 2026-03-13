@@ -46,3 +46,54 @@ spec:
           claimName: fedora-workstation-43-pvc
       - name: tmp
         emptyDir: {}
+---
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: fedora-desktop
+spec:
+  running: false
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: fedora-desktop
+    spec:
+      domain:
+        cpu:
+          cores: 4
+        resources:
+          requests:
+            memory: 4Gi
+        devices:
+          disks:
+            - name: disk0
+              disk:
+                bus: virtio
+            - name: cloudinitdisk
+              disk:
+                bus: virtio
+      volumes:
+        - name: disk0
+          persistentVolumeClaim:
+            claimName: fedora-workstation-43-pvc
+        - name: cloudinitdisk
+          cloudInitNoCloud:
+            userData: |
+              #cloud-config
+              user: kube
+              password: changeme
+              chpasswd: { expire: false }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fedora-desktop-access
+spec:
+  ports:
+    - name: ssh
+      port: 22      # External port
+      protocol: TCP
+      targetPort: 22   # Port inside the VM for SSH
+  selector:
+    kubevirt.io/domain: fedora-desktop
+  type: LoadBalancer
