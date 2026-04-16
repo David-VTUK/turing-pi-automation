@@ -4,6 +4,7 @@ metadata:
   labels:
     app: tdarr-node
   name: tdarr-node
+  namespace: tdarr
 spec:
   revisionHistoryLimit: 10
   selector:
@@ -42,7 +43,7 @@ spec:
           name: 8266tcp
           protocol: TCP
         resources: {}
-        securityContext
+        securityContext:
           privileged: true
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
