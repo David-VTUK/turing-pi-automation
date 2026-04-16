@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tdarr
+  labels:
+    app: tdarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tdarr
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: tdarr
+    spec:
+      containers:
+        - name: tdarr
+          image: ghcr.io/haveagitgat/tdarr:2.69.01
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: Europe/London
+            - name: PUID
+              value: "1001"
+            - name: PGID
+              value: "1001"
+            - name: ServerIP
+              value: 0.0.0.0
+            - name: ServerPort
+              value: "8266"
+            - name: webUIPort
+              value: "8265"
+            - name: internalNode
+              value: "false"
+            - name: nodeID
+              value: Controller1
+          ports:
+            - containerPort: 8266
+              name: server
+              protocol: TCP
+            - containerPort: 8265
+              name: webui
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /app/configs
+              name: tdarr-config
+            - mountPath: /media-library
+              name: media-library
+            - mountPath: /app/server
+              name: tdarr-server
+            - name: tcache
+              mountPath: /tcache
+      volumes:
+        - name: media-library
+          nfs:
+            path: /volume1/nas
+            server: 192.168.88.228
+        - name: tcache
+          nfs:
+            path: /volume1/nas/tdarr-cache
+            server: 192.168.88.228
+        - name: tdarr-config
+          persistentVolumeClaim:
+            claimName: tdarr-config
+        - name: tdarr-server
+          persistentVolumeClaim:
+            claimName: tdarr-server
