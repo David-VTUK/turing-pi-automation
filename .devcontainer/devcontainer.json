@@ -21,7 +21,6 @@
 	},
 
 	"remoteUser": "root",
-	"postStartCommand": "podman system service --time=0 unix:///run/podman/podman.sock",
 	"workspaceFolder": "/workspace",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,Z"
 }
