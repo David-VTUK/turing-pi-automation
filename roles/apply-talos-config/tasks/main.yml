@@ -1,0 +1,27 @@
+- name: Apply Control Plane configuration
+  ansible.builtin.command: >
+    talosctl apply-config --insecure
+    --nodes {{ hostvars[item].ansible_host }}
+    --file {{ talos_apply_config_dir }}/controlplane.yaml
+  loop: "{{ groups['control_plane_nodes'] }}"
+  delegate_to: localhost
+  changed_when: true
+
+
+- name: Apply Worker configuration
+  ansible.builtin.command: >
+    talosctl apply-config --insecure
+    --nodes {{ hostvars[item].ansible_host }}
+    --file {{ talos_apply_config_dir }}/worker.yaml
+  loop: "{{ groups['worker_nodes'] }}"
+  delegate_to: localhost
+  changed_when: true
+
+
+- name: Wait for Control Plane API to become ready (Port 50000)
+  ansible.builtin.wait_for:
+    host: "{{ hostvars[groups['server_nodes'][0]].ansible_host }}"
+    port: 50000
+    timeout: 300
+    msg: "Timeout waiting for the Control Plane Talos API to come online."
+  delegate_to: localhost

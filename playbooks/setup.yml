@@ -1,20 +1,26 @@
-- name: Generate Talos Cluster Configurations locally
-  hosts: localhost
-  connection: local
-  gather_facts: false
-  vars:
-    talos_cluster_name: "turing-rk1-cluster"
-    talos_controlplane_ip: "172.16.10.31"
-  roles:
-    - generate-talos-config
-
-
-#- name: Flash Turing Pi RK1 Nodes
+#- name: Generate Talos Cluster Configurations locally
 #  hosts: localhost
 #  connection: local
 #  gather_facts: false
 #  vars:
-#    tpi_flash_nodes_bmc_ip: "172.16.10.30" # Replace with your BMC IP
-#    tpi_flash_nodes_image_path: "/home/user/Downloads/metal-turing_rk1-arm64.raw"
+#    talos_cluster_name: "turing-rk1-cluster"
+#    talos_controlplane_ip: "172.16.10.31"
 #  roles:
-#    - tpi_flash_nodes
+#    - generate-talos-config
+
+- name: Flash Turing Pi RK1 Nodes
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    tpi_flash_nodes_bmc_ip: "172.16.10.30" # Replace with your BMC IP
+    tpi_flash_nodes_image_path: "/tmp/metal-arm64.raw.xz"
+  roles:
+    - tpi_flash_nodes
+
+#- name: Push Configs
+#  hosts: localhost
+#  connection: local
+#  gather_facts: false
+#  roles:
+#    - apply-talos-config
