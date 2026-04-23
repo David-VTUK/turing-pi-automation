@@ -1,0 +1,42 @@
+- name: Verify tpi CLI is installed locally
+  ansible.builtin.command: tpi --version
+  delegate_to: localhost
+  register: tpi_flash_nodes_tpi_check
+  changed_when: false
+  ignore_errors: true
+
+- name: Fail if tpi CLI is missing
+  ansible.builtin.fail:
+    msg: "The 'tpi' CLI tool must be installed on the Ansible control node to run this role."
+  when: tpi_flash_nodes_tpi_check.rc != 0
+
+- name: Power off RK1 nodes prior to flashing
+  ansible.builtin.command: >
+    tpi --host {{ tpi_flash_nodes_bmc_ip }} power --node {{ item }} off
+  loop: "{{ tpi_flash_nodes_target_nodes }}"
+  delegate_to: localhost
+  register: tpi_flash_nodes_power_off
+  changed_when: true
+
+- name: Wait for nodes to power down gracefully
+  ansible.builtin.pause:
+    seconds: 5
+
+- name: Flash Control Plane OS image to all RK1 nodes
+  ansible.builtin.command: >
+    tpi --host {{ tpi_flash_nodes_bmc_ip }} flash --node {{ item }} --image-path {{ tpi_flash_nodes_cp_image_path }}
+  delegate_to: localhost
+  register: tpi_flash_nodes_flash_cp_status
+  changed_when: true
+  loop: "{{ tpi_flash_nodes_target_nodes }}"
+
+- name: Power on RK1 nodes
+  ansible.builtin.command: >
+    tpi --host {{ tpi_flash_nodes_bmc_ip }} power --node {{ item }} on
+  loop: "{{ tpi_flash_nodes_target_nodes }}"
+  delegate_to: localhost
+  changed_when: true
+
+- name: Display flashing success
+  ansible.builtin.debug:
+    msg: "Successfully flashed CP (Node {{ tpi_flash_nodes_target_nodes[0] }}) and Workers (Nodes {{ tpi_flash_nodes_target_nodes[1:] | default('None') }})."

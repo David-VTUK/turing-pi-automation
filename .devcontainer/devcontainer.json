@@ -13,15 +13,12 @@
 				"streetsidesoftware.code-spell-checker",
 				"redhat.ansible",
 				"redhat.vscode-yaml",
-				"ms-python.python",
-				"sanjulaganepola.github-local-actions"
-	
+				"ms-python.python"
 			]
 		}
 	},
 
 	"remoteUser": "root",
-	"postStartCommand": "podman system service --time=0 unix:///run/podman/podman.sock",
 	"workspaceFolder": "/workspace",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,Z"
 }

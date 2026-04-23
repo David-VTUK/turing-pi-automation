@@ -1,0 +1,14 @@
+# The IP address of your Turing Pi 2 BMC
+tpi_flash_nodes_bmc_ip: "172.16.10.30"
+
+# The nodes you want to flash (1-4)
+tpi_flash_nodes_target_nodes:
+  - 1
+  - 2
+  - 3
+  - 4
+
+# The absolute path to the OS image on your local machine
+tpi_flash_nodes_image_path: "{{ playbook_dir }}/metal-arm64.raw"
+
+tpi_flash_nodes_talos_output_dir: "{{ playbook_dir }}/talos_configs"

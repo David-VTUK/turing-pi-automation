@@ -1,0 +1,26 @@
+---
+cluster:
+  allowSchedulingOnControlPlanes: true
+  network:
+    cni:
+      name: none
+  proxy:
+    disabled: true
+machine:
+  sysctls:
+    vm.nr_hugepages: "1024"
+  kernel:
+    modules:
+      - name: vfio_pci
+      - name: uio_pci_generic
+      - name: nvme_tcp
+{% if longhorn_engine == 'v1' %}
+  disks:
+    - device: /dev/nvme0n1
+      partitions:
+        - mountpoint: /var/lib/kubelet
+          size: 20GB 
+        - mountpoint: /var/lib/containerd
+          size: 50GB 
+        - mountpoint: /var/lib/longhorn
+{% endif %}
