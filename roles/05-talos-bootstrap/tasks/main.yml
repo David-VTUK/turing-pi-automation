@@ -1,0 +1,31 @@
+---
+- name: Bootstrap Talos cluster (Initialize etcd)
+  delegate_to: localhost
+  run_once: true
+  vars:
+    talos_output_dir: "{{ playbook_dir }}/talos-configs"
+    talos_controlplane_ip: "{{ hostvars[groups['control_plane'][0]]['ansible_host'] }}"
+  block:
+    - name: Wait for Talos API to be reachable
+      ansible.builtin.wait_for:
+        host: "{{ talos_controlplane_ip }}"
+        port: 50000
+        delay: 15 # Gives the node time to shut down if it's restarting
+        timeout: 300
+        msg: "Timeout waiting for Talos API to come up on {{ talos_controlplane_ip }}"
+
+
+    - name: Execute Talos bootstrap
+      ansible.builtin.command: >
+        talosctl --talosconfig {{ talos_output_dir }}/talosconfig
+        --endpoints {{ talos_controlplane_ip }}
+        --nodes {{ talos_controlplane_ip }}
+        bootstrap
+      # Only run the bootstrap if etcd is not currently reporting a 'Running' state
+      register: bootstrap_result
+      changed_when: true
+
+    - name: Display bootstrap status
+      ansible.builtin.debug:
+        msg: "Cluster successfully bootstrapped! etcd is initializing."
+      when: bootstrap_result.changed # noqa: no-handler

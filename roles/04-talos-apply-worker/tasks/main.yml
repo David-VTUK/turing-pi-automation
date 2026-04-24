@@ -1,0 +1,23 @@
+- name: Wait for Talos API (port 50000) to become reachable
+  ansible.builtin.wait_for:
+    host: "{{ ansible_host }}"
+    port: 50000
+    timeout: 300
+    msg: "Timeout waiting for Talos API to come up on {{ ansible_host }}"
+  delegate_to: localhost
+
+- name: Apply initial worker configuration
+  ansible.builtin.command: >
+    talosctl apply-config
+    --insecure
+    --endpoints {{ ansible_host }}
+    --nodes {{ ansible_host }}
+    --file {{ playbook_dir }}/talos-configs/worker.yaml
+  delegate_to: localhost
+  register: apply_config
+  changed_when: true
+
+- name: Display apply status
+  ansible.builtin.debug:
+    msg: "Worker configuration successfully applied to {{ ansible_host }}."
+  when: apply_config.changed # noqa: no-handler

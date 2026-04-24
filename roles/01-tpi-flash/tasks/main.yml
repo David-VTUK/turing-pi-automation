@@ -1,0 +1,49 @@
+- name: Load secrets
+  ansible.builtin.include_vars: "../vault/secrets.yml"
+
+- name: Verify tpi CLI is available
+  ansible.builtin.assert:
+    that: lookup('ansible.builtin.pipe', 'command -v tpi') != ""
+    fail_msg: "The 'tpi' CLI tool is missing on the control node."
+
+- name: Execute Turing Pi flashing sequence
+  delegate_to: localhost
+  environment:
+    TPI_USERNAME: "{{ tpi_vault_username }}"
+    TPI_PASSWORD: "{{ tpi_vault_password }}"
+  block:
+    - name: Power off RK1 nodes prior to flashing
+      ansible.builtin.command: >
+        tpi --host {{ tpi_flash_nodes_bmc_ip }} power --node {{ hostvars[item].tpi_node_number }} off
+      loop: "{{ groups['all'] }}"
+      changed_when: true
+
+    - name: Wait for nodes to power down gracefully
+      ansible.builtin.pause:
+        seconds: 5
+
+    - name: Flash OS image to all RK1 nodes
+      ansible.builtin.command: >
+        tpi --host {{ tpi_flash_nodes_bmc_ip }} flash
+        --node {{ hostvars[item].tpi_node_number }}
+        --image-path {{ tpi_flash_nodes_image_path }}
+      loop: "{{ groups['all'] }}"
+      register: tpi_flash_nodes_flash_status
+      changed_when: true
+      timeout: 3600
+
+    - name: Power on RK1 nodes
+      ansible.builtin.command: >
+        tpi --host {{ tpi_flash_nodes_bmc_ip }} power --node {{ hostvars[item].tpi_node_number }} on
+      loop: "{{ groups['all'] }}"
+      changed_when: true
+
+    - name: Wait for Talos to boot and request configuration via UART
+      ansible.builtin.command: >
+        tpi --host {{ tpi_flash_nodes_bmc_ip }} uart --node {{ hostvars[item].tpi_node_number }} get
+      loop: "{{ groups['all'] }}"
+      register: tpi_flash_nodes_uart_output
+      until: "'upload configuration using talosctl' in tpi_flash_nodes_uart_output.stdout"
+      retries: 60
+      delay: 10
+      changed_when: false

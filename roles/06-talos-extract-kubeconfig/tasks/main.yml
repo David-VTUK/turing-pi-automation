@@ -1,0 +1,36 @@
+- name: Extract cluster kubeconfig
+  delegate_to: localhost
+  run_once: true
+  vars:
+    talos_output_dir: "{{ playbook_dir }}/talos-configs"
+    talos_controlplane_ip: "{{ hostvars[groups['control_plane'][0]]['ansible_host'] }}"
+  block:
+    - name: Wait for Talos API to recover after configuration reboot
+      ansible.builtin.wait_for:
+        host: "{{ talos_controlplane_ip }}"
+        port: 50000
+        delay: 15 # Give the node 15 seconds to actually start the reboot process before checking
+        timeout: 300
+        msg: "Timeout waiting for Talos API on {{ talos_controlplane_ip }} to recover after reboot."
+
+    - name: Download kubeconfig via talosctl
+      ansible.builtin.command: >
+        talosctl --talosconfig {{ talos_output_dir }}/talosconfig
+        --endpoints {{ talos_controlplane_ip }}
+        --nodes {{ talos_controlplane_ip }}
+        kubeconfig {{ talos_output_dir }}/kubeconfig
+      args:
+        # Ensures idempotency: skips if the kubeconfig is already downloaded
+        creates: "{{ talos_output_dir }}/kubeconfig"
+      register: kubeconfig_pull
+
+    - name: Ensure strict permissions on kubeconfig
+      ansible.builtin.file:
+        path: "{{ talos_output_dir }}/kubeconfig"
+        mode: '0600'
+        state: file
+
+    - name: Display extraction status
+      ansible.builtin.debug:
+        msg: "Kubeconfig successfully extracted and secured at {{ talos_output_dir }}/kubeconfig"
+      when: kubeconfig_pull.changed # noqa: no-handler

@@ -1,26 +1,29 @@
-#- name: Generate Talos Cluster Configurations locally
+#- name: Deploy Talos to Turing Pi
 #  hosts: localhost
-#  connection: local
-#  gather_facts: false
-#  vars:
-#    talos_cluster_name: "turing-rk1-cluster"
-#    talos_controlplane_ip: "172.16.10.31"
 #  roles:
-#    - generate-talos-config
+#    - 01-tpi-flash
+#    - 02-talos-generate-config
 
-- name: Flash Turing Pi RK1 Nodes
-  hosts: localhost
-  connection: local
-  gather_facts: false
-  vars:
-    tpi_flash_nodes_bmc_ip: "172.16.10.30" # Replace with your BMC IP
-    tpi_flash_nodes_image_path: "/tmp/metal-arm64.raw.xz"
+#- name: Apply Control Plane configurations
+#  hosts: control_plane
+#  gather_facts: false # Talos nodes don't have Python, so gathering facts will fail
+#  roles:
+#    - 03-talos-apply-control-plane
+
+#- name: Apply Worker configurations
+#  hosts: workers
+#  gather_facts: false # Talos nodes don't have Python, so gathering facts will fail
+#  roles:
+#    - 04-talos-apply-worker
+
+- name: Bootstrap Cluster
+  hosts: control_plane
+  gather_facts: false # Talos nodes don't have Python, so gathering facts will fail
   roles:
-    - tpi_flash_nodes
+    - 05-talos-bootstrap
 
-#- name: Push Configs
-#  hosts: localhost
-#  connection: local
-#  gather_facts: false
-#  roles:
-#    - apply-talos-config
+- name: Extract Kubeconfig
+  hosts: control_plane
+  gather_facts: false # Talos nodes don't have Python, so gathering facts will fail
+  roles:
+    - 06-talos-extract-kubeconfig

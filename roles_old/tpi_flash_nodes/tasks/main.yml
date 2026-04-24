@@ -70,8 +70,8 @@
 
 - name: Format NVMe drives on all nodes
   ansible.builtin.command: >
-    talosctl wipe disk nvme0n1 
-    -e {{ hostvars[item].ansible_host }} 
+    talosctl wipe disk nvme0n1
+    -e {{ hostvars['srv-rk1-01'].ansible_host }} }}
     -n {{ hostvars[item].ansible_host }}
   loop: "{{ groups['all'] }}"
   delegate_to: localhost
