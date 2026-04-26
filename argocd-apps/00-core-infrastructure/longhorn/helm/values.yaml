@@ -8,4 +8,4 @@ longhorn:
   persistence:
     defaultClassReplicaCount: 3
     dataEngine: v2
-    defaultDataLocality: strict-local
+    defaultDataLocality: best-effort
