@@ -1,2 +1,5 @@
 tpi_flash_nodes_bmc_ip: "172.16.10.30"  # Replace with your actual BMC IP
 tpi_flash_nodes_image_path: "/tmp/metal-arm64.raw.xz"
+
+
+talos_api_endpoint: 172.16.10.31

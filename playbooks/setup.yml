@@ -1,29 +1,35 @@
-#- name: Deploy Talos to Turing Pi
-#  hosts: localhost
-#  roles:
-#    - 01-tpi-flash
-#    - 02-talos-generate-config
+- name: Prepare Infrastructure
+  hosts: localhost
+  gather_facts: false
+  roles:
+    - 01-tpi-flash
+    - 02-talos-generate-config
 
-#- name: Apply Control Plane configurations
-#  hosts: control_plane
-#  gather_facts: false # Talos nodes don't have Python, so gathering facts will fail
-#  roles:
-#    - 03-talos-apply-control-plane
-
-#- name: Apply Worker configurations
-#  hosts: workers
-#  gather_facts: false # Talos nodes don't have Python, so gathering facts will fail
-#  roles:
-#    - 04-talos-apply-worker
-
-- name: Bootstrap Cluster
+- name: Deploy Talos Control Plane
   hosts: control_plane
-  gather_facts: false # Talos nodes don't have Python, so gathering facts will fail
+  connection: local
+  gather_facts: false
+  roles:
+    - 03-talos-apply-control-plane
+
+- name: Deploy Talos Workers
+  hosts: workers
+  connection: local
+  gather_facts: false
+  roles:
+    - 04-talos-apply-worker
+
+- name: Bootstrap and Install Core Services
+  hosts: localhost
+  gather_facts: false
+  environment:
+    KUBECONFIG: "{{ playbook_dir }}/talos-configs/kubeconfig"
   roles:
     - 05-talos-bootstrap
-
-- name: Extract Kubeconfig
-  hosts: control_plane
-  gather_facts: false # Talos nodes don't have Python, so gathering facts will fail
-  roles:
     - 06-talos-extract-kubeconfig
+    - 07-talos-check-cluster-ready
+    - 08-install-gateway-api-crds
+    - 09-cluster-install-cilium
+    - 10-install-cert-manager
+    - 11-install-argocd
+    - 12-generate-argocd-applications

@@ -1,3 +1,0 @@
----
-# Directory where controlplane.yaml, worker.yaml, and talosconfig live
-talos_apply_config_dir: "/talos-configs"

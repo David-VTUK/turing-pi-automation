@@ -1,6 +1,10 @@
 cilium:
   bgpControlPlane:
     enabled: true
+  cgroup:
+    autoMount:
+      enabled: false
+    hostRoot: /sys/fs/cgroup
   gatewayAPI:
     enabled: true
   hubble:
@@ -9,9 +13,10 @@ cilium:
     ui:
       enabled: true
   ipam:
-    operator:
-      clusterPoolCIDR: 10.42.0.0/16
+    mode: kubernetes
   k8sServiceHost: 172.16.10.31
   k8sServicePort: 6443
   kubeProxyReplacement: true
+  securityContext:
+    privileged: true
   namespaceOverride: cilium

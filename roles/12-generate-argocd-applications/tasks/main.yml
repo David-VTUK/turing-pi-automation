@@ -1,4 +1,12 @@
 - name: Delete sh.helm instances
+  vars:
+    secrets:
+      - name: argocd
+        namespace: argocd
+      - name: cilium
+        namespace: cilium
+      - name: cert-manager
+        namespace: cert-manager
   kubernetes.core.k8s:
     state: absent
     definition:

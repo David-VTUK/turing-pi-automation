@@ -4,7 +4,6 @@
     port: 50000
     timeout: 300
     msg: "Timeout waiting for Talos API to come up on {{ ansible_host }}"
-  delegate_to: localhost
 
 - name: Apply initial control plane configuration
   ansible.builtin.command: >
@@ -12,7 +11,6 @@
     --insecure
     --nodes {{ ansible_host }}
     --file {{ playbook_dir }}/talos-configs/controlplane.yaml
-  delegate_to: localhost
   register: apply_config
   changed_when: true
 

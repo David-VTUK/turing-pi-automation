@@ -7,7 +7,6 @@
     fail_msg: "The 'tpi' CLI tool is missing on the control node."
 
 - name: Execute Turing Pi flashing sequence
-  delegate_to: localhost
   environment:
     TPI_USERNAME: "{{ tpi_vault_username }}"
     TPI_PASSWORD: "{{ tpi_vault_password }}"
@@ -47,3 +46,4 @@
       retries: 60
       delay: 10
       changed_when: false
+      when: not ansible_check_mode

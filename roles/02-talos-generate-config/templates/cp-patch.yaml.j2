@@ -1,4 +1,17 @@
 cluster:
+  apiServer:
+    admissionControl:
+      - name: PodSecurity
+        configuration:
+          apiVersion: pod-security.admission.config.k8s.io/v1
+          kind: PodSecurityConfiguration
+          defaults:
+            enforce: "privileged"
+            enforce-version: "latest"
+            audit: "privileged"
+            audit-version: "latest"
+            warn: "privileged"
+            warn-version: "latest"
   allowSchedulingOnControlPlanes: true
   network:
     cni:
@@ -13,11 +26,3 @@ machine:
       - name: vfio_pci
       - name: uio_pci_generic
       - name: nvme_tcp
-  disks:
-    - device: /dev/nvme0n1
-      partitions:
-        - mountpoint: /var/lib/kubelet
-          size: 20GB 
-        - mountpoint: /var/lib/containerd
-          size: 50GB 
-        - mountpoint: /var/lib/longhorn

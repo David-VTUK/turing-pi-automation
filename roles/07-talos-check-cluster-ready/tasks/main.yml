@@ -1,0 +1,24 @@
+- name: Check Kubernetes cluster readiness (silent fail and retry)
+  vars:
+    talos_output_dir: "{{ playbook_dir }}/talos-configs"
+    k8s_wait_max_retries: 10
+    k8s_wait_delay_seconds: 15
+  kubernetes.core.k8s_info:
+    kubeconfig: "{{ talos_output_dir }}/kubeconfig"
+    kind: Node
+  register: k8s_status
+  # Retries the task until it succeeds
+  until: k8s_status is not failed
+  retries: "{{ k8s_wait_max_retries }}"
+  delay: "{{ k8s_wait_delay_seconds }}"
+  ignore_errors: true
+  no_log: true
+
+- name: Verify cluster connection status
+  ansible.builtin.debug:
+    msg: >-
+      {% if k8s_status is not failed %}
+      Success: Successfully connected to the Kubernetes API. The cluster is ready.
+      {% else %}
+      Warning: Kubernetes API remained unreachable after {{ k8s_wait_max_retries }} attempts. Moving forward silently.
+      {% endif %}

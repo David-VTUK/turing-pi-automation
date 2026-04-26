@@ -1,5 +1,4 @@
 - name: Extract cluster kubeconfig
-  delegate_to: localhost
   run_once: true
   vars:
     talos_output_dir: "{{ playbook_dir }}/talos-configs"
@@ -29,6 +28,14 @@
         path: "{{ talos_output_dir }}/kubeconfig"
         mode: '0600'
         state: file
+
+    - name: Permanently set KUBECONFIG in ~/.bashrc
+      ansible.builtin.lineinfile:
+        path: ~/.bashrc
+        regexp: '^export KUBECONFIG='
+        line: 'export KUBECONFIG="{{ talos_output_dir }}/kubeconfig"'
+        create: true
+        mode: '0644'
 
     - name: Display extraction status
       ansible.builtin.debug:

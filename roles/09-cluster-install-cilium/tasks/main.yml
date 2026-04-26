@@ -1,25 +1,8 @@
-- name: Install Helm
-  ansible.builtin.shell: |
-    set -o pipefail;
-    curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-  args:
-    executable: /bin/bash
-  when: "'server_nodes' in group_names"
-  changed_when: "'server_nodes' in group_names"
-
-- name: Move kubeconfig
-  ansible.builtin.shell: |
-    mkdir -p ~/.kube
-    cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
-    chmod 600 ~/.kube/config
-  when: "'server_nodes' in group_names"
-  changed_when: "'server_nodes' in group_names"
-
-
 - name: Add a repository
   kubernetes.core.helm_repository:
     name: cilium
     repo_url: https://helm.cilium.io/
+
 
 - name: Install Cilium
   kubernetes.core.helm:
@@ -34,8 +17,7 @@
       k8sServiceHost: "{{ cilium_service_host }}"
       k8sServicePort: "{{ cilium_service_port }}"
       ipam:
-        operator:
-          clusterPoolCIDR: "{{ cilium_cluster_pool_cidr }}"
+        mode: kubernetes
       bgpControlPlane:
         enabled: true
       hubble:
@@ -45,6 +27,12 @@
           enabled: true
       gatewayAPI:
         enabled: true
+      cgroup:
+        autoMount:
+          enabled: false
+        hostRoot: /sys/fs/cgroup
+      securityContext:
+        privileged: true
 
 - name: Create Cilium BGP Peering Policy Object
   kubernetes.core.k8s:
