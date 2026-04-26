@@ -1,9 +1,11 @@
 longhorn:
   namespaceOverride: longhorn
   defaultSettings:
-    defaultDataPath: /mnt/data/longhorn/
+    v2DataEngine: true
+    v1DataEngine: false
   preUpgradeChecker:
     jobEnabled: false
   persistence:
     defaultClassReplicaCount: 3
-    defaultDataLocality: best-effort
+    dataEngine: v2
+    defaultDataLocality: strict-local
