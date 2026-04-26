@@ -4,7 +4,7 @@ longhorn:
     v2DataEngine: true
     v1DataEngine: false
     createDefaultDiskLabeledNodes: false
-    defaultDataPath: "/dev/nvme1n1"
+    defaultDataPath: "/dev/nvme0n1"
   preUpgradeChecker:
     jobEnabled: false
   persistence:
