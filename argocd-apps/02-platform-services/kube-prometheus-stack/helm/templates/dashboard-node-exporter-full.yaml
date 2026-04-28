@@ -6,4 +6,4 @@ metadata:
   name: node-exporter-full-dashboard
 data:
   mikrotik.json: |-
-    {{ .Files.Get "dashboards/node-exporter-full.json" | indent 4 }}
+    {{- .Files.Get "dashboards/node-exporter-full.json" | nindent 4 }}
