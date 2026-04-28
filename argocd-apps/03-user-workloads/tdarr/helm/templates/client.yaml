@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: tdarr-node
+  name: tdarr-node
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: tdarr-node
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: tdarr-node
+    spec:
+      affinity: {}
+      containers:
+      - env:
+        - name: TZ
+          value: Europe/London
+        - name: PUID
+          value: "1001"
+        - name: PGID
+          value: "1001"
+        - name: serverIP
+          value: tdarr
+        - name: serverPort
+          value: "8266"
+        - name: nodeType
+          value: "mapped"
+        - name: transcodecpuWorkers
+          value: "1"
+        - name: healthcheckcpuWorkers
+          value: "1"
+        image: ghcr.io/haveagitgat/tdarr_node:2.69.01
+        imagePullPolicy: Always
+        name: tdarr-node
+        ports:
+        - containerPort: 8266
+          name: 8266tcp
+          protocol: TCP
+        resources: {}
+        securityContext:
+          privileged: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /media-library
+          name: media-library
+        - mountPath: /tcache
+          name: tcache
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: media-library
+        nfs:
+          path: /volume1/nas
+          server: 192.168.88.228
+      - name: tcache
+        nfs:
+          path: /volume1/nas/tdarr-cache
+          server: 192.168.88.228
