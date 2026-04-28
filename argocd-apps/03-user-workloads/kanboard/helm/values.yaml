@@ -12,6 +12,8 @@ kanboard:
         accessMode: ReadWriteOnce
   route:
     enabled: true
+    hostnames:
+      - kanboard.virtualthoughts.co.uk
     parentRefs:
       - name: cilium-api-gateway
         namespace: cilium
