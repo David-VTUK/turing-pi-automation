@@ -1,0 +1,16 @@
+- name: Delete sh.helm instances
+  kubernetes.core.k8s:
+    state: absent
+    definition:
+      apiVersion: v1
+      kind: secret
+      metadata:
+        name: sh.helm.release.v1.{{ item.name }}.v1
+        namespace: '{{ item.namespace }}'
+  loop: '{{ secrets }}'
+
+- name: Apply ArgoCD Applicationset
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      - "{{ lookup('file', '../argocd-apps/applicationset.yaml') }}"

@@ -1,0 +1,159 @@
+- name: Install Helm
+  ansible.builtin.shell: |
+    set -o pipefail;
+    curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+  args:
+    executable: /bin/bash
+  when: "'server_nodes' in group_names"
+  changed_when: "'server_nodes' in group_names"
+
+- name: Move kubeconfig
+  ansible.builtin.shell: |
+    mkdir -p ~/.kube
+    cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
+    chmod 600 ~/.kube/config
+  when: "'server_nodes' in group_names"
+  changed_when: "'server_nodes' in group_names"
+
+
+- name: Add a repository
+  kubernetes.core.helm_repository:
+    name: cilium
+    repo_url: https://helm.cilium.io/
+
+- name: Install Cilium
+  kubernetes.core.helm:
+    name: cilium
+    chart_ref: cilium/cilium
+    chart_version: "{{ cilium_version }}"
+    release_namespace: "{{ cilium_namespace }}"
+    create_namespace: true
+    wait: true
+    values:
+      kubeProxyReplacement: true
+      k8sServiceHost: "{{ cilium_service_host }}"
+      k8sServicePort: "{{ cilium_service_port }}"
+      ipam:
+        operator:
+          clusterPoolCIDR: "{{ cilium_cluster_pool_cidr }}"
+      bgpControlPlane:
+        enabled: true
+      hubble:
+        relay:
+          enabled: true
+        ui:
+          enabled: true
+      gatewayAPI:
+        enabled: true
+
+- name: Create Cilium BGP Peering Policy Object
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: cilium.io/v2alpha1
+      kind: CiliumBGPClusterConfig
+      metadata:
+        name: default
+        namespace: "{{ cilium_namespace }}"
+      spec:
+        bgpInstances:
+          - name: "{{ cilium_bgp_peer_config_name }}"
+            localASN: "{{ cilium_bgp_local_as }}"
+            peers:
+              - name: "{{ cilium_bgp_peer_config_name }}"
+                peerASN: "{{ cilium_bgp_peer_as }}"
+                peerAddress: "{{ cilium_bgp_peer_address }}"
+                peerConfigRef:
+                  name: "{{ cilium_bgp_peer_config_name }}"
+
+- name: Create Cilium BGP Peer Config Object
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: cilium.io/v2alpha1
+      kind: CiliumBGPPeerConfig
+      metadata:
+        name: "{{ cilium_bgp_peer_config_name }}"
+        namespace: "{{ cilium_namespace }}"
+      spec:
+        timers:
+          holdTimeSeconds: 9
+          keepAliveTimeSeconds: 3
+        gracefulRestart:
+          enabled: true
+          restartTimeSeconds: 15
+        families:
+          - afi: "ipv4"
+            safi: "unicast"
+            advertisements:
+              matchLabels:
+                advertise: "bgp"
+
+- name: Create BGP IP clusterPoolCIDR
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: cilium.io/v2alpha1
+      kind: CiliumLoadBalancerIPPool
+      metadata:
+        name: default
+        namespace: "{{ cilium_namespace }}"
+      spec:
+        allowFirstLastIPs: "No"
+        blocks:
+          - cidr: "{{ cilium_bgp_advertise_pool }}"
+
+# Advertise all Loadbalancer IP's
+- name: Create BGP Advertisment
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: cilium.io/v2alpha1
+      kind: CiliumBGPAdvertisement
+      metadata:
+        name: default
+        namespace: "{{ cilium_namespace }}"
+        labels:
+          advertise: bgp
+      spec:
+        advertisements:
+          - advertisementType: "Service"
+            service:
+              addresses:
+                - LoadBalancerIP
+            selector:
+              matchExpressions:
+                - key: somekey
+                  operator: NotIn
+                  values: ['never-used-value']
+
+- name: Create directories for application files
+  ansible.builtin.file:
+    path: ../argocd-apps/00-core-infrastructure/{{ cilium_namespace }}
+    state: directory
+    mode: '0755'
+
+- name: Generate ArgoCD application
+  ansible.builtin.template:
+    src: ../template/Chart.yaml.j2
+    dest: ../argocd-apps/00-core-infrastructure/{{ cilium_namespace }}/helm/Chart.yaml
+    mode: '0644'
+  vars:
+    app_name: "cilium"
+    chart_repo_url: "https://helm.cilium.io/"
+    app_chart_version: "{{ cilium_version }}"
+
+- name: Extract existing values from chart
+  ansible.builtin.shell: set -o pipefail && helm get values cilium --namespace "{{ cilium_namespace }}" -o yaml | sed 's/USER-SUPPLIED VALUES/cilium/'
+  register: helm_values_output
+  changed_when: false
+
+- name: Generate values yaml
+  ansible.builtin.template:
+    src: ../template/values.yaml.j2
+    dest: ../argocd-apps/00-core-infrastructure/{{ cilium_namespace }}/helm/values.yaml
+    mode: '0644'
+  vars:
+    app_name: "cilium"
+    app_values: "{{ helm_values_output.stdout }}"
+    app_namespace: "namespaceOverride: {{ cilium_namespace }}"

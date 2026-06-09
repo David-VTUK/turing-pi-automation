@@ -1,0 +1,10 @@
+# Define the device and partition settings
+device: /dev/nvme0n1
+partition_start: 1MiB
+partition_end: 100%
+filesystem: ext4
+mount_point: /mnt/data
+fstab_options: 'defaults'
+fstab_dump: 0
+fstab_fsck: 0
+partition_number: 1
