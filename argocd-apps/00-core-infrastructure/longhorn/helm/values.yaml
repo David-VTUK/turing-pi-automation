@@ -5,5 +5,5 @@ longhorn:
   preUpgradeChecker:
     jobEnabled: false
   persistence:
-    defaultClassReplicaCount: 3
-    defaultDataLocality: best-effort
+    defaultClassReplicaCount: 4
+    defaultDataLocality: strict-local
