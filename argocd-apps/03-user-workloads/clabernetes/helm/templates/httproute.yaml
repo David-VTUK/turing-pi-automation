@@ -16,7 +16,7 @@ spec:
     - backendRefs:
         - group: ''	
           kind: Service
-          name: "clabernetes"
+          name: "clabernetes-ui"
           port: 80
           weight: 1	
       matches:	
