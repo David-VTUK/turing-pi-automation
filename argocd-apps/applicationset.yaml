@@ -95,6 +95,19 @@ spec:
           jsonPointers:
           - /data/
     {{- end }}
+    {{ if eq .path.basename "clabernetes"}}
+      spec:
+        syncPolicy:
+          syncOptions:
+            - CreateNamespace=true
+            - RespectIgnoreDifferences=true
+        ignoreDifferences:
+        - group: ""
+          kind: Secret
+          name: clabernetes-certificate
+          jsonPointers:
+            - /data
+    {{- end}}
     {{ if eq .path.basename "kube-prometheus-stack" }}
       spec:
         syncPolicy:
