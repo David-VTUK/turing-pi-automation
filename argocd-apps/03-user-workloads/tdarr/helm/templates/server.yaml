@@ -79,11 +79,11 @@ spec:
         - name: media-library
           nfs:
             path: /volume1/nas
-            server: 192.168.88.228
+            server: 172.25.10.233
         - name: tcache
           nfs:
             path: /volume1/nas/tdarr-cache
-            server: 192.168.88.228
+            server: 172.25.10.233
         - name: tdarr-config
           persistentVolumeClaim:
             claimName: tdarr-config
