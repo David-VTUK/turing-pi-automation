@@ -5,5 +5,5 @@ metadata:
     grafana_dashboard: "1"
   name: node-exporter-full-dashboard
 data:
-  mikrotik.json: |-
+  node-exporter-full.json: |-
     {{- .Files.Get "dashboards/node-exporter-full.json" | nindent 4 }}
