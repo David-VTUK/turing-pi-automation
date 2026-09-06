@@ -5,7 +5,7 @@ metadata:
   namespace: longhorn
 spec:
   hostnames:
-    - "longhorn.virtualthoughts.co.uk"
+    - "longhorn.lab.virtualthoughts.co.uk"
   parentRefs:
     - name: cilium-api-gateway
       namespace: cilium

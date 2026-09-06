@@ -122,7 +122,7 @@ spec:
       sectionName: https-gateway
       namespace: cilium
   hostnames:
-    - tdarr.virtualthoughts.co.uk
+    - tdarr.lab.virtualthoughts.co.uk
   rules:
     - matches:
         - path:

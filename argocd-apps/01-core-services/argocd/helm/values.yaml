@@ -4,5 +4,5 @@ argo-cd:
       server.insecure: true
       applicationsetcontroller.enable.progressive.syncs: true
   global:
-    domain: argocd.virtualthoughts.co.uk
+    domain: argocd.lab.virtualthoughts.co.uk
   namespaceOverride: argocd

@@ -5,7 +5,7 @@ metadata:
   namespace: clabernetes
 spec:
   hostnames:
-    - "clabernetes.virtualthoughts.co.uk"
+    - "clabernetes.lab.virtualthoughts.co.uk"
   parentRefs:
     - group: gateway.networking.k8s.io	
       kind: Gateway

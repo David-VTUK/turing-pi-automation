@@ -26,7 +26,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: HOMEPAGE_ALLOWED_HOSTS
-              value: homepage.virtualthoughts.co.uk
+              value: homepage.lab.virtualthoughts.co.uk
             - name: HOMEPAGE_PROXY_DISABLE_IPV6
               value: "true"
             - name: HOMEPAGE_VAR_GRAFANA_USERNAME

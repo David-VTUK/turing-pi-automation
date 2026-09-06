@@ -4,7 +4,7 @@ metadata:
   name: homepage
 spec:
   hostnames:
-    - "homepage.virtualthoughts.co.uk"
+    - "homepage.lab.virtualthoughts.co.uk"
   parentRefs:
     - name: cilium-api-gateway
       namespace: cilium

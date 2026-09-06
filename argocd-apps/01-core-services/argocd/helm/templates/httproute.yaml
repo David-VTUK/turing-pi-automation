@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   hostnames:
-    - "argocd.virtualthoughts.co.uk"
+    - "argocd.lab.virtualthoughts.co.uk"
   parentRefs:
     - group: gateway.networking.k8s.io	
       kind: Gateway

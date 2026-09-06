@@ -5,7 +5,7 @@ metadata:
   namespace: kube-prometheus-stack
 spec:
   hostnames:
-    - "prometheus.virtualthoughts.co.uk"
+    - "prometheus.lab.virtualthoughts.co.uk"
   parentRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
@@ -31,7 +31,7 @@ metadata:
   namespace: kube-prometheus-stack
 spec:
   hostnames:
-    - "alertmanager.virtualthoughts.co.uk"
+    - "alertmanager.lab.virtualthoughts.co.uk"
   parentRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
@@ -57,7 +57,7 @@ metadata:
   namespace: kube-prometheus-stack
 spec:
   hostnames:
-    - "grafana.virtualthoughts.co.uk"
+    - "grafana.lab.virtualthoughts.co.uk"
   parentRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
