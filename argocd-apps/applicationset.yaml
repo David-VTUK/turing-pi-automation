@@ -93,7 +93,8 @@ spec:
           kind: Secret
           name: cilium-ca
           jsonPointers:
-          - /data/
+          - /data/ca.crt
+          - /data/ca.key
     {{- end }}
     {{ if eq .path.basename "clabernetes"}}
       spec:
