@@ -6,4 +6,4 @@ metadata:
   name: node-exporter-full-dashboard
 data:
   node-exporter-full.json: |-
-{{- .Files.Get "dashboards/node-exporter-full.json" | nindent 4 }}
+    {{- .Files.Get "dashboards/node-exporter-full.json" | nindent 4 }}
