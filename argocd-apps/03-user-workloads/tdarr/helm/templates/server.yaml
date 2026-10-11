@@ -40,7 +40,7 @@ spec:
     spec:
       containers:
         - name: tdarr
-          image: ghcr.io/haveagitgat/tdarr:2.69.01
+          image: ghcr.io/haveagitgat/tdarr:3.00.00
           imagePullPolicy: Always
           env:
             - name: TZ

@@ -34,7 +34,7 @@ spec:
           value: "1"
         - name: healthcheckcpuWorkers
           value: "1"
-        image: ghcr.io/haveagitgat/tdarr_node:2.69.01
+        image: ghcr.io/haveagitgat/tdarr_node:3.00.00
         imagePullPolicy: Always
         name: tdarr-node
         ports:
