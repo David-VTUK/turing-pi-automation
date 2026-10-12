@@ -19,3 +19,6 @@ kube-prometheus-stack:
       ## Valid values: Fail, Ignore, IgnoreOnInstallOnly
       ## IgnoreOnInstallOnly - If Release.IsInstall returns "true", set "Ignore" otherwise "Fail"
       failurePolicy: "Ignore"
+  alertmanager:
+    alertmanagerSpec:
+      configSecret: alertmanager-custom-config
