@@ -90,7 +90,7 @@ spec:
       # ==========================================
 
       - alert: MikroTikHighRXError
-        expr: increase(mktxp_interface_rx_error_total[5m]) > 1
+        expr: increase(mktxp_interface_tx_error_total{name!="back-to-home-vpn"}[5m]) > 1
         for: 5m
         labels:
           severity: warning
@@ -99,7 +99,7 @@ spec:
           description: "RX error on {{ `{{ $labels.routerboard_name }}` }} over the last 5mins is currently {{ `{{ $value }}` }}."
 
       - alert: MikroTikHighTXError
-        expr: increase(mktxp_interface_tx_error_total[5m]) > 1
+        expr: increase(mktxp_interface_tx_error_total{name!="back-to-home-vpn"}[5m]) > 1
         for: 5m
         labels:
           severity: warning
