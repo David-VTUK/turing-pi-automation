@@ -16,8 +16,8 @@ spec:
         labels:
           severity: warning
         annotations:
-          summary: "High CPU load on Router {{ $labels.routerboard_name }}"
-          description: "CPU load on {{ $labels.routerboard_name }} is currently {{ $value | printf \"%.2f\" }}%."
+          summary: "High CPU load on Router {{ `{{ $labels.routerboard_name }}` }}"
+          description: "CPU load on {{ `{{ $labels.routerboard_name }}` }} is currently {{ `{{ $value | printf \"%.2f\" }}` }}%."
 
       - alert: MikroTikLowMemory
         expr: (mktxp_system_free_memory / mktxp_system_total_memory) * 100 < 10
@@ -25,8 +25,8 @@ spec:
         labels:
           severity: warning
         annotations:
-          summary: "Low memory on Router {{ $labels.routerboard_name }}"
-          description: "{{ $labels.routerboard_name }} has less than 10% free memory remaining."
+          summary: "Low memory on Router {{ `{{ $labels.routerboard_name }}` }}"
+          description: "{{ `{{ $labels.routerboard_name }}` }} has less than 10% free memory remaining."
 
       - alert: MikroTikHighCPUTemperature
         expr: mktxp_system_cpu_temperature > 70
@@ -34,8 +34,8 @@ spec:
         labels:
           severity: warning
         annotations:
-          summary: "High CPU temperature on {{ $labels.routerboard_name }}"
-          description: "CPU Temperature on {{ $labels.routerboard_name }} is currently {{ $value }}°C."
+          summary: "High CPU temperature on {{ `{{ $labels.routerboard_name }}` }}"
+          description: "CPU Temperature on {{ `{{ $labels.routerboard_name }}` }} is currently {{ `{{ $value }}` }}°C."
 
       - alert: MikroTikHighPHYTemperature
         expr: mktxp_system_phy_temperature > 70
@@ -43,8 +43,8 @@ spec:
         labels:
           severity: warning
         annotations:
-          summary: "High PHY temperature on {{ $labels.routerboard_name }}"
-          description: "PHY Temperature on {{ $labels.routerboard_name }} is currently {{ $value }}°C."
+          summary: "High PHY temperature on {{ `{{ $labels.routerboard_name }}` }}"
+          description: "PHY Temperature on {{ `{{ $labels.routerboard_name }}` }} is currently {{ `{{ $value }}` }}°C."
 
       - alert: MikroTikHighBoard1Temperature
         expr: mktxp_system_board_temperature1 > 70
@@ -52,8 +52,8 @@ spec:
         labels:
           severity: warning
         annotations:
-          summary: "High Board 1 temperature PHY on {{ $labels.routerboard_name }}"
-          description: "Board 1 Temperature on {{ $labels.routerboard_name }} is currently {{ $value }}°C."
+          summary: "High Board 1 temperature PHY on {{ `{{ $labels.routerboard_name }}` }}"
+          description: "Board 1 Temperature on {{ `{{ $labels.routerboard_name }}` }} is currently {{ `{{ $value }}` }}°C."
 
 
       - alert: MikroTikHighBoard2Temperature
@@ -62,8 +62,8 @@ spec:
         labels:
           severity: warning
         annotations:
-          summary: "High Board 2 temperature on {{ $labels.routerboard_name }}"
-          description: "Board 2 Temperature on {{ $labels.routerboard_name }} is currently {{ $value }}°C."
+          summary: "High Board 2 temperature on {{ `{{ $labels.routerboard_name }}` }}"
+          description: "Board 2 Temperature on {{ `{{ $labels.routerboard_name }}` }} is currently {{ `{{ $value }}` }}°C."
 
       - alert: MikroTikHighSFPTemperature
         expr: mktxp_interface_sfp_temperature > 70
@@ -71,8 +71,8 @@ spec:
         labels:
           severity: warning
         annotations:
-          summary: "High SFP temperature on {{ $labels.routerboard_name }}, interface {{ $labels.name }}"
-          description: "SFP Temperature on {{ $labels.routerboard_name }}, interface {{ $labels.name }} is currently {{ $value }}°C."
+          summary: "High SFP temperature on {{ `{{ $labels.routerboard_name }}` }}, interface {{ `{{ $labels.name }}` }}"
+          description: "SFP Temperature on {{ `{{ $labels.routerboard_name }}` }}, interface {{ `{{ $labels.name }}` }} is currently {{ `{{ $value }}` }}°C."
 
       - alert: MikroTikHighSwitchTemperature
         expr: mktxp_system_switch_temperature > 70
@@ -80,8 +80,8 @@ spec:
         labels:
           severity: warning
         annotations:
-          summary: "High Switch temperature on {{ $labels.routerboard_name }}"
-          description: "Switch Temperature on {{ $labels.routerboard_name }} is currently {{ $value }}°C."
+          summary: "High Switch temperature on {{ `{{ $labels.routerboard_name }}` }}"
+          description: "Switch Temperature on {{ `{{ $labels.routerboard_name }}` }} is currently {{ `{{ $value }}` }}°C."
 
 
 
@@ -95,8 +95,8 @@ spec:
         labels:
           severity: warning
         annotations:
-          summary: "High RX error rate on {{ $labels.routerboard_name }}, interface {{ $labels.name}}"
-          description: "RX error on {{ $labels.routerboard_name }} over the last 5mins is currently {{ $value }}."
+          summary: "High RX error rate on {{ `{{ $labels.routerboard_name }}` }}, interface {{ `{{ $labels.name}}` }}"
+          description: "RX error on {{ `{{ $labels.routerboard_name }}` }} over the last 5mins is currently {{ `{{ $value }}` }}."
 
       - alert: MikroTikHighTXError
         expr: increase(mktxp_interface_tx_error_total[5m]) > 1
@@ -104,8 +104,8 @@ spec:
         labels:
           severity: warning
         annotations:
-          summary: "High TX error rate on {{ $labels.routerboard_name }}, interface {{ $labels.name}}"
-          description: "TX error on {{ $labels.routerboard_name }} over the last 5mins is currently {{ $value }}."
+          summary: "High TX error rate on {{ `{{ $labels.routerboard_name }}` }}, interface {{ `{{ $labels.name}}` }}"
+          description: "TX error on {{ `{{ $labels.routerboard_name }}` }} over the last 5mins is currently {{ `{{ $value }}` }}."
 
       # ==========================================
       # Software & OS
@@ -117,5 +117,5 @@ spec:
         labels:
           severity: info
         annotations:
-          summary: "RouterOS update available on {{ $labels.routerboard_name }}"
-          description: "{{ $labels.newest_version }} is available for {{ $labels.routerboard_name }}."
+          summary: "RouterOS update available on {{ `{{ $labels.routerboard_name }}` }}"
+          description: "{{ `{{ $labels.newest_version }}` }} is available for {{ `{{ $labels.routerboard_name }}` }}."
