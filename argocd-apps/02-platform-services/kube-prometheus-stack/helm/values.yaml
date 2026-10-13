@@ -25,7 +25,8 @@ kube-prometheus-stack:
 
   # Disable some of the default monitoring rules due to how K3s packages components within its static binary
   defaultRules:
-    kubeControllerManager: false
-    kubeProxy: false
-    kubeSchedulerAlerting: false
+    rules: 
+      kubeControllerManager: false
+      kubeProxy: false
+      kubeSchedulerAlerting: false
 
