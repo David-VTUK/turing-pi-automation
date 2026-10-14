@@ -1,8 +1,9 @@
 loki:
-  deploymentMode: Monolithic
+  # 1. Use the chart's valid identifier
+  deploymentMode: SingleBinary
 
+  # 2. Configure the monolithic pod
   singleBinary:
-    enabled: true
     replicas: 2
     extraArgs:
       - -config.expand-env=true
@@ -10,6 +11,15 @@ loki:
       - secretRef:
           name: loki-s3-credentials
 
+  # 3. Explicitly override chart defaults to prevent validate.yaml failure
+  backend:
+    replicas: 0
+  read:
+    replicas: 0
+  write:
+    replicas: 0
+
+  # 4. Loki binary settings
   loki:
     auth_enabled: false
     commonConfig:
@@ -40,9 +50,10 @@ loki:
         region: eu-homelab-1
         accessKeyId: "${AWS_ACCESS_KEY_ID}"
         secretAccessKey: "${AWS_SECRET_ACCESS_KEY}"
-        endpoint: https://rustfs.lab.virtualthoughts.co.uk
+        endpoint: rustfs.lab.virtualthoughts.co.uk
         s3ForcePathStyle: true
 
+  # 5. Disable unused components
   minio:
     enabled: false
 
