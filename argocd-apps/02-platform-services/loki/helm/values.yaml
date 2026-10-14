@@ -1,5 +1,7 @@
 loki:
+  deploymentMode: Monolithic
   loki:
+    auth_enabled: false # Set to true if you want multitenancy (requires X-Scope-OrgID header in Grafana)
     storage:
       type: s3
       bucketNames:
@@ -31,12 +33,6 @@ loki:
     rulerConfig:
       enable_api: true
 
-  ignoreMinioDeprecation: false  # Temporary workaround – MinIO will be removed 2026-10-31
-  minio:
-    enabled: false
-        
-  deploymentMode: Monolithic
-
   singleBinary:
     replicas: 2
     extraArgs:
@@ -45,15 +41,16 @@ loki:
       - secretRef:
           name: loki-s3-credentials
 
-  
-  # Zero out replica counts of other deployment modes
+  ignoreMinioDeprecation: false
+  minio:
+    enabled: false
+
   backend:
     replicas: 0
   read:
     replicas: 0
   write:
     replicas: 0
-
   ingester:
     replicas: 0
   querier:
