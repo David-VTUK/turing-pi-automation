@@ -19,6 +19,7 @@ rustfs:
     existingGateway:
       name: cilium-api-gateway
       namespace: cilium
+  region: "eu-homelab-1"
   storageclass:
     name: longhorn
     dataStorageSize: 20Gi
