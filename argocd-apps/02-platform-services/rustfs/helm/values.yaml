@@ -1,7 +1,7 @@
 rustfs:
   replicaCount: 4
   secret:
-    existingSecret: rustfs-creds
+    existingSecret: rustfs-credentials
   ingress:
     enabled: false
   gatewayApi:
