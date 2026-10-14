@@ -1,20 +1,17 @@
-# Top-level key matches the dependency alias in Chart.yaml
 loki:
   deploymentMode: Monolithic
 
+  singleBinary:
+    enabled: true
+    replicas: 2
+    extraArgs:
+      - -config.expand-env=true
+    extraEnvFrom:
+      - secretRef:
+          name: loki-s3-credentials
+
   loki:
-    storage:
-      type: s3
-      bucketNames:
-        chunks: loki-chunks
-        ruler: loki-ruler
-        admin: loki-admin
-      s3:
-        region: eu-homelab-1
-        accessKeyId: "${AWS_ACCESS_KEY_ID}"
-        secretAccessKey: "${AWS_SECRET_ACCESS_KEY}"
-        endpoint: https://rustfs.lab.virtualthoughts.co.uk
-        s3ForcePathStyle: true
+    auth_enabled: false
     commonConfig:
       replication_factor: 1
     schemaConfig:
@@ -33,44 +30,21 @@ loki:
       volume_enabled: true
     rulerConfig:
       enable_api: true
+    storage:
+      type: s3
+      bucketNames:
+        chunks: loki-chunks
+        ruler: loki-ruler
+        admin: loki-admin
+      s3:
+        region: eu-homelab-1
+        accessKeyId: "${AWS_ACCESS_KEY_ID}"
+        secretAccessKey: "${AWS_SECRET_ACCESS_KEY}"
+        endpoint: https://rustfs.lab.virtualthoughts.co.uk
+        s3ForcePathStyle: true
 
-  singleBinary:
-    replicas: 2
-    extraArgs:
-      - -config.expand-env=true
-    extraEnvFrom:
-      - secretRef:
-          name: loki-s3-credentials
-
-  ignoreMinioDeprecation: false  # Temporary workaround – MinIO will be removed 2026-10-31
   minio:
     enabled: false
 
-  # Zero out replica counts of other deployment modes
-  backend:
-    replicas: 0
-  read:
-    replicas: 0
-  write:
-    replicas: 0
-
-  ingester:
-    replicas: 0
-  querier:
-    replicas: 0
-  queryFrontend:
-    replicas: 0
-  queryScheduler:
-    replicas: 0
-  distributor:
-    replicas: 0
-  compactor:
-    replicas: 0
-  indexGateway:
-    replicas: 0
-  bloomPlanner:
-    replicas: 0
-  bloomBuilder:
-    replicas: 0
-  bloomGateway:
-    replicas: 0
+  gateway:
+    enabled: true
