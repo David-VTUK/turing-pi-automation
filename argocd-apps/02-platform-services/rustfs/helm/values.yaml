@@ -15,7 +15,7 @@ rustfs:
         name: https-gateway
         port: 443
     hostname: rustfs.lab.virtualthoughts.co.uk # Console hostname.
-    httpToHttpsRedirect: true
+    httpToHttpsRedirect: false # handled by api gateway
     existingGateway:
       name: cilium-api-gateway
       namespace: cilium
