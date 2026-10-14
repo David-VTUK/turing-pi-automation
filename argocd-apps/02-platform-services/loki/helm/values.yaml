@@ -1,16 +1,17 @@
 loki:
   loki:
     storage:
-    type: s3
-    bucketNames:
-      chunks: loki-chunks
-      ruler: loki-ruler
-      admin: loki-admin
-    s3:
-      region: eu-homelab-1
-      accessKeyId: "${AWS_ACCESS_KEY_ID}"
-      secretAccessKey: "${AWS_SECRET_ACCESS_KEY}"
-      endpoint: rustfs.lab.virtualthoughts.co.uk
+      type: s3
+      bucketNames:
+        chunks: loki-chunks
+        ruler: loki-ruler
+        admin: loki-admin
+      s3:
+        region: eu-homelab-1
+        accessKeyId: "${AWS_ACCESS_KEY_ID}"
+        secretAccessKey: "${AWS_SECRET_ACCESS_KEY}"
+        endpoint: https://rustfs.lab.virtualthoughts.co.uk
+        s3ForcePathStyle: true
     commonConfig:
       replication_factor: 1
     schemaConfig:
