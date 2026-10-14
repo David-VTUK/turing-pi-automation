@@ -9,11 +9,11 @@ rustfs:
     gatewayClass: cilium
     listeners:
       http:
-        name: web
-        port: 8000
+        name: http-to-https-redirect
+        port: 80
       https:
-        name: websecure
-        port: 8443
+        name: https-gateway
+        port: 443
     hostname: rustfs.lab.virtualthoughts.co.uk # Console hostname.
     httpToHttpsRedirect: true
     existingGateway:
