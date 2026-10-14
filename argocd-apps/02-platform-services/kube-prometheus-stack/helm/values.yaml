@@ -4,6 +4,14 @@ kube-prometheus-stack:
       existingSecret: "grafana-credentials"
       userKey: admin-user
       passwordKey: admin-password
+    additionalDataSources:
+      - name: Loki
+        type: loki
+        access: proxy
+        url: http://loki-gateway.loki.svc.cluster.local:80
+        isDefault: false
+        jsonData:
+          maxLines: 1000
   prometheus:
     prometheusSpec:
       storageSpec:
