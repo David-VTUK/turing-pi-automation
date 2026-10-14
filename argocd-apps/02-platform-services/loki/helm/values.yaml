@@ -1,7 +1,8 @@
+# Top-level key matches the dependency alias in Chart.yaml
 loki:
   deploymentMode: Monolithic
+
   loki:
-    auth_enabled: false # Set to true if you want multitenancy (requires X-Scope-OrgID header in Grafana)
     storage:
       type: s3
       bucketNames:
@@ -41,16 +42,18 @@ loki:
       - secretRef:
           name: loki-s3-credentials
 
-  ignoreMinioDeprecation: false
+  ignoreMinioDeprecation: false  # Temporary workaround – MinIO will be removed 2026-10-31
   minio:
     enabled: false
 
+  # Zero out replica counts of other deployment modes
   backend:
     replicas: 0
   read:
     replicas: 0
   write:
     replicas: 0
+
   ingester:
     replicas: 0
   querier:
