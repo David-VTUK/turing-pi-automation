@@ -1,0 +1,25 @@
+rustfs:
+  replicaCount: 4
+  secret:
+    existingSecret: rustfs-creds
+  ingress:
+    enabled: false
+  gatewayApi:
+    enabled: true
+    gatewayClass: cilium
+    listeners:
+      http:
+        name: web
+        port: 8000
+      https:
+        name: websecure
+        port: 8443
+    hostname: rustfs.lab.virtualthoughts.co.uk # Console hostname.
+    httpToHttpsRedirect: true
+    existingGateway:
+      name: cilium-api-gateway
+      namespace: cilium
+  storageclass:
+    name: longhorn
+    dataStorageSize: 50Gi
+    logStorageSize: 50Gi
